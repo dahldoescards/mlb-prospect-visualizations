@@ -40,61 +40,121 @@ def generate_release_html(release_data, all_releases):
     career_lengths = [p['career_length'] for p in players]
     
     # Create HTML with embedded Plotly
+    avg_war = sum(war_values) / len(war_values) if war_values else 0
+    avg_career = sum(career_lengths) / len(career_lengths) if career_lengths else 0
+    
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{release_name} - Prospect Visualization</title>
+    <title>{release_name} | Bowman Prospect Analysis</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {{
+            box-sizing: border-box;
+        }}
         body {{
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            background-color: #ffffff;
         }}
         .container {{
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 40px 30px;
+        }}
+        .header-section {{
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
         }}
         h1 {{
-            color: #333;
-            margin-bottom: 10px;
+            color: #1e3c72;
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
         }}
         .subtitle {{
-            color: #666;
-            margin-bottom: 30px;
+            color: #6c757d;
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
         }}
         #plot {{
             width: 100%;
-            height: 600px;
+            height: 650px;
+            margin: 30px 0;
         }}
         .stats {{
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 4px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
         }}
-        .stats p {{
-            margin: 5px 0;
-            color: #555;
+        .stat-item {{
+            text-align: center;
+        }}
+        .stat-label {{
+            display: block;
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }}
+        .stat-value {{
+            display: block;
+            font-size: 1.75rem;
+            color: #1e3c72;
+            font-weight: 700;
+        }}
+        @media (max-width: 768px) {{
+            .container {{
+                padding: 20px 15px;
+            }}
+            h1 {{
+                font-size: 1.5rem;
+            }}
+            #plot {{
+                height: 500px;
+            }}
+            .stats {{
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }}
         }}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>{release_name}</h1>
-        <p class="subtitle">Career WAR vs Career Length</p>
+        <div class="header-section">
+            <h1>{release_name}</h1>
+            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+        </div>
         <div id="plot"></div>
         <div class="stats">
-            <p><strong>Total Players Shown:</strong> {len(players)}</p>
-            <p><strong>Average WAR:</strong> {sum(war_values) / len(war_values):.2f}</p>
-            <p><strong>Average Career Length:</strong> {sum(career_lengths) / len(career_lengths):.2f} years</p>
+            <div class="stat-item">
+                <span class="stat-label">Players Shown</span>
+                <span class="stat-value">{len(players)}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Average WAR</span>
+                <span class="stat-value">{avg_war:.2f}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Avg Career Length</span>
+                <span class="stat-value">{avg_career:.1f} yrs</span>
+            </div>
         </div>
     </div>
 
@@ -111,12 +171,12 @@ def generate_release_html(release_data, all_releases):
                 color: '#333'
             }},
             marker: {{
-                size: 8,
-                color: '#1f77b4',
-                opacity: 0.7,
+                size: 10,
+                color: '#2a5298',
+                opacity: 0.8,
                 line: {{
-                    width: 1,
-                    color: '#fff'
+                    width: 2,
+                    color: '#ffffff'
                 }}
             }},
             hovertemplate: '<b>%{{text}}</b><br>' +
@@ -126,24 +186,49 @@ def generate_release_html(release_data, all_releases):
 
         var layout = {{
             title: {{
-                text: '{release_name} - Career WAR vs Career Length',
-                font: {{ size: 18 }}
+                text: '',
+                font: {{ size: 0 }}
             }},
             xaxis: {{
-                title: 'Career WAR',
-                titlefont: {{ size: 14 }},
+                title: {{
+                    text: 'Career WAR',
+                    font: {{ size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }}
+                }},
+                titlefont: {{ size: 16, family: 'Inter, sans-serif' }},
                 showgrid: true,
-                gridcolor: '#e0e0e0'
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1
             }},
             yaxis: {{
-                title: 'Career Length (years)',
-                titlefont: {{ size: 14 }},
+                title: {{
+                    text: 'Career Length (years)',
+                    font: {{ size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }}
+                }},
+                titlefont: {{ size: 16, family: 'Inter, sans-serif' }},
                 showgrid: true,
-                gridcolor: '#e0e0e0'
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1
             }},
-            plot_bgcolor: 'white',
-            paper_bgcolor: 'white',
-            hovermode: 'closest'
+            plot_bgcolor: '#ffffff',
+            paper_bgcolor: '#ffffff',
+            hovermode: 'closest',
+            margin: {{
+                l: 80,
+                r: 40,
+                t: 20,
+                b: 60
+            }},
+            font: {{
+                family: 'Inter, sans-serif',
+                size: 12,
+                color: '#495057'
+            }}
         }};
 
         var config = {{
@@ -160,7 +245,7 @@ def generate_release_html(release_data, all_releases):
     return html_content
 
 def generate_index_html(all_releases):
-    """Generate main index.html with tabs for all releases."""
+    """Generate main index.html with dropdown menu for all releases."""
     # Filter releases to only include those with valid players
     valid_releases = []
     for release in all_releases:
@@ -170,131 +255,210 @@ def generate_index_html(all_releases):
                 'name': release['release'],
                 'year': release.get('year', 0),
                 'set': release.get('set', ''),
-                'player_count': len(players)
+                'player_count': len(players),
+                'filename': release['release'].lower().replace(' ', '_').replace('&', 'and') + '.html'
             })
     
-    # Sort by year, then by set name
-    valid_releases.sort(key=lambda x: (x['year'], x['set']))
+    # Sort by year (descending), then by set name
+    valid_releases.sort(key=lambda x: (-x['year'], x['set']))
     
-    # Generate tab HTML
-    tabs_html = ''
-    tab_content_html = ''
+    # Generate dropdown options
+    dropdown_options = ''
+    for release in valid_releases:
+        dropdown_options += f'<option value="{release["filename"]}">{release["name"]}</option>\n'
     
-    for i, release in enumerate(valid_releases):
-        release_name = release['name']
-        filename = release_name.lower().replace(' ', '_').replace('&', 'and') + '.html'
-        active_class = 'active' if i == 0 else ''
-        show_class = 'show active' if i == 0 else ''
-        
-        tabs_html += f'''
-        <li class="nav-item">
-            <a class="nav-link {active_class}" id="{filename}-tab" data-bs-toggle="tab" href="#{filename}" role="tab" aria-controls="{filename}">
-                {release_name}
-            </a>
-        </li>'''
-        
-        tab_content_html += f'''
-        <div class="tab-pane fade {show_class}" id="{filename}" role="tabpanel">
-            <iframe src="{filename}" style="width: 100%; height: 800px; border: none;"></iframe>
-        </div>'''
+    # Get first release for initial display
+    first_release = valid_releases[0] if valid_releases else None
+    
+    initial_file = first_release['filename'] if first_release else ''
     
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLB Prospect Success Rate Visualizations</title>
+    <title>Bowman Prospect Analysis | Career WAR Visualizations</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {{
+            box-sizing: border-box;
+        }}
         body {{
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
         }}
         .main-container {{
-            max-width: 1400px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 1600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             overflow: hidden;
         }}
         .header {{
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 30px;
+            padding: 50px 40px;
+            border-bottom: 4px solid #ffd700;
         }}
         .header h1 {{
+            margin: 0 0 12px 0;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }}
+        .header .subtitle {{
             margin: 0;
-            font-size: 2.5em;
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 400;
         }}
-        .header p {{
-            margin: 10px 0 0 0;
-            opacity: 0.9;
-        }}
-        .nav-tabs {{
-            border-bottom: 2px solid #dee2e6;
-            padding: 0 20px;
+        .controls-section {{
+            padding: 30px 40px;
             background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
         }}
-        .nav-tabs .nav-link {{
-            color: #495057;
-            border: none;
-            border-bottom: 3px solid transparent;
-            padding: 15px 20px;
+        .release-selector {{
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }}
-        .nav-tabs .nav-link:hover {{
-            border-bottom-color: #667eea;
-            color: #667eea;
-        }}
-        .nav-tabs .nav-link.active {{
-            color: #667eea;
-            background-color: white;
-            border-bottom-color: #667eea;
+        .release-selector label {{
             font-weight: 600;
+            color: #495057;
+            margin: 0;
+            font-size: 1rem;
         }}
-        .tab-content {{
-            padding: 0;
+        .release-selector select {{
+            flex: 1;
+            max-width: 500px;
+            padding: 12px 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            background-color: white;
+            color: #212529;
+            cursor: pointer;
+            transition: all 0.2s;
+        }}
+        .release-selector select:hover {{
+            border-color: #2a5298;
+        }}
+        .release-selector select:focus {{
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }}
+        .visualization-container {{
+            position: relative;
+            min-height: 700px;
+            background-color: #ffffff;
+        }}
+        .visualization-container iframe {{
+            width: 100%;
+            height: 800px;
+            border: none;
+            display: block;
         }}
         .stats-summary {{
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
+            padding: 25px 40px;
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }}
-        .stats-summary p {{
-            margin: 5px 0;
-            color: #495057;
+        .stats-summary .stat-item {{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }}
+        .stats-summary .stat-label {{
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }}
+        .stats-summary .stat-value {{
+            font-weight: 700;
+            color: #2a5298;
+            font-size: 1.1rem;
+        }}
+        .stats-summary .note {{
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-style: italic;
+        }}
+        @media (max-width: 768px) {{
+            .main-container {{
+                margin: 20px;
+                border-radius: 8px;
+            }}
+            .header {{
+                padding: 30px 20px;
+            }}
+            .header h1 {{
+                font-size: 2rem;
+            }}
+            .controls-section {{
+                padding: 20px;
+            }}
+            .release-selector {{
+                flex-direction: column;
+                align-items: stretch;
+            }}
+            .release-selector select {{
+                max-width: 100%;
+            }}
+            .stats-summary {{
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }}
         }}
     </style>
 </head>
 <body>
     <div class="main-container">
         <div class="header">
-            <h1>MLB Prospect Success Rate Analysis</h1>
-            <p>Interactive visualizations showing Career WAR vs Career Length for each release</p>
+            <h1>Bowman Prospect Analysis</h1>
+            <p class="subtitle">Career WAR vs Career Length Visualizations</p>
         </div>
-        <ul class="nav nav-tabs" id="releaseTabs" role="tablist">
-            {tabs_html}
-        </ul>
-        <div class="tab-content" id="releaseTabContent">
-            {tab_content_html}
+        <div class="controls-section">
+            <div class="release-selector">
+                <label for="releaseSelect">Select Release:</label>
+                <select id="releaseSelect" class="form-select">
+                    {dropdown_options}
+                </select>
+            </div>
+        </div>
+        <div class="visualization-container">
+            <iframe id="visualizationFrame" src="{initial_file}" style="width: 100%; height: 800px; border: none;"></iframe>
         </div>
         <div class="stats-summary">
-            <p><strong>Total Releases:</strong> {len(valid_releases)}</p>
-            <p><strong>Note:</strong> Only players who debuted with WAR > 0 are displayed</p>
+            <div class="stat-item">
+                <span class="stat-label">Total Releases:</span>
+                <span class="stat-value">{len(valid_releases)}</span>
+            </div>
+            <div class="note">Only players who debuted with WAR > 0 are displayed</div>
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Enable Bootstrap tabs
-        var triggerTabList = [].slice.call(document.querySelectorAll('#releaseTabs a'));
-        triggerTabList.forEach(function (triggerEl) {{
-            var tabTrigger = new bootstrap.Tab(triggerEl);
-            triggerEl.addEventListener('click', function (event) {{
-                event.preventDefault();
-                tabTrigger.show();
-            }});
+        document.getElementById('releaseSelect').addEventListener('change', function(e) {{
+            const selectedFile = e.target.value;
+            document.getElementById('visualizationFrame').src = selectedFile;
         }});
     </script>
 </body>
