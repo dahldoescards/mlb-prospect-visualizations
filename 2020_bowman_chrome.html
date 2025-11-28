@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2020 Bowman Chrome - Prospect Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        #plot {
+            width: 100%;
+            height: 600px;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .stats p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2020 Bowman Chrome</h1>
+        <p class="subtitle">Career WAR vs Career Length</p>
+        <div id="plot"></div>
+        <div class="stats">
+            <p><strong>Total Players Shown:</strong> 19</p>
+            <p><strong>Average WAR:</strong> 3.49</p>
+            <p><strong>Average Career Length:</strong> 3.21 years</p>
+        </div>
+    </div>
+
+    <script>
+        var data = [{
+            x: [4.1728, 0.263753, 4.44755, 0.515317, 1.11272, 0.502902, 6.74145, 8.30144, 12.0818, 4.84191, 1.6085, 1.07241, 12.0167, 1.82415, 0.40597, 2.047, 0.0499568, 4.27677, 0.0636875],
+            y: [6.0, 1.0, 3.0, 1.0, 3.0, 2.0, 4.0, 4.0, 6.0, 4.0, 4.0, 2.0, 4.0, 4.0, 3.0, 2.0, 1.0, 4.0, 3.0],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Alex Vesia", "Austin Shenton", "Brenton Doyle", "Christian Koss", "Drew Millas", "Erik Miller", "Francisco Alvarez", "Gabriel Moreno", "Isaac Paredes", "Ivan Herrera", "Logan O'Hoppe", "Luisangel Acu\u00f1a", "Michael Harris", "Michael Massey", "Packy Naughton", "Pedro Pages", "Ricky Vanasco", "Ryan Pepiot", "Yoendrys Gomez"],
+            textposition: 'top center',
+            textfont: {
+                size: 10,
+                color: '#333'
+            },
+            marker: {
+                size: 8,
+                color: '#1f77b4',
+                opacity: 0.7,
+                line: {
+                    width: 1,
+                    color: '#fff'
+                }
+            },
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
+        }];
+
+        var layout = {
+            title: {
+                text: '2020 Bowman Chrome - Career WAR vs Career Length',
+                font: { size: 18 }
+            },
+            xaxis: {
+                title: 'Career WAR',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            yaxis: {
+                title: 'Career Length (years)',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white',
+            hovermode: 'closest'
+        };
+
+        var config = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+    </script>
+</body>
+</html>

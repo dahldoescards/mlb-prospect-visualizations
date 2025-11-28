@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2019 Bowman Chrome - Prospect Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        #plot {
+            width: 100%;
+            height: 600px;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .stats p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2019 Bowman Chrome</h1>
+        <p class="subtitle">Career WAR vs Career Length</p>
+        <div id="plot"></div>
+        <div class="stats">
+            <p><strong>Total Players Shown:</strong> 30</p>
+            <p><strong>Average WAR:</strong> 4.04</p>
+            <p><strong>Average Career Length:</strong> 4.47 years</p>
+        </div>
+    </div>
+
+    <script>
+        var data = [{
+            x: [0.0799413, 0.0161979, 14.8176, 1.07637, 6.17546, 22.9051, 1.3426, 4.35915, 7.58039, 0.53919, 2.5669, 0.988574, 6.50103, 11.8912, 5.92182, 0.486976, 0.253678, 0.656391, 3.23144, 9.46379, 0.469203, 0.203033, 0.705896, 8.85802, 0.0169432, 4.09753, 2.79099, 0.391947, 0.0805791, 2.73468],
+            y: [7.0, 1.0, 6.0, 3.0, 7.0, 5.0, 6.0, 6.0, 6.0, 5.0, 5.0, 6.0, 5.0, 5.0, 4.0, 3.0, 2.0, 3.0, 5.0, 7.0, 4.0, 3.0, 5.0, 6.0, 2.0, 5.0, 4.0, 4.0, 2.0, 2.0],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Abraham Toro", "Adam Kloffenstein", "Alejandro Kirk", "Brayan Rocchio", "Bryan Abreu", "Cal Raleigh", "Carlos Hernandez", "Cole Irvin", "Cristian Javier", "Deivi Garcia", "Edwin Uceta", "Eli White", "Garrett Whitlock", "Geraldo Perdomo", "Jhoan Duran", "Jordan Yamamoto", "Leonardo Jimenez", "Livan Soto", "Luis Gil", "Michael King", "Mike Siani", "Noelvi Marte", "Owen Miller", "Patrick Sandoval", "Payton Henry", "Ryan Feltner", "Sam Hentges", "Sean Hjelle", "Tyler Phillips", "Wenceel Perez"],
+            textposition: 'top center',
+            textfont: {
+                size: 10,
+                color: '#333'
+            },
+            marker: {
+                size: 8,
+                color: '#1f77b4',
+                opacity: 0.7,
+                line: {
+                    width: 1,
+                    color: '#fff'
+                }
+            },
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
+        }];
+
+        var layout = {
+            title: {
+                text: '2019 Bowman Chrome - Career WAR vs Career Length',
+                font: { size: 18 }
+            },
+            xaxis: {
+                title: 'Career WAR',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            yaxis: {
+                title: 'Career Length (years)',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white',
+            hovermode: 'closest'
+        };
+
+        var config = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+    </script>
+</body>
+</html>

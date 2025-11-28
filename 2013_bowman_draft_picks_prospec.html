@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2013 Bowman Draft Picks Prospec - Prospect Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        #plot {
+            width: 100%;
+            height: 600px;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .stats p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2013 Bowman Draft Picks Prospec</h1>
+        <p class="subtitle">Career WAR vs Career Length</p>
+        <div id="plot"></div>
+        <div class="stats">
+            <p><strong>Total Players Shown:</strong> 23</p>
+            <p><strong>Average WAR:</strong> 9.45</p>
+            <p><strong>Average Career Length:</strong> 7.78 years</p>
+        </div>
+    </div>
+
+    <script>
+        var data = [{
+            x: [61.5584, 0.00237282, 6.0607, 0.0179463, 0.0757425, 1.58617, 0.327083, 0.778006, 3.55364, 9.29384, 17.8316, 20.6192, 0.209753, 29.1934, 10.2249, 7.89808, 1.77158, 1.04759, 5.24293, 0.044186, 11.8711, 17.6595, 10.3792],
+            y: [10.0, 8.0, 6.0, 3.0, 7.0, 7.0, 9.0, 8.0, 7.0, 10.0, 9.0, 11.0, 4.0, 11.0, 11.0, 11.0, 5.0, 4.0, 8.0, 1.0, 9.0, 10.0, 10.0],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Aaron Judge", "Andrew Knapp", "Austin Meadows", "Blake Taylor", "Clint Frazier", "Colin Moran", "Dominic Smith", "Hunter Dozier", "Hunter Harvey", "Hunter Renfroe", "J.P. Crawford", "Jonathan Gray", "Kohl Stewart", "Kris Bryant", "Marco Gonzales", "Michael Lorenzen", "Oscar Mercado", "Phil Ervin", "Reese McGuire", "Robert Kaminsky", "Ryan McMahon", "Tim Anderson", "Trevor Williams"],
+            textposition: 'top center',
+            textfont: {
+                size: 10,
+                color: '#333'
+            },
+            marker: {
+                size: 8,
+                color: '#1f77b4',
+                opacity: 0.7,
+                line: {
+                    width: 1,
+                    color: '#fff'
+                }
+            },
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
+        }];
+
+        var layout = {
+            title: {
+                text: '2013 Bowman Draft Picks Prospec - Career WAR vs Career Length',
+                font: { size: 18 }
+            },
+            xaxis: {
+                title: 'Career WAR',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            yaxis: {
+                title: 'Career Length (years)',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white',
+            hovermode: 'closest'
+        };
+
+        var config = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2015 Bowman - Prospect Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        #plot {
+            width: 100%;
+            height: 600px;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .stats p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2015 Bowman</h1>
+        <p class="subtitle">Career WAR vs Career Length</p>
+        <div id="plot"></div>
+        <div class="stats">
+            <p><strong>Total Players Shown:</strong> 27</p>
+            <p><strong>Average WAR:</strong> 6.94</p>
+            <p><strong>Average Career Length:</strong> 7.89 years</p>
+        </div>
+    </div>
+
+    <script>
+        var data = [{
+            x: [1.71544, 9.29926, 22.914, 2.10542, 0.165192, 5.61098, 7.83149, 1.09408, 11.029, 1.85257, 3.7203, 1.77296, 3.89327, 18.5654, 5.06151, 21.8777, 29.1175, 14.926, 2.79612, 0.0980124, 0.818953, 16.99, 0.544782, 1.92455, 0.389432, 1.37211, 0.00532809],
+            y: [6.0, 9.0, 11.0, 7.0, 2.0, 8.0, 8.0, 8.0, 11.0, 6.0, 7.0, 11.0, 6.0, 11.0, 10.0, 9.0, 9.0, 11.0, 11.0, 8.0, 2.0, 10.0, 9.0, 9.0, 2.0, 5.0, 7.0],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Alex Reyes", "Amed Rosario", "Carlos Rodon", "Chad Pinder", "Dariel Alvarez", "Domingo German", "Edmundo Sosa", "Eric Haase", "Francellis Montas", "Harold Ramirez", "Jordan Luplow", "Jorge Lopez", "Jorge Mateo", "Luis Severino", "Orlando Arcia", "Ozhaino Albies", "Rafael Devers", "Raisel Iglesias", "Robert Refsnyder", "Rowdy Tellez", "Ryan Merritt", "Teoscar Hernandez", "Trevor Gott", "Ty Blach", "Tyler Wagner", "Victor Reyes", "Wes Parsons"],
+            textposition: 'top center',
+            textfont: {
+                size: 10,
+                color: '#333'
+            },
+            marker: {
+                size: 8,
+                color: '#1f77b4',
+                opacity: 0.7,
+                line: {
+                    width: 1,
+                    color: '#fff'
+                }
+            },
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
+        }];
+
+        var layout = {
+            title: {
+                text: '2015 Bowman - Career WAR vs Career Length',
+                font: { size: 18 }
+            },
+            xaxis: {
+                title: 'Career WAR',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            yaxis: {
+                title: 'Career Length (years)',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white',
+            hovermode: 'closest'
+        };
+
+        var config = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2020 Bowman Draft - Prospect Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        #plot {
+            width: 100%;
+            height: 600px;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .stats p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2020 Bowman Draft</h1>
+        <p class="subtitle">Career WAR vs Career Length</p>
+        <div id="plot"></div>
+        <div class="stats">
+            <p><strong>Total Players Shown:</strong> 40</p>
+            <p><strong>Average WAR:</strong> 2.73</p>
+            <p><strong>Average Career Length:</strong> 2.88 years</p>
+        </div>
+    </div>
+
+    <script>
+        var data = [{
+            x: [1.9053, 6.84887, 1.95178, 5.10616, 3.67631, 0.516433, 2.49195, 0.556988, 0.26909, 3.35911, 0.236502, 3.9874, 0.20037, 2.77932, 11.8924, 3.30883, 1.07991, 1.76022, 0.434908, 1.1748, 5.6295, 3.35911, 0.201562, 0.406324, 0.176805, 0.152642, 2.15566, 0.216776, 0.0475084, 10.2225, 7.79759, 0.0724157, 6.33938, 1.19545, 11.1788, 2.92516, 0.479152, 2.7003, 0.291718, 0.00161107],
+            y: [4.0, 3.0, 3.0, 3.0, 4.0, 4.0, 3.0, 3.0, 2.0, 2.0, 3.0, 2.0, 2.0, 3.0, 6.0, 4.0, 1.0, 1.0, 3.0, 3.0, 3.0, 2.0, 3.0, 2.0, 3.0, 4.0, 3.0, 3.0, 1.0, 3.0, 3.0, 1.0, 5.0, 3.0, 5.0, 4.0, 2.0, 3.0, 2.0, 1.0],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Alec Burleson", "Austin Wells", "Bobby Miller", "Brandon Pfaadt", "Bryce Elder", "Cade Cavalli", "Carmen Mlodzinski", "Casey Schmitt", "Clayton Beeter", "Colt Keith", "Connor Phillips", "Dillon Dingler", "Eric Orze", "Evan Carter", "Garrett Crochet", "Garrett Mitchell", "Ian Seymour", "Jared Jones", "Jared Shuster", "Joe Boyle", "Jordan Westburg", "Keith Colt", "Kyle Nicolas", "Landon Knack", "Luke Little", "Max Meyer", "Nick Gonzales", "Nick Loftin", "Owen Caissie", "Patrick Bailey", "Pete Crow-Armstrong", "Petey Halpin", "Reid Detmers", "Slade Cecconi", "Spencer Strider", "Spencer Torkelson", "Thomas Saggese", "Tyler Soderstrom", "Will Klein", "Zach DeLoach"],
+            textposition: 'top center',
+            textfont: {
+                size: 10,
+                color: '#333'
+            },
+            marker: {
+                size: 8,
+                color: '#1f77b4',
+                opacity: 0.7,
+                line: {
+                    width: 1,
+                    color: '#fff'
+                }
+            },
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
+        }];
+
+        var layout = {
+            title: {
+                text: '2020 Bowman Draft - Career WAR vs Career Length',
+                font: { size: 18 }
+            },
+            xaxis: {
+                title: 'Career WAR',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            yaxis: {
+                title: 'Career Length (years)',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white',
+            hovermode: 'closest'
+        };
+
+        var config = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+    </script>
+</body>
+</html>

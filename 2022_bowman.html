@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2022 Bowman - Prospect Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        #plot {
+            width: 100%;
+            height: 600px;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .stats p {
+            margin: 5px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2022 Bowman</h1>
+        <p class="subtitle">Career WAR vs Career Length</p>
+        <div id="plot"></div>
+        <div class="stats">
+            <p><strong>Total Players Shown:</strong> 19</p>
+            <p><strong>Average WAR:</strong> 2.31</p>
+            <p><strong>Average Career Length:</strong> 2.63 years</p>
+        </div>
+    </div>
+
+    <script>
+        var data = [{
+            x: [6.73911, 0.000366325, 2.67404, 0.109105, 0.166374, 0.102992, 12.771, 0.0659813, 2.13809, 4.56152, 0.29786, 0.498498, 4.59456, 0.0162228, 1.53162, 1.63159, 1.44743, 0.458896, 4.13118],
+            y: [4.0, 1.0, 1.0, 3.0, 1.0, 2.0, 3.0, 1.0, 4.0, 2.0, 3.0, 4.0, 3.0, 2.0, 4.0, 3.0, 4.0, 2.0, 3.0],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Brayan Bello", "Christian Roa", "Colson Montgomery", "Curtis Mead", "Darren Baker", "Dustin Harris", "Elly De LA Cruz", "George Valera", "Jack Suwinski", "James Wood", "Jordan Wicks", "Lenyn Sosa", "Matt McLain", "Niko Kavadas", "Oswaldo Cabrera", "Randy Vasquez", "Ronny Henriquez", "Ryan Bliss", "Taj Bradley"],
+            textposition: 'top center',
+            textfont: {
+                size: 10,
+                color: '#333'
+            },
+            marker: {
+                size: 8,
+                color: '#1f77b4',
+                opacity: 0.7,
+                line: {
+                    width: 1,
+                    color: '#fff'
+                }
+            },
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
+        }];
+
+        var layout = {
+            title: {
+                text: '2022 Bowman - Career WAR vs Career Length',
+                font: { size: 18 }
+            },
+            xaxis: {
+                title: 'Career WAR',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            yaxis: {
+                title: 'Career Length (years)',
+                titlefont: { size: 14 },
+                showgrid: true,
+                gridcolor: '#e0e0e0'
+            },
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white',
+            hovermode: 'closest'
+        };
+
+        var config = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+    </script>
+</body>
+</html>
