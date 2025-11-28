@@ -1,4 +1,5 @@
-# Python
+# Python - Keep script local, don't push to GitHub
+*.py
 __pycache__/
 *.py[cod]
 *$py.class
@@ -8,11 +9,18 @@ env/
 venv/
 ENV/
 
-# Data files
+# Data files - Never push data
 *.json
 *.csv
 *.xlsx
 *.xls
+
+# Documentation - Not needed for site to work
+*.md
+!README.md
+
+# Deployment scripts - Not needed on GitHub
+*.sh
 
 # IDE
 .vscode/
