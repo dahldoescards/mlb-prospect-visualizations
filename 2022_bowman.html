@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2022 Bowman</h1>
-            <p class="subtitle">Career Length vs Career WAR Analysis</p>
+            <p class="subtitle">Career WAR vs Career Length Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -115,8 +115,8 @@
 
     <script>
         var data = [{
-            x: [1.0, 4.0, 1.0, 1.0, 3.0, 2.0, 1.0, 1.0, 2.0, 1.0, 3.0, 1.0, 4.0, 2.0, 2.0, 2.0, 3.0, 3.0, 4.0, 3.0, 1.0, 2.0, 2.0, 4.0, 3.0, 4.0, 2.0, 3.0, 2.0, 1.0],
-            y: [0, 6.73911, 0.000366325, 2.67404, 0.109105, -0.600237, 0.166374, -0.453047, 0.102992, -0.168008, 12.771, 0.0659813, 2.13809, 4.56152, -0.442537, -0.191445, 0.29786, -0.0782498, 0.498498, 4.59456, -0.374467, 0.0162228, -1.03238, 1.53162, 1.63159, 1.44743, 0.458896, 4.13118, -0.489737, -0.381939],
+            x: [0, 6.73911, 0.000366325, 2.67404, 0.109105, -0.600237, 0.166374, -0.453047, 0.102992, -0.168008, 12.771, 0.0659813, 2.13809, 4.56152, -0.442537, -0.191445, 0.29786, -0.0782498, 0.498498, 4.59456, -0.374467, 0.0162228, -1.03238, 1.53162, 1.63159, 1.44743, 0.458896, 4.13118, -0.489737, -0.381939],
+            y: [1.0, 4.0, 1.0, 1.0, 3.0, 2.0, 1.0, 1.0, 2.0, 1.0, 3.0, 1.0, 4.0, 2.0, 2.0, 2.0, 3.0, 3.0, 4.0, 3.0, 1.0, 2.0, 2.0, 4.0, 3.0, 4.0, 2.0, 3.0, 2.0, 1.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Andry Lara", "Brayan Bello", "Christian Roa", "Colson Montgomery", "Curtis Mead", "Darell Hernaiz", "Darren Baker", "Denzer Guzman", "Dustin Harris", "Edgar Quero", "Elly De LA Cruz", "George Valera", "Jack Suwinski", "James Wood", "Jhonkensy Noel", "Jonatan Clase", "Jordan Wicks", "Jose Fermin", "Lenyn Sosa", "Matt McLain", "Max Muncy", "Niko Kavadas", "Oscar Colas", "Oswaldo Cabrera", "Randy Vasquez", "Ronny Henriquez", "Ryan Bliss", "Taj Bradley", "Trey Sweeney", "Warming Bernabel"],
@@ -135,8 +135,8 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career Length: %{x} years<br>' +
-                          'Career WAR: %{y}<extra></extra>'
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
         }];
 
         var layout = {
@@ -145,20 +145,6 @@
                 font: { size: 0 }
             },
             xaxis: {
-                title: {
-                    text: 'Career Length (years)',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
-                showgrid: true,
-                gridcolor: '#e9ecef',
-                gridwidth: 1,
-                zeroline: false,
-                linecolor: '#dee2e6',
-                linewidth: 1,
-                range: [0.00, 5.40]
-            },
-            yaxis: {
                 title: {
                     text: 'Career WAR',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
@@ -173,6 +159,22 @@
                 linecolor: '#dee2e6',
                 linewidth: 1,
                 range: [-3.31, 15.05]
+            },
+            yaxis: {
+                title: {
+                    text: 'Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0, 5],
+                tickmode: 'linear',
+                dtick: 1
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

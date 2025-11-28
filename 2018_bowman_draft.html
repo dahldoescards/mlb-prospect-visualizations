@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2018 Bowman Draft</h1>
-            <p class="subtitle">Career Length vs Career WAR Analysis</p>
+            <p class="subtitle">Career WAR vs Career Length Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -115,8 +115,8 @@
 
     <script>
         var data = [{
-            x: [6.0, 4.0, 1.0, 6.0, 1.0, 3.0, 1.0, 6.0, 2.0, 5.0, 2.0, 2.0, 5.0, 5.0, 1.0, 5.0, 1.0, 5.0, 1.0, 3.0, 4.0, 4.0, 6.0, 5.0, 3.0, 4.0, 5.0, 7.0, 4.0, 4.0, 3.0, 3.0, 6.0, 1.0, 5.0, 3.0, 4.0, 1.0, 5.0, 4.0, 1.0],
-            y: [9.25136, 1.36418, 0.00586009, 13.3255, 1.58055, 6.82847, 0.749218, 4.87143, 0.209667, 1.55571, 3.91782, 0.392994, 0, 5.36699, 0, 0.91876, 0.802091, 7.87164, -0.0635772, -0.888034, 0.781431, 1.23376, 6.2139, 14.8235, -0.463217, 2.9432, 2.65015, 19.9586, 4.8977, 2.47394, 0, 3.30063, 8.32221, 0, 0.943761, 8.01686, 2.93649, -0.163983, 2.6895, 2.21359, -0.178966],
+            x: [9.25136, 1.36418, 0.00586009, 13.3255, 1.58055, 6.82847, 0.749218, 4.87143, 0.209667, 1.55571, 3.91782, 0.392994, 0, 5.36699, 0, 0.91876, 0.802091, 7.87164, -0.0635772, -0.888034, 0.781431, 1.23376, 6.2139, 14.8235, -0.463217, 2.9432, 2.65015, 19.9586, 4.8977, 2.47394, 0, 3.30063, 8.32221, 0, 0.943761, 8.01686, 2.93649, -0.163983, 2.6895, 2.21359, -0.178966],
+            y: [6.0, 4.0, 1.0, 6.0, 1.0, 3.0, 1.0, 6.0, 2.0, 5.0, 2.0, 2.0, 5.0, 5.0, 1.0, 5.0, 1.0, 5.0, 1.0, 3.0, 4.0, 4.0, 6.0, 5.0, 3.0, 4.0, 5.0, 7.0, 4.0, 4.0, 3.0, 3.0, 6.0, 1.0, 5.0, 3.0, 4.0, 1.0, 5.0, 4.0, 1.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Alec Bohm", "Alek Thomas", "Anthony Seigler", "Brady Singer", "Braxton Ashcraft", "Brice Turang", "Carlos Cortes", "Casey Mize", "Cole Winn", "Daniel Lynch", "Grayson Rodriguez", "Griffin Conine", "Jackson Kowar", "Jake McCarthy", "Jake Wong", "Jarred Kelenic", "Jeremiah Jackson", "Jonathan India", "Jordan Groshans", "Jordyn Adams", "Josiah Gray", "Kody Clemens", "Kris Bubic", "Logan Gilbert", "Luken Baker", "Matthew Liberatore", "Nick Madrigal", "Nico Hoerner", "Noah Naylor", "Nolan Gorman", "Owen White", "Parker Meadows", "Ryan Jeffers", "Ryan Rolison", "Ryan Weathers", "Shane McClanahan", "Simeon Woods-Richardson", "Travis Swaggerty", "Trevor Larnach", "Triston Casas", "Will Banfield"],
@@ -135,8 +135,8 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career Length: %{x} years<br>' +
-                          'Career WAR: %{y}<extra></extra>'
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
         }];
 
         var layout = {
@@ -145,20 +145,6 @@
                 font: { size: 0 }
             },
             xaxis: {
-                title: {
-                    text: 'Career Length (years)',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
-                showgrid: true,
-                gridcolor: '#e9ecef',
-                gridwidth: 1,
-                zeroline: false,
-                linecolor: '#dee2e6',
-                linewidth: 1,
-                range: [0.00, 8.70]
-            },
-            yaxis: {
                 title: {
                     text: 'Career WAR',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
@@ -173,6 +159,22 @@
                 linecolor: '#dee2e6',
                 linewidth: 1,
                 range: [-3.88, 22.95]
+            },
+            yaxis: {
+                title: {
+                    text: 'Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0, 8],
+                tickmode: 'linear',
+                dtick: 1
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

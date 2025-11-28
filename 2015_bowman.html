@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2015 Bowman</h1>
-            <p class="subtitle">Career Length vs Career WAR Analysis</p>
+            <p class="subtitle">Career WAR vs Career Length Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -115,8 +115,8 @@
 
     <script>
         var data = [{
-            x: [6.0, 9.0, 3.0, 11.0, 7.0, 2.0, 8.0, 8.0, 8.0, 7.0, 11.0, 6.0, 8.0, 7.0, 11.0, 6.0, 10.0, 5.0, 11.0, 10.0, 9.0, 5.0, 9.0, 11.0, 11.0, 8.0, 2.0, 4.0, 10.0, 8.0, 9.0, 9.0, 2.0, 5.0, 7.0, 5.0],
-            y: [1.71544, 9.29926, -0.169822, 22.914, 2.10542, 0.165192, 5.61098, 7.83149, 1.09408, -0.258235, 11.029, 1.85257, -0.0101678, 3.7203, 1.77296, 3.89327, -0.0185391, -0.0364031, 18.5654, 5.06151, 21.8777, -0.377312, 29.1175, 14.926, 2.79612, 0.0980124, 0.818953, 0, 16.99, -0.0447355, 0.544782, 1.92455, 0.389432, 1.37211, 0.00532809, -1.99275],
+            x: [1.71544, 9.29926, -0.169822, 22.914, 2.10542, 0.165192, 5.61098, 7.83149, 1.09408, -0.258235, 11.029, 1.85257, -0.0101678, 3.7203, 1.77296, 3.89327, -0.0185391, -0.0364031, 18.5654, 5.06151, 21.8777, -0.377312, 29.1175, 14.926, 2.79612, 0.0980124, 0.818953, 0, 16.99, -0.0447355, 0.544782, 1.92455, 0.389432, 1.37211, 0.00532809, -1.99275],
+            y: [6.0, 9.0, 3.0, 11.0, 7.0, 2.0, 8.0, 8.0, 8.0, 7.0, 11.0, 6.0, 8.0, 7.0, 11.0, 6.0, 10.0, 5.0, 11.0, 10.0, 9.0, 5.0, 9.0, 11.0, 11.0, 8.0, 2.0, 4.0, 10.0, 8.0, 9.0, 9.0, 2.0, 5.0, 7.0, 5.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Alex Reyes", "Amed Rosario", "Carlos Asuaje", "Carlos Rodon", "Chad Pinder", "Dariel Alvarez", "Domingo German", "Edmundo Sosa", "Eric Haase", "Erik Gonzalez", "Francellis Montas", "Harold Ramirez", "Jake Bauers", "Jordan Luplow", "Jorge Lopez", "Jorge Mateo", "Jose De Leon", "Keury Mella", "Luis Severino", "Orlando Arcia", "Ozhaino Albies", "Peter O'Brien", "Rafael Devers", "Raisel Iglesias", "Robert Refsnyder", "Rowdy Tellez", "Ryan Merritt", "Stephen Gonsalves", "Teoscar Hernandez", "Touki Toussaint", "Trevor Gott", "Ty Blach", "Tyler Wagner", "Victor Reyes", "Wes Parsons", "Yasmany Tomas"],
@@ -135,8 +135,8 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career Length: %{x} years<br>' +
-                          'Career WAR: %{y}<extra></extra>'
+                          'Career WAR: %{x}<br>' +
+                          'Career Length: %{y} years<extra></extra>'
         }];
 
         var layout = {
@@ -145,20 +145,6 @@
                 font: { size: 0 }
             },
             xaxis: {
-                title: {
-                    text: 'Career Length (years)',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
-                showgrid: true,
-                gridcolor: '#e9ecef',
-                gridwidth: 1,
-                zeroline: false,
-                linecolor: '#dee2e6',
-                linewidth: 1,
-                range: [0.00, 13.10]
-            },
-            yaxis: {
                 title: {
                     text: 'Career WAR',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
@@ -173,6 +159,22 @@
                 linecolor: '#dee2e6',
                 linewidth: 1,
                 range: [-5.90, 33.03]
+            },
+            yaxis: {
+                title: {
+                    text: 'Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0, 13],
+                tickmode: 'linear',
+                dtick: 1
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',
