@@ -135,7 +135,7 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career WAR: %{x}<br>' +
+                          'Career WAR: %{x:.1f}<br>' +
                           'Career Length: %{y} years<extra></extra>'
         }];
 
@@ -153,12 +153,11 @@
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
-                zeroline: true,
-                zerolinecolor: '#6c757d',
-                zerolinewidth: 2,
+                zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [-4.74, 30.41]
+                range: [-4.74, 30.41],
+                tickformat: '.1f'
             },
             yaxis: {
                 title: {
