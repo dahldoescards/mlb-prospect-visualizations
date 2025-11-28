@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2019 Bowman Chrome</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career Length vs Career WAR Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -115,8 +115,8 @@
 
     <script>
         var data = [{
-            x: [0.0799413, 0.0161979, 14.8176, -0.204377, 0, 0, 1.07637, 6.17546, 22.9051, 1.3426, 4.35915, 7.58039, 0.53919, 2.5669, 0.988574, 0, 6.50103, 11.8912, -0.223166, 0, -0.488827, 5.92182, -0.238172, 0.486976, 0, -0.137881, 0, 0.253678, 0.656391, 3.23144, 0, 9.46379, 0.469203, 0.203033, -0.0666966, 0.705896, 8.85802, 0.0169432, 4.09753, 2.79099, 0.391947, -0.745427, -0.222968, 0.0805791, 2.73468],
-            y: [7.0, 1.0, 6.0, 3.0, 1.0, 5.0, 3.0, 7.0, 5.0, 6.0, 6.0, 6.0, 5.0, 5.0, 6.0, 1.0, 5.0, 5.0, 1.0, 2.0, 2.0, 4.0, 3.0, 3.0, 7.0, 4.0, 4.0, 2.0, 3.0, 5.0, 3.0, 7.0, 4.0, 3.0, 1.0, 5.0, 6.0, 2.0, 5.0, 4.0, 4.0, 2.0, 4.0, 2.0, 2.0],
+            x: [7.0, 1.0, 6.0, 3.0, 1.0, 5.0, 3.0, 7.0, 5.0, 6.0, 6.0, 6.0, 5.0, 5.0, 6.0, 1.0, 5.0, 5.0, 1.0, 2.0, 2.0, 4.0, 3.0, 3.0, 7.0, 4.0, 4.0, 2.0, 3.0, 5.0, 3.0, 7.0, 4.0, 3.0, 1.0, 5.0, 6.0, 2.0, 5.0, 4.0, 4.0, 2.0, 4.0, 2.0, 2.0],
+            y: [0.0799413, 0.0161979, 14.8176, -0.204377, 0, 0, 1.07637, 6.17546, 22.9051, 1.3426, 4.35915, 7.58039, 0.53919, 2.5669, 0.988574, 0, 6.50103, 11.8912, -0.223166, 0, -0.488827, 5.92182, -0.238172, 0.486976, 0, -0.137881, 0, 0.253678, 0.656391, 3.23144, 0, 9.46379, 0.469203, 0.203033, -0.0666966, 0.705896, 8.85802, 0.0169432, 4.09753, 2.79099, 0.391947, -0.745427, -0.222968, 0.0805791, 2.73468],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Abraham Toro", "Adam Kloffenstein", "Alejandro Kirk", "Alexander Canario", "Brailyn Marquez", "Brandon Bielak", "Brayan Rocchio", "Bryan Abreu", "Cal Raleigh", "Carlos Hernandez", "Cole Irvin", "Cristian Javier", "Deivi Garcia", "Edwin Uceta", "Eli White", "Francisco Morales", "Garrett Whitlock", "Geraldo Perdomo", "Israel Pineda", "James Bourque", "Jared Oliva", "Jhoan Duran", "Jonathan Ornelas", "Jordan Yamamoto", "Jorge Alcala", "Jose Devers", "Konnor Pilkington", "Leonardo Jimenez", "Livan Soto", "Luis Gil", "Mason Englert", "Michael King", "Mike Siani", "Noelvi Marte", "Orelvis Martinez", "Owen Miller", "Patrick Sandoval", "Payton Henry", "Ryan Feltner", "Sam Hentges", "Sean Hjelle", "Seth Beer", "Terrin Vavra", "Tyler Phillips", "Wenceel Perez"],
@@ -135,8 +135,8 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career WAR: %{x}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Career Length: %{x} years<br>' +
+                          'Career WAR: %{y}<extra></extra>'
         }];
 
         var layout = {
@@ -145,6 +145,20 @@
                 font: { size: 0 }
             },
             xaxis: {
+                title: {
+                    text: 'Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0.00, 8.70]
+            },
+            yaxis: {
                 title: {
                     text: 'Career WAR',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
@@ -159,19 +173,6 @@
                 linecolor: '#dee2e6',
                 linewidth: 1,
                 range: [-4.04, 26.20]
-            },
-            yaxis: {
-                title: {
-                    text: 'Career Length (years)',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
-                showgrid: true,
-                gridcolor: '#e9ecef',
-                gridwidth: 1,
-                zeroline: false,
-                linecolor: '#dee2e6',
-                linewidth: 1
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

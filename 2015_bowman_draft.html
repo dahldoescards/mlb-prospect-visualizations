@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2015 Bowman Draft</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career Length vs Career WAR Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -115,8 +115,8 @@
 
     <script>
         var data = [{
-            x: [-0.188107, 10.9929, 0.369313, 20.2292, 0, 2.4847, -0.0351793, -0.691992, -1.01195, -0.0795671, 0.978032, 28.4459, 1.34071, 20.6299, -0.176486, 0.102894, 1.70123, 10.0599, 11.5747, 2.41923, 1.15647, 25.3842, 5.94011, -0.0814137, -0.123144, 0.401938, 0.78556, -1.05383, 5.96485, -0.0953357, -0.0125827, 11.0463, -0.0345967, 12.7182, 0.00518267, -1.46322, 7.21972, 14.7903],
-            y: [6.0, 10.0, 6.0, 7.0, 2.0, 7.0, 10.0, 2.0, 3.0, 2.0, 7.0, 10.0, 7.0, 9.0, 1.0, 6.0, 4.0, 7.0, 6.0, 8.0, 8.0, 8.0, 8.0, 3.0, 1.0, 6.0, 5.0, 4.0, 6.0, 8.0, 8.0, 8.0, 3.0, 7.0, 1.0, 4.0, 6.0, 9.0],
+            x: [6.0, 10.0, 6.0, 7.0, 2.0, 7.0, 10.0, 2.0, 3.0, 2.0, 7.0, 10.0, 7.0, 9.0, 1.0, 6.0, 4.0, 7.0, 6.0, 8.0, 8.0, 8.0, 8.0, 3.0, 1.0, 6.0, 5.0, 4.0, 6.0, 8.0, 8.0, 8.0, 3.0, 7.0, 1.0, 4.0, 6.0, 9.0],
+            y: [-0.188107, 10.9929, 0.369313, 20.2292, 0, 2.4847, -0.0351793, -0.691992, -1.01195, -0.0795671, 0.978032, 28.4459, 1.34071, 20.6299, -0.176486, 0.102894, 1.70123, 10.0599, 11.5747, 2.41923, 1.15647, 25.3842, 5.94011, -0.0814137, -0.123144, 0.401938, 0.78556, -1.05383, 5.96485, -0.0953357, -0.0125827, 11.0463, -0.0345967, 12.7182, 0.00518267, -1.46322, 7.21972, 14.7903],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Alex Young", "Andrew Benintendi", "Andrew Suarez", "Austin Riley", "Beau Burrows", "Brendan Rodgers", "Carson Fulmer", "Chris Shaw", "Christin Stewart", "Cody Ponce", "D.J. Stewart", "Dansby Swanson", "Dillon Tate", "Ian Happ", "Jacob Nix", "Jake Woodford", "James Kaprielian", "Josh Naylor", "Ke'Bryan Hayes", "Kevin Newman", "Kolby Allard", "Kyle Tucker", "Michael Soroka", "Nick Neidert", "Nick Plummer", "Peter Lambert", "Phil Bickford", "Richie Martin", "Ryan Mountcastle", "Scott Kingery", "Tanner Rainey", "Taylor Ward", "Thomas Eshelman", "Trent Clark", "Tyler Jay", "Tyler Nevin", "Tyler Stephenson", "Walker Buehler"],
@@ -135,8 +135,8 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career WAR: %{x}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Career Length: %{x} years<br>' +
+                          'Career WAR: %{y}<extra></extra>'
         }];
 
         var layout = {
@@ -145,6 +145,20 @@
                 font: { size: 0 }
             },
             xaxis: {
+                title: {
+                    text: 'Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0.00, 12.00]
+            },
+            yaxis: {
                 title: {
                     text: 'Career WAR',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
@@ -159,19 +173,6 @@
                 linecolor: '#dee2e6',
                 linewidth: 1,
                 range: [-5.31, 32.29]
-            },
-            yaxis: {
-                title: {
-                    text: 'Career Length (years)',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
-                showgrid: true,
-                gridcolor: '#e9ecef',
-                gridwidth: 1,
-                zeroline: false,
-                linecolor: '#dee2e6',
-                linewidth: 1
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

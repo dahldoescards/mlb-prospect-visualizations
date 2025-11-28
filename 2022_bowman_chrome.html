@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2022 Bowman Chrome</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career Length vs Career WAR Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -115,8 +115,8 @@
 
     <script>
         var data = [{
-            x: [-0.26149, -0.469675, 0.903884, 4.94321, -0.145063, 1.40733, 1.30262, 0, -0.100153, 0, 1.72346, 4.97696, 6.85658, 8.36548, -0.245868, -0.378341, 9.08537, 1.17252, 0.56292, -0.0631534, -0.750207],
-            y: [1.0, 1.0, 2.0, 3.0, 1.0, 1.0, 1.0, 3.0, 3.0, 1.0, 2.0, 4.0, 2.0, 2.0, 1.0, 2.0, 4.0, 2.0, 3.0, 1.0, 1.0],
+            x: [1.0, 1.0, 2.0, 3.0, 1.0, 1.0, 1.0, 3.0, 3.0, 1.0, 2.0, 4.0, 2.0, 2.0, 1.0, 2.0, 4.0, 2.0, 3.0, 1.0, 1.0],
+            y: [-0.26149, -0.469675, 0.903884, 4.94321, -0.145063, 1.40733, 1.30262, 0, -0.100153, 0, 1.72346, 4.97696, 6.85658, 8.36548, -0.245868, -0.378341, 9.08537, 1.17252, 0.56292, -0.0631534, -0.750207],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Brady House", "Braxton Fulford", "Cade Marlowe", "Ceddanne Rafaela", "Cesar Prieto", "Daylen Lile", "Denzel Clarke", "Dylan Dodd", "Enmanuel Valdez", "Evan Lee", "Gavin Stone", "Graham Ashcraft", "Jackson Chourio", "Jackson Merrill", "Jorbit Vivas", "Jorge Barrosa", "Maikel Garcia", "Michael Burrows", "Nelson Velazquez", "Simon Muzziotti", "Yanquiel Fernandez"],
@@ -135,8 +135,8 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career WAR: %{x}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Career Length: %{x} years<br>' +
+                          'Career WAR: %{y}<extra></extra>'
         }];
 
         var layout = {
@@ -145,6 +145,20 @@
                 font: { size: 0 }
             },
             xaxis: {
+                title: {
+                    text: 'Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0.00, 5.40]
+            },
+            yaxis: {
                 title: {
                     text: 'Career WAR',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
@@ -159,19 +173,6 @@
                 linecolor: '#dee2e6',
                 linewidth: 1,
                 range: [-2.66, 10.99]
-            },
-            yaxis: {
-                title: {
-                    text: 'Career Length (years)',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
-                showgrid: true,
-                gridcolor: '#e9ecef',
-                gridwidth: 1,
-                zeroline: false,
-                linecolor: '#dee2e6',
-                linewidth: 1
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

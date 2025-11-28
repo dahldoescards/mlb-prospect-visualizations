@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2025 Bowman</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career Length vs Career WAR Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -115,11 +115,11 @@
 
     <script>
         var data = [{
-            x: [0.100419, -0.279206, 0, -0.000931177, 0.196092, 0.433529, -0.00762324, -0.140613],
-            y: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            x: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            y: [0.100419, -0.279206, 0, -0.000931177, 0.196092, 0.433529, -0.00762324, -0.140613],
             mode: 'markers+text',
             type: 'scatter',
-            text: ["Chhase Dollander", "Cody Freeman", "Didier Fuentes", "Jhostynxon Garcia", "Jonah Tong", "Mike Vasil", "Rafael Flores", "Tsung-Che Cheng"],
+            text: ["Chase Dollander", "Cody Freeman", "Didier Fuentes", "Jhostynxon Garcia", "Jonah Tong", "Mike Vasil", "Rafael Flores", "Tsung-Che Cheng"],
             textposition: 'top center',
             textfont: {
                 size: 10,
@@ -135,8 +135,8 @@
                 }
             },
             hovertemplate: '<b>%{text}</b><br>' +
-                          'Career WAR: %{x}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Career Length: %{x} years<br>' +
+                          'Career WAR: %{y}<extra></extra>'
         }];
 
         var layout = {
@@ -145,6 +145,20 @@
                 font: { size: 0 }
             },
             xaxis: {
+                title: {
+                    text: 'Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0.00, 2.10]
+            },
+            yaxis: {
                 title: {
                     text: 'Career WAR',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
@@ -159,19 +173,6 @@
                 linecolor: '#dee2e6',
                 linewidth: 1,
                 range: [-1.32, 1.48]
-            },
-            yaxis: {
-                title: {
-                    text: 'Career Length (years)',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
-                showgrid: true,
-                gridcolor: '#e9ecef',
-                gridwidth: 1,
-                zeroline: false,
-                linecolor: '#dee2e6',
-                linewidth: 1
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',
