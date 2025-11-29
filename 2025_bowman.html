@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2025 Bowman</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">0.04</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">1.0 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">16.0</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [0.100419, -0.279206, 0, -0.000931177, 0.196092, 0.433529, -0.00762324, -0.140613],
-            y: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            y: [21.0, 36.0, 4.0, 5.0, 5.0, 47.0, 7.0, 3.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Chase Dollander", "Cody Freeman", "Didier Fuentes", "Jhostynxon Garcia", "Jonah Tong", "Mike Vasil", "Rafael Flores", "Tsung-Che Cheng"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [21.0, 36.0, 4.0, 5.0, 5.0, 47.0, 7.0, 3.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 2],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 51.7],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

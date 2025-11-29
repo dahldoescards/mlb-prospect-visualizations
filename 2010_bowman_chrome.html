@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2010 Bowman Chrome</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">7.13</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">8.8 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">26.0</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [4.46722, -0.28321, 2.33928, 1.79495, 25.5927, 0.188365, 0.376354, -0.948484, -0.133151, 2.86761, 0.00412112, 0.136548, 14.3764, -0.523308, 20.9599, -0.701893, 5.32382, -0.0102344, 46.4905, 2.16718, 21.4323, 34.1066, 13.6967, -1.76519, 17.0941, -0.0226366, 19.2325, 8.11795, 3.78087, 3.54093, 5.48359, -1.24165, 9.8616, 8.38892, 0, 0.829216, 2.55506, 5.87531, 15.095, 1.84739, -0.00615795],
-            y: [9.0, 3.0, 13.0, 12.0, 16.0, 8.0, 5.0, 7.0, 1.0, 12.0, 4.0, 2.0, 11.0, 2.0, 10.0, 4.0, 12.0, 9.0, 14.0, 6.0, 13.0, 11.0, 15.0, 3.0, 14.0, 10.0, 11.0, 10.0, 9.0, 10.0, 12.0, 3.0, 7.0, 14.0, 5.0, 13.0, 9.0, 11.0, 11.0, 5.0, 5.0],
+            y: [10.777777777777779, 20.333333333333332, 6.083333333333333, 26.625, 3.6875, 11.0, 6.8, 9.333333333333334, 1.0, 3.0833333333333335, 18.25, 17.5, 6.818181818181818, 12.5, 116.5, 64.0, 5.833333333333333, 9.2, 4.0, 12.333333333333334, 2.3846153846153846, 134.54545454545453, 0.6428571428571429, 9.0, 1.8571428571428572, 2.1666666666666665, 109.0, 80.22222222222223, 40.22222222222222, 1.125, 2.3636363636363638, 36.333333333333336, 6.0, 1.0, 13.666666666666666, 35.38461538461539, 7.285714285714286, 3.2, 100.0, 89.4, 23.333333333333332],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Adeinis Hechavarria", "Alex Liddi", "Anthony Bass", "Arodys Vizcaino", "Aroldis Chapman", "Bryan Mitchell", "Carlos Peguero", "Corban Joseph", "Daniel Fields", "Ehire Adrianza", "Eury Perez", "Francisco Peguero", "Gary Sanchez", "James Darnell", "Jason Kipnis", "Jefry Marte", "Jeurys Familia", "Jhan Marinez", "Josh Donaldson", "Kirk Nieuwenhuis", "Kyle Gibson", "Kyle Seager", "Liam Hendriks", "Marc Krauss", "Martin Perez", "Matt Davidson", "Max Kepler", "Miguel Sano", "Pedro Baez", "Robbie Erlin", "Robinson Chirinos", "Ryan Wheeler", "Scooter Gennett", "Shelby Miller", "Simon Castro", "T.J. McFarland", "Trayce Thompson", "Tyler Chatwood", "Wil Myers", "Wilin Rosario", "Wilkin Ramirez"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [97.0, 61.0, 73.0, 213.0, 59.0, 66.0, 34.0, 28.0, 1.0, 37.0, 73.0, 35.0, 75.0, 25.0, 1165.0, 256.0, 70.0, 46.0, 52.0, 74.0, 31.0, 1480.0, 9.0, 27.0, 26.0, 13.0, 1199.0, 722.0, 362.0, 9.0, 26.0, 109.0, 42.0, 13.0, 41.0, 460.0, 51.0, 32.0, 1100.0, 447.0, 70.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 18],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 148.0],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

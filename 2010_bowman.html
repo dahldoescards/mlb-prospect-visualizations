@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2010 Bowman</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">8.89</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">7.9 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">34.1</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [0.00312976, 1.86719, 35.8069, 0.13614, 0.151258, 27.184, 2.64008, 6.76207, 3.83605, -0.9229, 1.903, 0.00348542, 16.8179, 13.1206, 0.811766, 51.592, 0, 2.12646, 0.533208, 22.9439, -0.585803],
-            y: [7.0, 13.0, 14.0, 3.0, 4.0, 15.0, 5.0, 6.0, 6.0, 5.0, 8.0, 5.0, 15.0, 14.0, 6.0, 13.0, 1.0, 11.0, 1.0, 12.0, 2.0],
+            y: [15.142857142857142, 50.375, 10.071428571428571, 25.5, 11.5, 111.53333333333333, 68.4, 18.0, 3.5, 9.0, 3.25, 15.4, 8.384615384615385, 19.615384615384617, 4.666666666666667, 137.46153846153845, 11.0, 41.55555555555556, 17.0, 131.08333333333334, 3.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Alexi Amarista", "Anthony Gose", "Anthony Rizzo", "Brett Jackson", "Chad Jenkins", "D.J. LeMahieu", "David Lough", "Dustin Ackley", "Felix Doubront", "Grant Green", "J.R. Murphy", "Jaff Decker", "Jose Iglesias", "Julio Teheran", "Nick Franklin", "Nolan Arenado", "Patrick Schuster", "Rex Brothers", "Slade Heathcott", "Starlin Castro", "Thomas Neal"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [106.0, 403.0, 141.0, 51.0, 46.0, 1673.0, 342.0, 108.0, 21.0, 45.0, 26.0, 77.0, 109.0, 255.0, 28.0, 1787.0, 11.0, 374.0, 17.0, 1573.0, 6.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 17],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 151.2],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

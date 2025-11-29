@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2013 Bowman Draft Picks Prospec</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">6.47</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">6.5 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">25.0</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [-0.118708, 61.5584, 0.00237282, 6.0607, 0.0179463, -0.18737, -1.52466, 0.0757425, 1.58617, 0.327083, -0.199776, 0.778006, 3.55364, 9.29384, 17.8316, 20.6192, -0.680211, 0.209753, 29.1934, 10.2249, 7.89808, -0.188539, 1.77158, 1.04759, 5.24293, 0.044186, 0, 11.8711, -0.705269, 17.6595, -0.112138, 10.3792, 0],
-            y: [2.0, 10.0, 8.0, 6.0, 3.0, 3.0, 5.0, 7.0, 7.0, 9.0, 2.0, 8.0, 7.0, 10.0, 9.0, 11.0, 4.0, 4.0, 11.0, 11.0, 11.0, 4.0, 5.0, 4.0, 8.0, 1.0, 1.0, 9.0, 2.0, 10.0, 4.0, 10.0, 7.0],
+            y: [8.0, 114.5, 2.2857142857142856, 9.833333333333334, 30.666666666666668, 8.666666666666666, 5.6, 40.0, 71.71428571428571, 10.333333333333334, 9.5, 85.0, 7.0, 14.0, 103.33333333333333, 21.272727272727273, 18.333333333333332, 7.0, 13.090909090909092, 1.1, 2.6363636363636362, 7.0, 11.0, 9.25, 11.125, 5.0, 8.0, 17.11111111111111, 29.0, 99.1, 30.666666666666668, 2.3, 10.75],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Aaron Blair", "Aaron Judge", "Andrew Knapp", "Austin Meadows", "Blake Taylor", "Braden Shipley", "Chance Sisco", "Clint Frazier", "Colin Moran", "Dominic Smith", "Dustin Peterson", "Hunter Dozier", "Hunter Harvey", "Hunter Renfroe", "J.P. Crawford", "Jonathan Gray", "Justin Williams", "Kohl Stewart", "Kris Bryant", "Marco Gonzales", "Michael Lorenzen", "Nick Ciuffo", "Oscar Mercado", "Phil Ervin", "Reese McGuire", "Robert Kaminsky", "Ryan Eades", "Ryan McMahon", "Ryder Jones", "Tim Anderson", "Travis Demeritte", "Trevor Williams", "Tyler Danish"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [16.0, 1145.0, 16.0, 59.0, 92.0, 26.0, 28.0, 280.0, 502.0, 93.0, 19.0, 595.0, 49.0, 140.0, 930.0, 234.0, 55.0, 21.0, 144.0, 11.0, 29.0, 21.0, 55.0, 37.0, 89.0, 5.0, 8.0, 154.0, 58.0, 991.0, 92.0, 23.0, 43.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 13],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 126.0],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

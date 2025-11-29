@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2023 Bowman Draft</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">2.40</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">1.3 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">43.8</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [-0.168936, 0.160484, 1.70708, 0.784357, 3.49986, -0.17973, 1.55915, 1.45756, 1.20677, 10.77, 0.859745, 7.13813],
-            y: [1.0, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 2.0],
+            y: [10.0, 44.0, 36.0, 6.0, 12.0, 67.0, 49.0, 126.0, 8.0, 27.5, 6.0, 134.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Bryce Eldridge", "C.J. Kayfus", "Grant Taylor", "Hurston Waldrep", "Jacob Wilson", "Kristian Campbell", "Luke Keaschall", "Matt Shaw", "Nolan McLean", "Paul Skenes", "Rhett Lowder", "Wyatt Langford"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [10.0, 44.0, 36.0, 12.0, 12.0, 67.0, 49.0, 126.0, 8.0, 55.0, 6.0, 268.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 3],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 147.4],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

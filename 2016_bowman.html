@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2016 Bowman</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">4.93</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">5.0 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">26.9</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [43.0882, 0, -0.103421, 1.31111, 0, -0.882222, 0, -0.0833288, 0.242325, 0, 0.720255, -0.120012, 14.995, -1.05424, -0.571779, -0.122355, 6.64851, 10.692, -0.395935, 1.8358, 0.105749, 1.99921, 6.97993, 11.2193, 7.44589, 24.2548],
-            y: [10.0, 1.0, 6.0, 3.0, 3.0, 6.0, 3.0, 4.0, 1.0, 1.0, 7.0, 3.0, 10.0, 2.0, 1.0, 3.0, 7.0, 9.0, 2.0, 5.0, 5.0, 3.0, 8.0, 8.0, 9.0, 10.0],
+            y: [122.5, 7.0, 3.0, 15.0, 2.6666666666666665, 32.0, 29.666666666666668, 3.0, 32.0, 4.0, 7.5, 55.333333333333336, 25.11111111111111, 21.5, 10.0, 14.0, 4.285714285714286, 12.444444444444445, 13.0, 3.8, 23.0, 39.333333333333336, 20.428571428571427, 80.5, 10.11111111111111, 107.8],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Alex Bregman", "Anderson Espinoza", "Anthony Alford", "Ariel Jurado", "Brady Lail", "Daz Cameron", "Domingo Acevedo", "Drew Jackson", "Francis Martes", "Franklyn Kilome", "Jharel Cotton", "Juan Yepez", "Kenta Maeda", "Kevin Kramer", "Lucius Fox", "Mark Zagunis", "Mauricio Dubon", "Paul DeJong", "Rafael Bautista", "Sal Romano", "Samuel Coonrod", "Stone Garrett", "Trey Mancini", "Tyler O'Neill", "Victor Robles", "Willson Contreras"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [1225.0, 7.0, 18.0, 45.0, 8.0, 160.0, 89.0, 6.0, 32.0, 4.0, 30.0, 166.0, 226.0, 43.0, 10.0, 42.0, 30.0, 112.0, 26.0, 19.0, 115.0, 118.0, 143.0, 644.0, 91.0, 1078.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 12],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 134.8],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

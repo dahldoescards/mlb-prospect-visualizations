@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2021 Bowman Chrome</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">0.71</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">2.6 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">27.6</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [0.0921007, -0.44638, 2.14776, 0.70747, 6.01219, -0.35784, 0.917392, -0.985785, 1.9553, 1.16095, 0, 1.29182, 0.191074, 0.141978, -0.186039, -0.463901, -0.116012],
-            y: [2.0, 2.0, 4.0, 3.0, 4.0, 2.0, 5.0, 2.0, 4.0, 4.0, 1.0, 3.0, 2.0, 4.0, 1.0, 1.0, 1.0],
+            y: [1.5, 18.0, 38.0, 16.0, 103.5, 72.5, 16.2, 52.5, 13.75, 30.25, 9.0, 30.333333333333332, 2.0, 24.0, 31.0, 7.0, 3.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Angel Rondon", "Bryan Ramos", "Christopher Morel", "Eguy Rosario", "Ezequiel Tovar", "Gilberto Celestino", "Gregory Santos", "Jordan Diaz", "Jose Butto", "Josh Winckowski", "Juan Then", "Justin Martinez", "Kyle Hurt", "Liover Peguero", "Osleivis Basabe", "Pedro Leon", "Tyler Gentry"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [3.0, 36.0, 152.0, 48.0, 414.0, 145.0, 81.0, 105.0, 55.0, 121.0, 9.0, 91.0, 4.0, 96.0, 31.0, 7.0, 3.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 6],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 113.8],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

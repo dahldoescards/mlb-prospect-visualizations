@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2011 Bowman Draft Picks Prospec</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">13.31</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">7.9 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">33.2</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [6.41502, 26.4086, 0.588474, 28.0105, -1.0211, 9.69983, 3.93005, 1.87335, 10.1841, 60.4662, 40.6121, 0.0357904, 24.9225, 0.00335935, 8.42276, 14.4813, 17.5282, 0.712967, 5.21187, 10.4789, 2.33583, 37.973, 0, 1.25189, 21.6921, 26.8502, 14.5759, -1.00052],
-            y: [9.0, 10.0, 5.0, 10.0, 2.0, 10.0, 9.0, 9.0, 11.0, 11.0, 12.0, 2.0, 12.0, 1.0, 8.0, 4.0, 11.0, 6.0, 11.0, 10.0, 10.0, 13.0, 2.0, 3.0, 10.0, 10.0, 10.0, 1.0],
+            y: [1.7777777777777777, 22.2, 8.6, 106.6, 45.5, 7.1, 60.0, 4.333333333333333, 23.75, 139.54545454545453, 120.41666666666667, 7.0, 11.5, 6.0, 17.75, 19.0, 7.909090909090909, 32.333333333333336, 42.45454545454545, 8.375, 6.444444444444445, 2.076923076923077, 14.5, 10.0, 3.4, 106.5, 3.1, 92.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Archie Bradley", "Blake Snell", "Blake Swihart", "Brandon Nimmo", "Bubba Starling", "C.J. Cron", "Cory Spangenberg", "Daniel Vogelbach", "Dylan Bundy", "Francisco Lindor", "George Springer", "Jake Hager", "Javier Baez", "Jed Bradley", "Joe Panik", "Jose Fernandez", "Kolten Wong", "Kyle Crick", "Matt Barnes", "Michael Fulmer", "Robert Stephenson", "Sonny Gray", "Taylor Guerrieri", "Taylor Jungmann", "Trevor Bauer", "Trevor Story", "Tyler Anderson", "Tyler Goeddel"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [16.0, 222.0, 43.0, 1066.0, 91.0, 71.0, 420.0, 39.0, 190.0, 1535.0, 1445.0, 14.0, 138.0, 6.0, 142.0, 76.0, 87.0, 194.0, 467.0, 67.0, 58.0, 27.0, 29.0, 30.0, 34.0, 1065.0, 31.0, 92.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 15],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 153.5],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',

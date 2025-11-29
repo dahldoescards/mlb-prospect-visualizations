@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header-section">
             <h1>2013 Bowman Chrome</h1>
-            <p class="subtitle">Career WAR vs Career Length Analysis</p>
+            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
         <div class="stats">
@@ -107,8 +107,8 @@
                 <span class="stat-value">4.37</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">6.7 yrs</span>
+                <span class="stat-label">Avg Games/Season</span>
+                <span class="stat-value">21.1</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [1.2437, -0.0247005, -0.473286, 1.40252, 0.00463165, -0.873529, -0.141649, -0.118462, 19.9422, -0.0274348, -0.0989318, -0.0414578, 0.462753, 0.941129, 8.00472, 9.03867, 3.57211, 18.303, 21.1405, 4.37325, 14.6583, 0.673767, -0.690194, 0.293538, 3.06041, 0.667366, 0, 4.31018, 0.0352005, 1.48139, -0.0241623, 0, 3.04884, 8.89222, 4.55294, 15.3748, 3.45357, 19.7855],
-            y: [4.0, 3.0, 4.0, 7.0, 1.0, 5.0, 2.0, 2.0, 11.0, 3.0, 4.0, 6.0, 2.0, 9.0, 10.0, 9.0, 10.0, 12.0, 10.0, 7.0, 11.0, 9.0, 5.0, 8.0, 8.0, 1.0, 4.0, 9.0, 9.0, 8.0, 4.0, 5.0, 12.0, 6.0, 10.0, 10.0, 7.0, 7.0],
+            y: [8.75, 14.0, 41.75, 32.42857142857143, 66.0, 78.0, 2.5, 13.5, 24.1, 13.5, 1.5, 75.0, 8.0, 8.0, 3.1, 21.0, 2.0, 90.66666666666667, 3.2, 88.28571428571429, 18.25, 3.125, 8.0, 15.5, 2.25, 41.0, 6.333333333333333, 4.0, 5.25, 0.7142857142857143, 17.5, 2.5, 4.0, 6.333333333333333, 36.44444444444444, 4.5, 10.333333333333334, 21.285714285714285],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Adalberto Mejia", "Andre Rienzo", "Arismendy Alcantara", "Cameron Gallagher", "Carlos Tocci", "Cody Asche", "Deivi Grullon", "Dylan Cozens", "Eduardo Rodriguez", "Edwin Escobar", "Erik Johnson", "Harold Castro", "Henry Owens", "J.T. Chargois", "Jake Lamb", "Jimmy Nelson", "Jorge Alfaro", "Jorge Polanco", "Jose Berrios", "Jose Peraza", "Lance McCullers", "Luis Torrens", "Mac Williamson", "Matt Reynolds", "Matt Wisler", "Mauricio Cabrera", "Miguel Almonte", "Miguel Andujar", "Mike Kickham", "Nick Tropeano", "Nik Turley", "Onelki Garcia", "Rafael Montero", "Roberto Osuna", "Tom Murphy", "Tyler Glasnow", "Tyler Heineman", "Yasiel Puig"],
@@ -134,9 +134,11 @@
                     color: '#ffffff'
                 }
             },
+            customdata: [35.0, 42.0, 167.0, 227.0, 66.0, 390.0, 5.0, 27.0, 241.0, 27.0, 6.0, 450.0, 16.0, 56.0, 31.0, 147.0, 18.0, 1088.0, 32.0, 618.0, 146.0, 25.0, 40.0, 93.0, 18.0, 41.0, 19.0, 36.0, 21.0, 5.0, 35.0, 5.0, 44.0, 38.0, 328.0, 45.0, 62.0, 149.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Career Length: %{y} years<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
 
         var layout = {
@@ -161,7 +163,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'Career Length (years)',
+                    text: 'Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -171,9 +173,8 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0, 14],
-                tickmode: 'linear',
-                dtick: 1
+                range: [0.0, 99.7],
+                tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',
