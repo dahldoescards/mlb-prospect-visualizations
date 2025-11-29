@@ -134,11 +134,11 @@
                     color: '#ffffff'
                 }
             },
-            customdata: [14.0, 43.0, 27.0, 15.0],
+            customdata: [[14.0, 1.0], [43.0, 1.0], [27.0, 1.0], [15.0, 1.0]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Games Played: %{customdata}<br>' +
-                          'Seasons Played: %{y:.1f}<extra></extra>'
+                          'Games Played: %{customdata[0]}<br>' +
+                          'Seasons Played: %{customdata[1]}<extra></extra>'
         }];
 
         var layout = {

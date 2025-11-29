@@ -134,11 +134,11 @@
                     color: '#ffffff'
                 }
             },
-            customdata: [104.0, 50.0, 1624.0, 64.0, 110.0, 44.0, 360.0, 74.0, 31.0, 120.0, 997.0],
+            customdata: [[104.0, 9.0], [50.0, 3.0], [1624.0, 14.0], [64.0, 10.0], [110.0, 11.0], [44.0, 2.0], [360.0, 7.0], [74.0, 7.0], [31.0, 13.0], [120.0, 10.0], [997.0, 11.0]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>'
+                          'Games Played: %{customdata[0]}<br>' +
+                          'Seasons Played: %{customdata[1]}<extra></extra>'
         }];
 
         var layout = {
