@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2010 Bowman | Bowman Prospect Analysis</title>
+    <title>2010 Bowman Draft Picks Prospects | Bowman Prospect Analysis</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +93,7 @@
 <body>
     <div class="container">
         <div class="header-section">
-            <h1>2010 Bowman</h1>
+            <h1>2010 Bowman Draft Picks Prospects</h1>
             <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
         <div id="plot"></div>
@@ -104,22 +104,22 @@
             </div>
             <div class="stat-item">
                 <span class="stat-label">Average WAR</span>
-                <span class="stat-value">8.89</span>
+                <span class="stat-value">13.33</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg Games/Season</span>
-                <span class="stat-value">57.5</span>
+                <span class="stat-value">38.5</span>
             </div>
         </div>
     </div>
 
     <script>
         var data = [{
-            x: [0.00312976, 1.86719, 35.8069, 0.13614, 0.151258, 27.184, 2.64008, 6.76207, 3.83605, -0.9229, 1.903, 0.00348542, 16.8179, 13.1206, 0.811766, 51.592, 0.0, 2.12646, 0.533208, 22.9439, -0.585803],
-            y: [100.28571428571429, 50.375, 123.35714285714286, 25.5, 11.5, 111.53333333333333, 68.4, 105.83333333333333, 19.666666666666668, 25.8, 35.5, 15.4, 99.46153846153847, 19.615384615384617, 50.166666666666664, 137.46153846153845, 11.0, 41.55555555555556, 17.0, 131.08333333333334, 7.5],
+            x: [6.27931, 0.0, -0.0504843, 0.0, 57.5875, 0.668688, 45.5393, 0.00343955, 4.00024, 11.5495, 0.226626, 18.8365, -1.68478, 57.3085, 15.9795, -2.09187, 6.86745, -1.56356, 20.5097, 40.0351, -0.0584792],
+            y: [21.75, 11.0, 17.0, 12.0, 26.2, 26.833333333333332, 124.3076923076923, 13.5, 85.85714285714286, 28.833333333333332, 7.0, 24.88888888888889, 34.2, 135.28571428571428, 20.0, 32.0, 20.75, 45.0, 20.5, 100.53846153846153, 2.0],
             mode: 'markers+text',
             type: 'scatter',
-            text: ["Alexi Amarista", "Anthony Gose", "Anthony Rizzo", "Brett Jackson", "Chad Jenkins", "D.J. LeMahieu", "David Lough", "Dustin Ackley", "Felix Doubront", "Grant Green", "J.R. Murphy", "Jaff Decker", "Jose Iglesias", "Julio Teheran", "Nick Franklin", "Nolan Arenado", "Patrick Schuster", "Rex Brothers", "Slade Heathcott", "Starlin Castro", "Thomas Neal"],
+            text: ["Aaron Sanchez", "Alex Wimmers", "Bryce Brentz", "Chance Ruffin", "Chris Sale", "Christian Colon", "Christian Yelich", "Deck McGuire", "Delino DeShields", "Drew Pomeranz", "Gary Brown", "Jameson Taillon", "Kaleb Cowart", "Manny Machado", "Matt Harvey", "Michael Choice", "Mike Foltynewicz", "Mike Olt", "Noah Syndergaard", "Yasmani Grandal", "Zach Lee"],
             textposition: 'top center',
             textfont: {
                 size: 10,
@@ -134,7 +134,7 @@
                     color: '#ffffff'
                 }
             },
-            customdata: [[702.0, 7.0], [403.0, 8.0], [1727.0, 14.0], [51.0, 2.0], [46.0, 4.0], [1673.0, 15.0], [342.0, 5.0], [635.0, 6.0], [118.0, 6.0], [129.0, 5.0], [284.0, 8.0], [77.0, 5.0], [1293.0, 13.0], [255.0, 13.0], [301.0, 6.0], [1787.0, 13.0], [11.0, 1.0], [374.0, 9.0], [17.0, 1.0], [1573.0, 12.0], [15.0, 2.0]],
+            customdata: [[174.0, 8.0], [22.0, 2.0], [34.0, 2.0], [24.0, 2.0], [393.0, 15.0], [161.0, 6.0], [1616.0, 13.0], [27.0, 2.0], [601.0, 7.0], [346.0, 12.0], [7.0, 1.0], [224.0, 9.0], [171.0, 5.0], [1894.0, 14.0], [180.0, 9.0], [96.0, 3.0], [166.0, 8.0], [135.0, 3.0], [164.0, 8.0], [1307.0, 13.0], [4.0, 2.0]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games Played: %{customdata[0]}<br>' +
@@ -158,7 +158,7 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [-7.08, 57.75],
+                range: [-8.85, 64.35],
                 tickformat: '.1f'
             },
             yaxis: {
@@ -173,7 +173,7 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0.0, 151.2],
+                range: [0.0, 148.8],
                 tickformat: '.1f'
             },
             plot_bgcolor: '#ffffff',
