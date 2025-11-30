@@ -4,730 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bowman Prospect Analysis | Career WAR Visualizations</title>
-    
-    <meta name="description" content="Visualize Career WAR vs. Games Played Per Season for Bowman baseball card prospects from 2009-2025">
-    <meta property="og:title" content="Bowman Prospect Analysis | Career WAR Visualizations">
-    <meta property="og:description" content="Interactive visualizations of MLB prospect success rates from Bowman card releases">
-    <meta property="og:type" content="website">
-    
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        'bowman-gold': '#d4af37',
-                        'bowman-dark': '#050b14',
-                        'bowman-card': '#1a2233',
-                    },
-                    backgroundImage: {
-                        'gold-gradient': 'linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c)',
-                    },
-                    boxShadow: {
-                        'glow': '0 0 20px rgba(212, 175, 55, 0.15)',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-primary: #050b14;
-            --bg-secondary: rgba(15, 23, 42, 0.75);
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --accent: #d4af37;
-        }
-        [data-theme="light"] {
-            --bg-primary: #f1f5f9;
-            --bg-secondary: rgba(255, 255, 255, 0.95);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --accent: #b8860b;
+        * {
+            box-sizing: border-box;
         }
         body {
-            background-color: var(--bg-primary);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 25%);
-            overflow-x: hidden;
-            transition: background-color 0.3s ease;
-            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
         }
-        [data-theme="light"] body {
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(184, 134, 11, 0.08) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.12) 0%, transparent 25%);
+        .main-container {
+            max-width: 1600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        [data-theme="light"] .text-white { color: var(--text-primary) !important; }
-        [data-theme="light"] .text-slate-300 { color: var(--text-primary) !important; }
-        [data-theme="light"] .text-slate-400 { color: var(--text-secondary) !important; }
-        [data-theme="light"] .text-slate-500 { color: var(--text-secondary) !important; }
-        [data-theme="light"] .text-slate-600 { color: #64748b !important; }
-        [data-theme="light"] .bg-black\/40 { background-color: rgba(0, 0, 0, 0.05) !important; }
-        [data-theme="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
-        [data-theme="light"] .bg-white\/5 { background-color: rgba(0, 0, 0, 0.03) !important; }
-        [data-theme="light"] .border-white\/5 { border-color: rgba(0, 0, 0, 0.05) !important; }
-        select option { background: #0f172a; color: #e2e8f0; padding: 12px; }
-        [data-theme="light"] select option { background: #ffffff; color: #0f172a; }
-        .glass-panel {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 40px;
+            border-bottom: 4px solid #ffd700;
         }
-        [data-theme="light"] .glass-panel {
-            border-color: rgba(0, 0, 0, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        .header h1 {
+            margin: 0 0 12px 0;
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
-        .progress-ring__circle {
-            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-            will-change: stroke-dashoffset;
+        .header .subtitle {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 400;
         }
-        #visualizationFrame {
-            will-change: opacity;
+        .controls-section {
+            padding: 30px 40px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
         }
-        .keyboard-shortcut {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-family: monospace;
+        .release-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        [data-theme="light"] .keyboard-shortcut {
-            background: rgba(184, 134, 11, 0.15);
-            border-color: rgba(184, 134, 11, 0.4);
+        .release-selector label {
+            font-weight: 600;
+            color: #495057;
+            margin: 0;
+            font-size: 1rem;
+        }
+        .release-selector select {
+            flex: 1;
+            max-width: 500px;
+            padding: 12px 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            background-color: white;
+            color: #212529;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .release-selector select:hover {
+            border-color: #2a5298;
+        }
+        .release-selector select:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+        .visualization-container {
+            position: relative;
+            min-height: 700px;
+            background-color: #ffffff;
+        }
+        .visualization-container iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            display: block;
+        }
+        .stats-summary {
+            padding: 25px 40px;
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .stats-summary .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stats-summary .stat-label {
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stats-summary .stat-value {
+            font-weight: 700;
+            color: #2a5298;
+            font-size: 1.1rem;
+        }
+        .stats-summary .note {
+            color: #6c757d;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 20px;
+                border-radius: 8px;
+            }
+            .header {
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .controls-section {
+                padding: 20px;
+            }
+            .release-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .release-selector select {
+                max-width: 100%;
+            }
+            .stats-summary {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-300 flex flex-col items-center justify-center p-4 lg:p-6">
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>Bowman Prospect Analysis</h1>
+            <p class="subtitle">Career WAR vs Games per Season Visualizations</p>
+        </div>
+        <div class="controls-section">
+            <div class="release-selector">
+                <label for="releaseSelect">Select Release:</label>
+                <select id="releaseSelect" class="form-select">
+                    <option value="2025_bowman.html">2025 Bowman</option>
+<option value="2025_bowman_chrome.html">2025 Bowman Chrome</option>
+<option value="2024_bowman.html">2024 Bowman</option>
+<option value="2024_bowman_chrome.html">2024 Bowman Chrome</option>
+<option value="2024_bowman_draft.html">2024 Bowman Draft</option>
+<option value="2023_bowman.html">2023 Bowman</option>
+<option value="2023_bowman_chrome.html">2023 Bowman Chrome</option>
+<option value="2023_bowman_draft.html">2023 Bowman Draft</option>
+<option value="2022_bowman.html">2022 Bowman</option>
+<option value="2022_bowman_chrome.html">2022 Bowman Chrome</option>
+<option value="2022_bowman_draft.html">2022 Bowman Draft</option>
+<option value="2021_bowman.html">2021 Bowman</option>
+<option value="2021_bowman_chrome.html">2021 Bowman Chrome</option>
+<option value="2021_bowman_draft.html">2021 Bowman Draft</option>
+<option value="2020_bowman.html">2020 Bowman</option>
+<option value="2020_bowman_chrome.html">2020 Bowman Chrome</option>
+<option value="2020_bowman_draft.html">2020 Bowman Draft</option>
+<option value="2019_bowman.html">2019 Bowman</option>
+<option value="2019_bowman_chrome.html">2019 Bowman Chrome</option>
+<option value="2019_bowman_draft.html">2019 Bowman Draft</option>
+<option value="2018_bowman.html">2018 Bowman</option>
+<option value="2018_bowman_chrome.html">2018 Bowman Chrome</option>
+<option value="2018_bowman_draft.html">2018 Bowman Draft</option>
+<option value="2017_bowman.html">2017 Bowman</option>
+<option value="2017_bowman_chrome.html">2017 Bowman Chrome</option>
+<option value="2017_bowman_draft.html">2017 Bowman Draft</option>
+<option value="2016_bowman.html">2016 Bowman</option>
+<option value="2016_bowman_chrome.html">2016 Bowman Chrome</option>
+<option value="2016_bowman_draft.html">2016 Bowman Draft</option>
+<option value="2015_bowman.html">2015 Bowman</option>
+<option value="2015_bowman_chrome.html">2015 Bowman Chrome</option>
+<option value="2015_bowman_draft.html">2015 Bowman Draft</option>
+<option value="2014_bowman.html">2014 Bowman</option>
+<option value="2014_bowman_chrome.html">2014 Bowman Chrome</option>
+<option value="2014_bowman_draft.html">2014 Bowman Draft</option>
+<option value="2013_bowman.html">2013 Bowman</option>
+<option value="2013_bowman_chrome.html">2013 Bowman Chrome</option>
+<option value="2013_bowman_draft_picks_prospects.html">2013 Bowman Draft Picks Prospects</option>
+<option value="2012_bowman.html">2012 Bowman</option>
+<option value="2012_bowman_chrome.html">2012 Bowman Chrome</option>
+<option value="2012_bowman_draft_picks_prospects.html">2012 Bowman Draft Picks Prospects</option>
+<option value="2011_bowman.html">2011 Bowman</option>
+<option value="2011_bowman_chrome.html">2011 Bowman Chrome</option>
+<option value="2011_bowman_draft_picks_prospects.html">2011 Bowman Draft Picks Prospects</option>
+<option value="2010_bowman.html">2010 Bowman</option>
+<option value="2010_bowman_chrome.html">2010 Bowman Chrome</option>
+<option value="2010_bowman_draft_picks_prospects.html">2010 Bowman Draft Picks Prospects</option>
+<option value="2009_bowman.html">2009 Bowman</option>
 
-    <div class="fixed top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-bowman-gold to-transparent opacity-60 z-50"></div>
-
-    <main class="w-full max-w-[1400px] relative z-10 flex flex-col gap-6">
-        
-        <header class="text-center py-8 relative">
-            <div class="absolute top-0 right-0 flex gap-2 items-center">
-                <button id="themeToggle" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Toggle theme" title="Toggle theme (T)">
-                    <svg class="w-5 h-5 text-bowman-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </button>
-                <button id="shareButton" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Share" title="Share (S)">
-                    <svg class="w-5 h-5 text-bowman-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                    </svg>
-                </button>
-                <button id="helpButton" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Help" title="Help (?)">
-                    <svg class="w-5 h-5 text-bowman-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </button>
-            </div>
-            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white tracking-tight mb-3 opacity-0" id="title-anim">
-                Bowman <span class="bg-gold-gradient text-transparent bg-clip-text">Analytics</span>
-            </h1>
-            <p class="text-sm md:text-base font-light text-slate-400 opacity-0" id="subtitle-anim">
-                Visualize Career WAR vs. Games Played Per Season
-            </p>
-        </header>
-
-        <div class="glass-panel rounded-2xl p-4 md:p-6 opacity-0 translate-y-4" id="stats-overview">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="text-center">
-                    <p class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Total Prospects</p>
-                    <p class="text-2xl font-bold text-bowman-gold font-mono" id="stats-total">--</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Total Debuted</p>
-                    <p class="text-2xl font-bold text-bowman-gold font-mono" id="stats-debuted">--</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Overall Rate</p>
-                    <p class="text-2xl font-bold text-bowman-gold font-mono" id="stats-rate">--%</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Best Year</p>
-                    <p class="text-lg font-bold text-bowman-gold font-mono" id="stats-best-year">--</p>
-                </div>
+                </select>
             </div>
         </div>
-
-        <div class="glass-panel rounded-2xl p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center opacity-0 translate-y-4" id="controls-anim">
-            
-            <div class="lg:col-span-5 flex flex-col gap-2">
-                <div class="flex items-center justify-between mb-1">
-                    <label class="text-[10px] font-bold text-bowman-gold uppercase tracking-[0.2em]" for="releaseSelect">Select Checklist</label>
-                    <label class="flex items-center gap-2 text-xs text-slate-500 cursor-pointer">
-                        <input type="checkbox" id="comparisonMode" class="w-4 h-4 rounded border-white/20 bg-black/40 text-bowman-gold focus:ring-bowman-gold">
-                        <span>Compare</span>
-                    </label>
-                </div>
-                <div class="relative mb-2">
-                    <input type="text" id="searchInput" placeholder="Search releases..." class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-bowman-gold/50 transition-all" aria-label="Search">
-                </div>
-                <div class="relative group">
-                    <select id="releaseSelect" aria-label="Select release" class="w-full bg-black/40 border border-white/10 text-white text-lg rounded-lg px-5 py-4 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold focus:ring-offset-2 focus:ring-offset-bowman-dark transition-all cursor-pointer font-serif shadow-lg hover:shadow-glow hover:border-white/20">
-                        <!-- Options will be dynamically generated from datasetConfig -->
-                    </select>
-                    <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-bowman-gold">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-4 bg-white/5 rounded-lg border border-white/5 p-4 flex flex-col justify-between h-full relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-20 h-20 bg-bowman-gold/10 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-700"></div>
-                
-                <div class="flex justify-between items-start border-b border-white/5 pb-2 mb-2 relative z-10">
-                    <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Release Date</span>
-                    <span id="release-date-display" class="text-sm font-bold text-white font-mono tracking-tight">Loading...</span>
-                </div>
-                
-                <div class="flex justify-between items-end relative z-10">
-                    <div class="flex flex-col">
-                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Success Rate</span>
-                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden w-24">
-                            <div id="rate-bar" class="h-full bg-bowman-gold w-0 transition-all duration-1000"></div>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-[10px] font-mono text-slate-500 uppercase block mb-1">Debuted / Total</span>
-                        <span id="debut-stat-display" class="text-xl font-bold text-bowman-gold font-mono leading-none">-- <span class="text-slate-600 text-sm">/ --</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-3 flex justify-end items-center gap-5">
-                <div class="text-right">
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-1">Archive Index</p>
-                    <p class="text-3xl text-white font-serif italic flex justify-end gap-1 items-baseline">
-                        <span id="counter-current">--</span>
-                        <span class="text-slate-600 text-sm font-sans not-italic" id="counter-total">/ --</span>
-                    </p>
-                </div>
-                
-                <div class="relative h-16 w-16 flex items-center justify-center shrink-0">
-                    <svg class="h-full w-full" width="60" height="60" viewBox="0 0 60 60">
-                        <circle class="text-white/5" stroke-width="4" stroke="currentColor" fill="transparent" r="26" cx="30" cy="30" />
-                        <circle 
-                            id="progress-circle"
-                            class="text-bowman-gold progress-ring__circle drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]" 
-                            stroke-width="4" 
-                            stroke-dasharray="163.36" 
-                            stroke-dashoffset="0" 
-                            stroke-linecap="round" 
-                            stroke="currentColor" 
-                            fill="transparent" 
-                            r="26" 
-                            cx="30" 
-                            cy="30" 
-                        />
-                    </svg>
-                    <div class="absolute inset-0 flex items-center justify-center text-bowman-gold/80">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
-                    </div>
-                </div>
-                <div id="comparisonSelects" class="hidden mt-2 space-y-2">
-                    <select id="comparisonSelect1" class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold">
-                        <option value="">Select first release...</option>
-                    </select>
-                    <select id="comparisonSelect2" class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold">
-                        <option value="">Select second release...</option>
-                    </select>
-                </div>
+        <div class="visualization-container">
+            <iframe id="visualizationFrame" src="2025_bowman.html" style="width: 100%; height: 800px; border: none;"></iframe>
+        </div>
+        <div class="stats-summary">
+            <div class="stat-item">
+                <span class="stat-label">Total Releases:</span>
+                <span class="stat-value">48</span>
             </div>
         </div>
-
-        <div class="glass-panel rounded-2xl p-2 relative h-[750px] w-full opacity-0 translate-y-8" id="iframe-anim">
-            <div class="absolute inset-0 flex flex-col gap-2 items-center justify-center z-0" id="loader">
-                <div class="w-10 h-10 border-2 border-bowman-gold border-t-transparent rounded-full animate-spin"></div>
-                <span class="text-xs font-mono text-bowman-gold animate-pulse">LOADING CHECKLIST DATA...</span>
-            </div>
-            <div id="iframe-container" class="relative z-10 w-full h-full">
-                <iframe id="visualizationFrame" src="2025_bowman_chrome.html" loading="lazy" class="relative z-10 w-full h-full border-none rounded-xl opacity-0 transition-opacity duration-700 bg-white"></iframe>
-            </div>
-        </div>
-
-        <div id="helpModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div class="glass-panel rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-white">Keyboard Shortcuts</h2>
-                    <button id="closeHelp" class="p-2 hover:bg-white/10 rounded-lg transition-colors">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Navigate releases</span>
-                        <span class="keyboard-shortcut">↑ ↓</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Jump to year (1-9)</span>
-                        <span class="keyboard-shortcut">1-9</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Toggle theme</span>
-                        <span class="keyboard-shortcut">T</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Share</span>
-                        <span class="keyboard-shortcut">S</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Show help</span>
-                        <span class="keyboard-shortcut">?</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="text-slate-300">Focus search</span>
-                        <span class="keyboard-shortcut">/</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // --- PRIVATE ANALYTICS ---
-        const analytics = {
-            track: function(event, data) {
-                try {
-                    const events = JSON.parse(localStorage.getItem('bowman_analytics') || '[]');
-                    events.push({ event, data, timestamp: Date.now() });
-                    if (events.length > 1000) events.shift();
-                    localStorage.setItem('bowman_analytics', JSON.stringify(events));
-                } catch(e) {}
-            }
-        };
-
-        // --- REAL DATASET CONFIGURATION ---
-        const datasetConfig = {
-            "2009_bowman.html": { "date": "May 11, 2009", "debuted": 11, "total": 17 },
-            "2010_bowman.html": { "date": "May 10, 2010", "debuted": 21, "total": 22 },
-            "2010_bowman_chrome.html": { "date": "Sep 17, 2010", "debuted": 41, "total": 49 },
-            "2010_bowman_draft_picks_prospects.html": { "date": "Dec 15, 2010", "debuted": 21, "total": 32 },
-            "2011_bowman.html": { "date": "May 9, 2011", "debuted": 23, "total": 33 },
-            "2011_bowman_chrome.html": { "date": "Sep 22, 2011", "debuted": 22, "total": 38 },
-            "2011_bowman_draft_picks_prospects.html": { "date": "Dec 14, 2011", "debuted": 28, "total": 34 },
-            "2012_bowman.html": { "date": "May 9, 2012", "debuted": 28, "total": 38 },
-            "2012_bowman_chrome.html": { "date": "Oct 17, 2012", "debuted": 28, "total": 40 },
-            "2012_bowman_draft_picks_prospects.html": { "date": "Dec 12, 2012", "debuted": 28, "total": 39 },
-            "2013_bowman.html": { "date": "May 8, 2013", "debuted": 36, "total": 46 },
-            "2013_bowman_chrome.html": { "date": "Sep 13, 2013", "debuted": 38, "total": 53 },
-            "2013_bowman_draft_picks_prospects.html": { "date": "Nov 13, 2013", "debuted": 33, "total": 48 },
-            "2014_bowman.html": { "date": "Apr 30, 2014", "debuted": 37, "total": 53 },
-            "2014_bowman_chrome.html": { "date": "Sep 26, 2014", "debuted": 47, "total": 70 },
-            "2014_bowman_draft.html": { "date": "Dec 3, 2014", "debuted": 40, "total": 69 },
-            "2015_bowman.html": { "date": "Jun 17, 2015", "debuted": 36, "total": 47 },
-            "2015_bowman_chrome.html": { "date": "Sep 4, 2015", "debuted": 46, "total": 72 },
-            "2015_bowman_draft.html": { "date": "Dec 9, 2015", "debuted": 38, "total": 60 },
-            "2016_bowman.html": { "date": "Apr 27, 2016", "debuted": 26, "total": 33 },
-            "2016_bowman_chrome.html": { "date": "Sep 7, 2016", "debuted": 41, "total": 56 },
-            "2016_bowman_draft.html": { "date": "Dec 9, 2016", "debuted": 44, "total": 56 },
-            "2017_bowman.html": { "date": "Apr 26, 2017", "debuted": 24, "total": 43 },
-            "2017_bowman_chrome.html": { "date": "Sep 29, 2017", "debuted": 39, "total": 60 },
-            "2017_bowman_draft.html": { "date": "Dec 6, 2017", "debuted": 48, "total": 76 },
-            "2018_bowman.html": { "date": "Apr 25, 2018", "debuted": 35, "total": 40 },
-            "2018_bowman_chrome.html": { "date": "Sep 26, 2018", "debuted": 48, "total": 79 },
-            "2018_bowman_draft.html": { "date": "Dec 14, 2018", "debuted": 41, "total": 62 },
-            "2019_bowman.html": { "date": "Apr 17, 2019", "debuted": 34, "total": 55 },
-            "2019_bowman_chrome.html": { "date": "Sep 18, 2019", "debuted": 45, "total": 66 },
-            "2019_bowman_draft.html": { "date": "Dec 4, 2019", "debuted": 49, "total": 81 },
-            "2020_bowman.html": { "date": "May 22, 2020", "debuted": 30, "total": 59 },
-            "2020_bowman_chrome.html": { "date": "Sep 18, 2020", "debuted": 36, "total": 75 },
-            "2020_bowman_draft.html": { "date": "Dec 9, 2020", "debuted": 55, "total": 119 },
-            "2021_bowman.html": { "date": "Apr 16, 2021", "debuted": 18, "total": 60 },
-            "2021_bowman_chrome.html": { "date": "Sep 22, 2021", "debuted": 17, "total": 86 },
-            "2021_bowman_draft.html": { "date": "Dec 31, 2021", "debuted": 38, "total": 87 },
-            "2022_bowman.html": { "date": "May 4, 2022", "debuted": 30, "total": 85 },
-            "2022_bowman_chrome.html": { "date": "Nov 30, 2022", "debuted": 21, "total": 112 },
-            "2022_bowman_draft.html": { "date": "Dec 21, 2022", "debuted": 31, "total": 102 },
-            "2023_bowman.html": { "date": "Apr 26, 2023", "debuted": 19, "total": 100 },
-            "2023_bowman_chrome.html": { "date": "Sep 13, 2023", "debuted": 16, "total": 132 },
-            "2023_bowman_draft.html": { "date": "Dec 12, 2023", "debuted": 12, "total": 101 },
-            "2024_bowman.html": { "date": "May 8, 2024", "debuted": 6, "total": 82 },
-            "2024_bowman_chrome.html": { "date": "Sep 11, 2024", "debuted": 13, "total": 141 },
-            "2024_bowman_draft.html": { "date": "Dec 4, 2024", "debuted": 8, "total": 101 },
-            "2025_bowman.html": { "date": "May 7, 2025", "debuted": 8, "total": 96 },
-            "2025_bowman_chrome.html": { "date": "Sep 23, 2025", "debuted": 4, "total": 105 }
-        };
-
-        // --- DYNAMIC SELECT GENERATION ---
-        function generateSelectOptions() {
-            const select = document.getElementById('releaseSelect');
-            const entries = Object.entries(datasetConfig);
-            
-            // Group by year
-            const groupedByYear = {};
-            entries.forEach(([filename, config], index) => {
-                const year = filename.match(/^(\d{4})/)?.[1] || 'Unknown';
-                if (!groupedByYear[year]) groupedByYear[year] = [];
-                
-                // Format display name
-                let displayName = filename
-                    .replace(/\.html$/, '')
-                    .replace(/^(\d{4})_/, '')
-                    .replace(/_/g, ' ')
-                    .replace(/\b\w/g, l => l.toUpperCase());
-                
-                // Special handling for draft picks prospects
-                displayName = displayName.replace('Draft Picks Prospec', 'Draft');
-                
-                groupedByYear[year].push({
-                    filename,
-                    displayName,
-                    index: index + 1,
-                    config
-                });
-            });
-            
-            // Sort years descending
-            const sortedYears = Object.keys(groupedByYear).sort((a, b) => b - a);
-            
-            // Generate optgroups and options
-            sortedYears.forEach(year => {
-                const optgroup = document.createElement('optgroup');
-                optgroup.label = `${year} Season`;
-                
-                // Sort items: Chrome first, then Draft, then regular Bowman
-                const items = groupedByYear[year].sort((a, b) => {
-                    const order = { chrome: 1, draft: 2, bowman: 3 };
-                    const aType = a.filename.includes('chrome') ? 'chrome' : a.filename.includes('draft') ? 'draft' : 'bowman';
-                    const bType = b.filename.includes('chrome') ? 'chrome' : b.filename.includes('draft') ? 'draft' : 'bowman';
-                    return (order[aType] || 99) - (order[bType] || 99);
-                });
-                
-                items.forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = item.filename;
-                    option.textContent = item.displayName;
-                    option.setAttribute('data-index', item.index);
-                    // Select the first item (most recent Chrome)
-                    if (year === sortedYears[0] && item.filename.includes('chrome')) {
-                        option.selected = true;
-                    }
-                    optgroup.appendChild(option);
-                });
-                
-                select.appendChild(optgroup);
-            });
-        }
-
-        // --- ANIMATION LOGIC ---
-        const totalReleases = Object.keys(datasetConfig).length; 
-        const circle = document.getElementById('progress-circle');
-        const radius = circle.r.baseVal.value;
-        const circumference = radius * 2 * Math.PI;
-
-        circle.style.strokeDasharray = `${circumference} ${circumference}`;
-        circle.style.strokeDashoffset = circumference;
-
-        function setProgress(percent) {
-            const offset = circumference - (percent / 100) * circumference;
-            circle.style.strokeDashoffset = offset;
-        }
-
-        function updateUI(selectElement, skipURL = false) {
-            const selectedOption = selectElement.options[selectElement.selectedIndex];
-            if (selectedOption.disabled || !selectedOption.value) return;
-            const filename = selectedOption.value;
-            if (!skipURL) updateURL(filename);
-            
-            // 1. Get Data from Config
-            const config = datasetConfig[filename] || { date: "Data Unavailable", debuted: 0, total: 0 };
-            
-            // 2. Update Date
-            document.getElementById('release-date-display').innerText = config.date;
-            
-            // 3. Update Debuted / Total
-            const targetDebut = config.debuted;
-            const targetTotal = config.total;
-            
-            document.getElementById('debut-stat-display').innerHTML = 
-                `${targetDebut} <span class="text-slate-500 text-xs">/ ${targetTotal}</span>`;
-
-            // 4. Update Rate Bar (Prevent Divide by Zero)
-            let rate = 0;
-            if (targetTotal > 0) {
-                rate = (targetDebut / targetTotal) * 100;
-            }
-            document.getElementById('rate-bar').style.width = `${rate}%`;
-
-            // 5. Update Circle & Counter (ROBUST FIX)
-            const indexAttribute = selectedOption.getAttribute('data-index');
-            const index = parseInt(indexAttribute);
-            
-            // Safety check for NaN on index
-            const safeIndex = isNaN(index) ? 0 : index;
-            const percent = (safeIndex / totalReleases) * 100;
-            
-            setProgress(percent);
-
-            const counterElement = document.getElementById('counter-current');
-            
-            // Get current value, default to 0 if NaN (Fixing the persistent NaN issue)
-            let currentVal = parseInt(counterElement.innerText);
-            if (isNaN(currentVal)) currentVal = 0;
-            
-            // Use a Proxy Object for GSAP 3 stability (Fixing "this.val" scope issue)
-            const proxy = { val: currentVal };
-            
-            gsap.to(proxy, {
-                val: safeIndex,
-                duration: 0.8,
-                ease: "power2.out",
-                onUpdate: function() {
-                    counterElement.innerText = Math.round(proxy.val);
-                }
-            });
-        }
-
-        // --- URL STATE ---
-        function updateURL(release) {
-            const url = new URL(window.location);
-            url.searchParams.set('release', release);
-            window.history.pushState({ release }, '', url);
-            analytics.track('view', { release });
-        }
-        function getURLRelease() {
-            return new URLSearchParams(window.location.search).get('release');
-        }
-
-        // --- THEME ---
-        function initTheme() {
-            const saved = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
-        }
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            analytics.track('theme_toggle', { theme: newTheme });
-        }
-
-        // --- STATS ---
-        function calculateStats() {
-            const entries = Object.values(datasetConfig);
-            const total = entries.reduce((sum, e) => sum + e.total, 0);
-            const debuted = entries.reduce((sum, e) => sum + e.debuted, 0);
-            const rate = total > 0 ? ((debuted / total) * 100).toFixed(1) : 0;
-            const byYear = {};
-            Object.entries(datasetConfig).forEach(([filename, config]) => {
-                const year = filename.match(/^(\d{4})/)?.[1];
-                if (year) {
-                    if (!byYear[year]) byYear[year] = { total: 0, debuted: 0 };
-                    byYear[year].total += config.total;
-                    byYear[year].debuted += config.debuted;
-                }
-            });
-            let bestYear = 'N/A', bestRate = 0;
-            Object.entries(byYear).forEach(([year, stats]) => {
-                const yearRate = stats.total > 0 ? (stats.debuted / stats.total) * 100 : 0;
-                if (yearRate > bestRate) { bestRate = yearRate; bestYear = year; }
-            });
-            return { total, debuted, rate, bestYear };
-        }
-        function updateStatsOverview() {
-            const stats = calculateStats();
-            document.getElementById('stats-total').textContent = stats.total.toLocaleString();
-            document.getElementById('stats-debuted').textContent = stats.debuted.toLocaleString();
-            document.getElementById('stats-rate').textContent = `${stats.rate}%`;
-            document.getElementById('stats-best-year').textContent = stats.bestYear;
-        }
-
-        // --- SEARCH ---
-        function filterOptions(term) {
-            const select = document.getElementById('releaseSelect');
-            Array.from(select.options).forEach(option => {
-                const matches = !term || option.textContent.toLowerCase().includes(term.toLowerCase());
-                option.style.display = matches ? '' : 'none';
-                if (option.parentElement.tagName === 'OPTGROUP') {
-                    const group = option.parentElement;
-                    const visible = Array.from(group.options).filter(opt => opt.style.display !== 'none');
-                    group.disabled = visible.length === 0;
-                }
-            });
-        }
-
-        // --- COMPARISON ---
-        function toggleComparison(enabled) {
-            document.getElementById('comparisonSelects').classList.toggle('hidden', !enabled);
-            const container = document.getElementById('iframe-container');
-            container.classList.toggle('comparison-mode', enabled);
-            if (enabled) {
-                generateSelectOptions(document.getElementById('comparisonSelect1'));
-                generateSelectOptions(document.getElementById('comparisonSelect2'));
-            } else {
-                container.innerHTML = '<iframe id="visualizationFrame" loading="lazy" class="relative z-10 w-full h-full border-none rounded-xl opacity-0 transition-opacity duration-700 bg-white"></iframe>';
-                const currentValue = document.getElementById('releaseSelect').value;
-                if (currentValue) {
-                    setTimeout(() => loadIframe(currentValue), 100);
-                }
-            }
-        }
-        function loadComparison(s1, s2) {
-            const container = document.getElementById('iframe-container');
-            container.innerHTML = '';
-            [s1, s2].forEach(src => {
-                if (!src) return;
-                const iframe = document.createElement('iframe');
-                iframe.src = src;
-                iframe.className = 'w-full h-full border-none rounded-xl bg-white';
-                iframe.loading = 'lazy';
-                container.appendChild(iframe);
-            });
-        }
-
-        // --- SHARE ---
-        function shareView() {
-            const url = new URL(window.location.href);
-            url.searchParams.set('release', document.getElementById('releaseSelect').value);
-            const shareUrl = url.toString();
-            if (navigator.share) {
-                navigator.share({ title: 'Bowman Prospect Analysis', url: shareUrl });
-            } else {
-                navigator.clipboard.writeText(shareUrl);
-                const toast = document.createElement('div');
-                toast.className = 'fixed top-4 right-4 bg-bowman-gold text-black px-4 py-2 rounded-lg shadow-lg z-50';
-                toast.textContent = 'Link copied!';
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 2000);
-            }
-            analytics.track('share', { release: document.getElementById('releaseSelect').value });
-        }
-
-        // --- KEYBOARD ---
-        function initKeyboard() {
-            document.addEventListener('keydown', (e) => {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                    if (e.key === 'Escape') e.target.blur();
-                    return;
-                }
-                switch(e.key) {
-                    case '/': e.preventDefault(); document.getElementById('searchInput').focus(); break;
-                    case 't': case 'T': toggleTheme(); break;
-                    case 's': case 'S': shareView(); break;
-                    case '?': document.getElementById('helpModal').classList.remove('hidden'); break;
-                    case 'Escape': document.getElementById('helpModal').classList.add('hidden'); break;
-                    case 'ArrowUp': e.preventDefault(); const s1 = document.getElementById('releaseSelect'); if (s1.selectedIndex > 0) { s1.selectedIndex--; s1.dispatchEvent(new Event('change')); } break;
-                    case 'ArrowDown': e.preventDefault(); const s2 = document.getElementById('releaseSelect'); if (s2.selectedIndex < s2.options.length - 1) { s2.selectedIndex++; s2.dispatchEvent(new Event('change')); } break;
-                    default: if (e.key >= '1' && e.key <= '9') {
-                        const year = 2025 - (parseInt(e.key) - 1);
-                        const s3 = document.getElementById('releaseSelect');
-                        const opt = Array.from(s3.options).find(o => o.value.includes(year));
-                        if (opt) { s3.value = opt.value; s3.dispatchEvent(new Event('change')); }
-                    }
-                }
-            });
-        }
-
-        // --- IFRAME LOADING (FIXED - SIMPLE) ---
-        function loadIframe(src) {
-            const iframe = document.getElementById('visualizationFrame');
-            const loader = document.getElementById('loader');
-            if (!iframe || !src) return;
-            
-            iframe.style.opacity = '0';
-            loader.style.display = 'flex';
-            
-            const handleLoad = function() {
-                iframe.style.opacity = '1';
-                loader.style.display = 'none';
-                iframe.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                iframe.removeEventListener('load', handleLoad);
-            };
-            
-            iframe.addEventListener('load', handleLoad);
-            setTimeout(() => { iframe.src = src; }, 300);
-        }
-
-        // --- EVENTS ---
-        const select = document.getElementById('releaseSelect');
-        const iframe = document.getElementById('visualizationFrame');
-
-        select.addEventListener('change', (e) => {
-            if (!document.getElementById('comparisonMode').checked) {
-                updateUI(e.target);
-                updateURL(e.target.value);
-                loadIframe(e.target.value);
-            }
-        });
-
-        document.getElementById('searchInput').addEventListener('input', (e) => filterOptions(e.target.value));
-        document.getElementById('comparisonMode').addEventListener('change', (e) => toggleComparison(e.target.checked));
-        document.getElementById('comparisonSelect1').addEventListener('change', () => {
-            const s1 = document.getElementById('comparisonSelect1').value;
-            const s2 = document.getElementById('comparisonSelect2').value;
-            if (s1 && s2) loadComparison(s1, s2);
-        });
-        document.getElementById('comparisonSelect2').addEventListener('change', () => {
-            const s1 = document.getElementById('comparisonSelect1').value;
-            const s2 = document.getElementById('comparisonSelect2').value;
-            if (s1 && s2) loadComparison(s1, s2);
-        });
-        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-        document.getElementById('shareButton').addEventListener('click', shareView);
-        document.getElementById('helpButton').addEventListener('click', () => document.getElementById('helpModal').classList.remove('hidden'));
-        document.getElementById('closeHelp').addEventListener('click', () => document.getElementById('helpModal').classList.add('hidden'));
-
-        window.addEventListener('popstate', () => {
-            const urlRelease = getURLRelease();
-            if (urlRelease && datasetConfig[urlRelease]) {
-                select.value = urlRelease;
-                updateUI(select);
-                loadIframe(urlRelease);
-            }
-        });
-
-        window.addEventListener('load', () => {
-            initTheme();
-            initKeyboard();
-            generateSelectOptions();
-            updateStatsOverview();
-            document.getElementById('counter-total').textContent = `/ ${totalReleases}`;
-            
-            const urlRelease = getURLRelease();
-            if (urlRelease && datasetConfig[urlRelease]) {
-                select.value = urlRelease;
-            }
-            
-            updateUI(select);
-            if (urlRelease) updateURL(urlRelease);
-            loadIframe(select.value);
-            
-            const tl = gsap.timeline();
-            tl.to("#title-anim", { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
-              .to("#subtitle-anim", { opacity: 1, duration: 0.8 }, "-=0.5")
-              .to("#stats-overview", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
-              .to("#controls-anim", { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.2)" }, "-=0.3")
-              .to("#iframe-anim", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4");
+        document.getElementById('releaseSelect').addEventListener('change', function(e) {
+            const selectedFile = e.target.value;
+            document.getElementById('visualizationFrame').src = selectedFile;
         });
     </script>
 </body>

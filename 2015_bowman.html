@@ -46,6 +46,21 @@
             height: 650px;
             margin: 30px 0;
         }
+        #plot-non-debuted {
+            width: 100%;
+            height: 650px;
+            margin: 30px 0;
+        }
+        .plot-section {
+            margin-bottom: 50px;
+        }
+        .plot-section h2 {
+            color: #1e3c72;
+            margin: 0 0 15px 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -92,6 +107,9 @@
             #plot {
                 height: 500px;
             }
+            #plot-non-debuted {
+                height: 500px;
+            }
             .stats {
                 grid-template-columns: 1fr;
                 padding: 20px;
@@ -105,20 +123,13 @@
             <h1>2015 Bowman</h1>
             <p class="subtitle">Career WAR vs Games per Season Analysis</p>
         </div>
-        <div id="plot"></div>
+        <div class="plot-section"><h2>Debuted Players</h2><div id="plot"></div></div>
+        
         <div class="stats">
-            <div class="stat-item">
-                <span class="stat-label">Players Shown</span>
-                <span class="stat-value">36</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Average WAR</span>
-                <span class="stat-value">5.13</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Avg Games/Season</span>
-                <span class="stat-value">50.1</span>
-            </div>
+            <div class="stat-item"><span class="stat-label">Debuted Players</span><span class="stat-value">36</span></div>
+            <div class="stat-item"><span class="stat-label">Average WAR</span><span class="stat-value">5.13</span></div>
+            <div class="stat-item"><span class="stat-label">Avg Games/Season</span><span class="stat-value">50.1</span></div>
+            
         </div>
         <div class="footnote">
             Data: Fangraphs, MLB
@@ -126,6 +137,8 @@
     </div>
 
     <script>
+        
+        // Plot for debuted players
         var data = [{
             x: [1.71544, 9.29926, -0.169822, 22.914, 2.10542, 0.165192, 5.61098, 7.83149, 1.09408, -0.258235, 11.029, 1.85257, -0.0101678, 3.7203, 1.77296, 3.89327, -0.0185391, -0.0364031, 18.5654, 5.06151, 21.8777, -0.377312, 29.1175, 14.926, 2.79612, 0.0980124, 0.818953, 0.0, 16.99, -0.0447355, 0.544782, 1.92455, 0.389432, 1.37211, 0.00532809, -1.99275],
             y: [20.2, 111.66666666666667, 58.333333333333336, 21.0, 79.0, 7.0, 17.0, 69.28571428571429, 47.875, 50.285714285714285, 16.9, 89.33333333333333, 102.5, 51.714285714285715, 30.8, 81.33333333333333, 5.0, 4.2, 20.1, 101.4, 114.22222222222223, 18.0, 127.0, 54.54545454545455, 54.1, 97.25, 4.5, 5.0, 109.9, 11.125, 31.875, 22.285714285714285, 3.0, 78.8, 9.5, 77.25],
@@ -210,6 +223,8 @@
         };
 
         Plotly.newPlot('plot', data, layout, config);
+        
+        
     </script>
 </body>
 </html>
