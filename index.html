@@ -5,12 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bowman Prospect Analysis | Career WAR Visualizations</title>
     
+    <meta name="description" content="Visualize Career WAR vs. Games Played Per Season for Bowman baseball card prospects from 2009-2025">
+    <meta property="og:title" content="Bowman Prospect Analysis | Career WAR Visualizations">
+    <meta property="og:description" content="Interactive visualizations of MLB prospect success rates from Bowman card releases">
+    <meta property="og:type" content="website">
+    
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
 
     <script>
         tailwind.config = {
@@ -57,6 +66,10 @@
             transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
+            will-change: stroke-dashoffset;
+        }
+        #visualizationFrame {
+            will-change: opacity;
         }
     </style>
 </head>
@@ -81,105 +94,7 @@
                 <label class="text-[10px] font-bold text-bowman-gold uppercase tracking-[0.2em] ml-1">Select Checklist</label>
                 <div class="relative group">
                     <select id="releaseSelect" class="w-full bg-black/40 border border-white/10 text-white text-lg rounded-lg px-5 py-4 appearance-none focus:outline-none focus:border-bowman-gold/50 transition-all cursor-pointer font-serif shadow-lg hover:shadow-glow hover:border-white/20">
-                        
-                        <optgroup label="2025 Season">
-                            <option value="2025_bowman_chrome.html" data-index="48" selected>2025 Bowman Chrome</option>
-                            <option value="2025_bowman.html" data-index="47">2025 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2024 Season">
-                            <option value="2024_bowman_draft.html" data-index="46">2024 Bowman Draft</option>
-                            <option value="2024_bowman_chrome.html" data-index="45">2024 Bowman Chrome</option>
-                            <option value="2024_bowman.html" data-index="44">2024 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2023 Season">
-                            <option value="2023_bowman_draft.html" data-index="43">2023 Bowman Draft</option>
-                            <option value="2023_bowman_chrome.html" data-index="42">2023 Bowman Chrome</option>
-                            <option value="2023_bowman.html" data-index="41">2023 Bowman</option>
-                        </optgroup>
-                        
-                        <optgroup label="2022 Season">
-                            <option value="2022_bowman_draft.html" data-index="40">2022 Bowman Draft</option>
-                            <option value="2022_bowman_chrome.html" data-index="39">2022 Bowman Chrome</option>
-                            <option value="2022_bowman.html" data-index="38">2022 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2021 Season">
-                            <option value="2021_bowman_draft.html" data-index="37">2021 Bowman Draft</option>
-                            <option value="2021_bowman_chrome.html" data-index="36">2021 Bowman Chrome</option>
-                            <option value="2021_bowman.html" data-index="35">2021 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2020 Season">
-                            <option value="2020_bowman_draft.html" data-index="34">2020 Bowman Draft</option>
-                            <option value="2020_bowman_chrome.html" data-index="33">2020 Bowman Chrome</option>
-                            <option value="2020_bowman.html" data-index="32">2020 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2019 Season">
-                            <option value="2019_bowman_draft.html" data-index="31">2019 Bowman Draft</option>
-                            <option value="2019_bowman_chrome.html" data-index="30">2019 Bowman Chrome</option>
-                            <option value="2019_bowman.html" data-index="29">2019 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2018 Season">
-                            <option value="2018_bowman_draft.html" data-index="28">2018 Bowman Draft</option>
-                            <option value="2018_bowman_chrome.html" data-index="27">2018 Bowman Chrome</option>
-                            <option value="2018_bowman.html" data-index="26">2018 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2017 Season">
-                            <option value="2017_bowman_draft.html" data-index="25">2017 Bowman Draft</option>
-                            <option value="2017_bowman_chrome.html" data-index="24">2017 Bowman Chrome</option>
-                            <option value="2017_bowman.html" data-index="23">2017 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2016 Season">
-                            <option value="2016_bowman_draft.html" data-index="22">2016 Bowman Draft</option>
-                            <option value="2016_bowman_chrome.html" data-index="21">2016 Bowman Chrome</option>
-                            <option value="2016_bowman.html" data-index="20">2016 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2015 Season">
-                            <option value="2015_bowman_draft.html" data-index="19">2015 Bowman Draft</option>
-                            <option value="2015_bowman_chrome.html" data-index="18">2015 Bowman Chrome</option>
-                            <option value="2015_bowman.html" data-index="17">2015 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2014 Season">
-                            <option value="2014_bowman_draft.html" data-index="16">2014 Bowman Draft</option>
-                            <option value="2014_bowman_chrome.html" data-index="15">2014 Bowman Chrome</option>
-                            <option value="2014_bowman.html" data-index="14">2014 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2013 Season">
-                            <option value="2013_bowman_draft_picks_prospects.html" data-index="13">2013 Bowman Draft</option>
-                            <option value="2013_bowman_chrome.html" data-index="12">2013 Bowman Chrome</option>
-                            <option value="2013_bowman.html" data-index="11">2013 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2012 Season">
-                            <option value="2012_bowman_draft_picks_prospects.html" data-index="10">2012 Bowman Draft</option>
-                            <option value="2012_bowman_chrome.html" data-index="9">2012 Bowman Chrome</option>
-                            <option value="2012_bowman.html" data-index="8">2012 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2011 Season">
-                            <option value="2011_bowman_draft_picks_prospects.html" data-index="7">2011 Bowman Draft</option>
-                            <option value="2011_bowman_chrome.html" data-index="6">2011 Bowman Chrome</option>
-                            <option value="2011_bowman.html" data-index="5">2011 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2010 Season">
-                            <option value="2010_bowman_draft_picks_prospects.html" data-index="4">2010 Bowman Draft</option>
-                            <option value="2010_bowman_chrome.html" data-index="3">2010 Bowman Chrome</option>
-                            <option value="2010_bowman.html" data-index="2">2010 Bowman</option>
-                        </optgroup>
-
-                        <optgroup label="2009 Season">
-                            <option value="2009_bowman.html" data-index="1">2009 Bowman</option>
-                        </optgroup>
+                        <!-- Options will be dynamically generated from datasetConfig -->
                     </select>
                     <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-bowman-gold">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -215,8 +130,8 @@
                 <div class="text-right">
                     <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-1">Archive Index</p>
                     <p class="text-3xl text-white font-serif italic flex justify-end gap-1 items-baseline">
-                        <span id="counter-current">48</span>
-                        <span class="text-slate-600 text-sm font-sans not-italic">/ 48</span>
+                        <span id="counter-current">--</span>
+                        <span class="text-slate-600 text-sm font-sans not-italic" id="counter-total">/ --</span>
                     </p>
                 </div>
                 
@@ -249,7 +164,7 @@
                 <div class="w-10 h-10 border-2 border-bowman-gold border-t-transparent rounded-full animate-spin"></div>
                 <span class="text-xs font-mono text-bowman-gold animate-pulse">LOADING CHECKLIST DATA...</span>
             </div>
-            <iframe id="visualizationFrame" src="2025_bowman_chrome.html" class="relative z-10 w-full h-full border-none rounded-xl opacity-0 transition-opacity duration-700 bg-white" onload="this.style.opacity='1'; document.getElementById('loader').style.display='none'"></iframe>
+            <iframe id="visualizationFrame" src="2025_bowman_chrome.html" loading="lazy" class="relative z-10 w-full h-full border-none rounded-xl opacity-0 transition-opacity duration-700 bg-white" onload="this.style.opacity='1'; document.getElementById('loader').style.display='none'"></iframe>
         </div>
 
     </main>
@@ -307,8 +222,69 @@
             "2025_bowman_chrome.html": { "date": "Sep 23, 2025", "debuted": 4, "total": 105 }
         };
 
+        // --- DYNAMIC SELECT GENERATION ---
+        function generateSelectOptions() {
+            const select = document.getElementById('releaseSelect');
+            const entries = Object.entries(datasetConfig);
+            
+            // Group by year
+            const groupedByYear = {};
+            entries.forEach(([filename, config], index) => {
+                const year = filename.match(/^(\d{4})/)?.[1] || 'Unknown';
+                if (!groupedByYear[year]) groupedByYear[year] = [];
+                
+                // Format display name
+                let displayName = filename
+                    .replace(/\.html$/, '')
+                    .replace(/^(\d{4})_/, '')
+                    .replace(/_/g, ' ')
+                    .replace(/\b\w/g, l => l.toUpperCase());
+                
+                // Special handling for draft picks prospects
+                displayName = displayName.replace('Draft Picks Prospec', 'Draft');
+                
+                groupedByYear[year].push({
+                    filename,
+                    displayName,
+                    index: index + 1,
+                    config
+                });
+            });
+            
+            // Sort years descending
+            const sortedYears = Object.keys(groupedByYear).sort((a, b) => b - a);
+            
+            // Generate optgroups and options
+            sortedYears.forEach(year => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = `${year} Season`;
+                
+                // Sort items: Chrome first, then Draft, then regular Bowman
+                const items = groupedByYear[year].sort((a, b) => {
+                    const order = { chrome: 1, draft: 2, bowman: 3 };
+                    const aType = a.filename.includes('chrome') ? 'chrome' : a.filename.includes('draft') ? 'draft' : 'bowman';
+                    const bType = b.filename.includes('chrome') ? 'chrome' : b.filename.includes('draft') ? 'draft' : 'bowman';
+                    return (order[aType] || 99) - (order[bType] || 99);
+                });
+                
+                items.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.filename;
+                    option.textContent = item.displayName;
+                    option.setAttribute('data-index', item.index);
+                    // Select the first item (most recent Chrome)
+                    if (year === sortedYears[0] && item.filename.includes('chrome')) {
+                        option.selected = true;
+                    }
+                    optgroup.appendChild(option);
+                });
+                
+                select.appendChild(optgroup);
+            });
+        }
+
         // --- ANIMATION LOGIC ---
-        const totalReleases = 48; 
+        const totalReleases = Object.keys(datasetConfig).length; 
         const circle = document.getElementById('progress-circle');
         const radius = circle.r.baseVal.value;
         const circumference = radius * 2 * Math.PI;
@@ -395,7 +371,22 @@
         });
 
         window.addEventListener('load', () => {
+            // Generate select options dynamically
+            generateSelectOptions();
+            
+            // Set total counter display
+            document.getElementById('counter-total').textContent = `/ ${totalReleases}`;
+            
+            // Update UI with initial selection
             updateUI(select);
+            
+            // Set initial iframe src
+            const initialValue = select.value;
+            if (iframe.src !== initialValue) {
+                iframe.src = initialValue;
+            }
+            
+            // Animate page elements
             const tl = gsap.timeline();
             tl.to("#title-anim", { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
               .to("#subtitle-anim", { opacity: 1, duration: 0.8 }, "-=0.5")
