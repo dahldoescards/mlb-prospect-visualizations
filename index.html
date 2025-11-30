@@ -55,9 +55,9 @@
             --accent: #d4af37;
         }
         [data-theme="light"] {
-            --bg-primary: #f8fafc;
-            --bg-secondary: rgba(255, 255, 255, 0.9);
-            --text-primary: #1e293b;
+            --bg-primary: #f1f5f9;
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --text-primary: #0f172a;
             --text-secondary: #475569;
             --accent: #b8860b;
         }
@@ -68,13 +68,24 @@
                 radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 25%);
             overflow-x: hidden;
             transition: background-color 0.3s ease;
+            color: var(--text-primary);
         }
         [data-theme="light"] body {
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(184, 134, 11, 0.05) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 25%);
+                radial-gradient(circle at 15% 50%, rgba(184, 134, 11, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.12) 0%, transparent 25%);
         }
+        [data-theme="light"] .text-white { color: var(--text-primary) !important; }
+        [data-theme="light"] .text-slate-300 { color: var(--text-primary) !important; }
+        [data-theme="light"] .text-slate-400 { color: var(--text-secondary) !important; }
+        [data-theme="light"] .text-slate-500 { color: var(--text-secondary) !important; }
+        [data-theme="light"] .text-slate-600 { color: #64748b !important; }
+        [data-theme="light"] .bg-black\/40 { background-color: rgba(0, 0, 0, 0.05) !important; }
+        [data-theme="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
+        [data-theme="light"] .bg-white\/5 { background-color: rgba(0, 0, 0, 0.03) !important; }
+        [data-theme="light"] .border-white\/5 { border-color: rgba(0, 0, 0, 0.05) !important; }
         select option { background: #0f172a; color: #e2e8f0; padding: 12px; }
+        [data-theme="light"] select option { background: #ffffff; color: #0f172a; }
         .glass-panel {
             background: var(--bg-secondary);
             backdrop-filter: blur(16px);
@@ -82,6 +93,10 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        [data-theme="light"] .glass-panel {
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
         }
         .progress-ring__circle {
             transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -92,31 +107,6 @@
         #visualizationFrame {
             will-change: opacity;
         }
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-        .comparison-mode .iframe-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 1rem;
-        }
-        .error-message {
-            display: none;
-            padding: 2rem;
-            text-align: center;
-            color: #ef4444;
-        }
-        .error-message.show {
-            display: flex;
-        }
         .keyboard-shortcut {
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid rgba(212, 175, 55, 0.3);
@@ -124,6 +114,10 @@
             border-radius: 0.25rem;
             font-size: 0.75rem;
             font-family: monospace;
+        }
+        [data-theme="light"] .keyboard-shortcut {
+            background: rgba(184, 134, 11, 0.15);
+            border-color: rgba(184, 134, 11, 0.4);
         }
     </style>
 </head>
@@ -135,17 +129,17 @@
         
         <header class="text-center py-8 relative">
             <div class="absolute top-0 right-0 flex gap-2 items-center">
-                <button id="themeToggle" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Toggle dark/light mode" title="Toggle theme (T)">
+                <button id="themeToggle" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Toggle theme" title="Toggle theme (T)">
                     <svg class="w-5 h-5 text-bowman-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 </button>
-                <button id="shareButton" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Share this view" title="Share (S)">
+                <button id="shareButton" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Share" title="Share (S)">
                     <svg class="w-5 h-5 text-bowman-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                     </svg>
                 </button>
-                <button id="helpButton" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Show keyboard shortcuts" title="Help (?)">
+                <button id="helpButton" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors" aria-label="Help" title="Help (?)">
                     <svg class="w-5 h-5 text-bowman-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -159,7 +153,6 @@
             </p>
         </header>
 
-        <!-- Quick Stats Overview -->
         <div class="glass-panel rounded-2xl p-4 md:p-6 opacity-0 translate-y-4" id="stats-overview">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="text-center">
@@ -192,13 +185,10 @@
                     </label>
                 </div>
                 <div class="relative mb-2">
-                    <input type="text" id="searchInput" placeholder="Search releases..." class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-bowman-gold/50 transition-all" aria-label="Search releases">
-                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search releases..." class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-bowman-gold/50 transition-all" aria-label="Search">
                 </div>
                 <div class="relative group">
-                    <select id="releaseSelect" aria-label="Select a Bowman release to view prospect statistics" class="w-full bg-black/40 border border-white/10 text-white text-lg rounded-lg px-5 py-4 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold focus:ring-offset-2 focus:ring-offset-bowman-dark transition-all cursor-pointer font-serif shadow-lg hover:shadow-glow hover:border-white/20">
+                    <select id="releaseSelect" aria-label="Select release" class="w-full bg-black/40 border border-white/10 text-white text-lg rounded-lg px-5 py-4 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold focus:ring-offset-2 focus:ring-offset-bowman-dark transition-all cursor-pointer font-serif shadow-lg hover:shadow-glow hover:border-white/20">
                         <!-- Options will be dynamically generated from datasetConfig -->
                     </select>
                     <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-bowman-gold">
@@ -206,14 +196,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </div>
-                </div>
-                <div id="comparisonSelects" class="hidden mt-2 space-y-2">
-                    <select id="comparisonSelect1" class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold">
-                        <option value="">Select first release to compare...</option>
-                    </select>
-                    <select id="comparisonSelect2" class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold">
-                        <option value="">Select second release to compare...</option>
-                    </select>
                 </div>
             </div>
 
@@ -269,6 +251,14 @@
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
                     </div>
                 </div>
+                <div id="comparisonSelects" class="hidden mt-2 space-y-2">
+                    <select id="comparisonSelect1" class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold">
+                        <option value="">Select first release...</option>
+                    </select>
+                    <select id="comparisonSelect2" class="w-full bg-black/40 border border-white/10 text-white text-sm rounded-lg px-4 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-bowman-gold">
+                        <option value="">Select second release...</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -276,26 +266,12 @@
             <div class="absolute inset-0 flex flex-col gap-2 items-center justify-center z-0" id="loader">
                 <div class="w-10 h-10 border-2 border-bowman-gold border-t-transparent rounded-full animate-spin"></div>
                 <span class="text-xs font-mono text-bowman-gold animate-pulse">LOADING CHECKLIST DATA...</span>
-                <div class="w-64 h-1 bg-white/10 rounded-full mt-4 overflow-hidden">
-                    <div id="loading-progress" class="h-full bg-bowman-gold transition-all duration-300" style="width: 0%"></div>
-                </div>
-            </div>
-            <div class="error-message absolute inset-0 flex flex-col items-center justify-center z-20" id="error-message">
-                <svg class="w-12 h-12 mx-auto mb-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p class="text-lg font-bold mb-2 text-white" id="error-text">Failed to load visualization</p>
-                <p class="text-sm text-slate-400 mb-4">The requested file could not be loaded.</p>
-                <button id="retry-button" class="px-4 py-2 bg-bowman-gold/20 hover:bg-bowman-gold/30 text-bowman-gold rounded-lg transition-colors">
-                    Retry
-                </button>
             </div>
             <div id="iframe-container" class="relative z-10 w-full h-full">
                 <iframe id="visualizationFrame" src="2025_bowman_chrome.html" loading="lazy" class="relative z-10 w-full h-full border-none rounded-xl opacity-0 transition-opacity duration-700 bg-white"></iframe>
             </div>
         </div>
 
-        <!-- Keyboard Shortcuts Modal -->
         <div id="helpModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div class="glass-panel rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
@@ -320,16 +296,12 @@
                         <span class="keyboard-shortcut">T</span>
                     </div>
                     <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Share current view</span>
+                        <span class="text-slate-300">Share</span>
                         <span class="keyboard-shortcut">S</span>
                     </div>
                     <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Show this help</span>
+                        <span class="text-slate-300">Show help</span>
                         <span class="keyboard-shortcut">?</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-white/10">
-                        <span class="text-slate-300">Close modals</span>
-                        <span class="keyboard-shortcut">ESC</span>
                     </div>
                     <div class="flex justify-between items-center py-2">
                         <span class="text-slate-300">Focus search</span>
@@ -342,24 +314,15 @@
     </main>
 
     <script>
-        // --- PRIVATE ANALYTICS (Local Storage Only) ---
+        // --- PRIVATE ANALYTICS ---
         const analytics = {
             track: function(event, data) {
                 try {
                     const events = JSON.parse(localStorage.getItem('bowman_analytics') || '[]');
                     events.push({ event, data, timestamp: Date.now() });
-                    // Keep only last 1000 events
                     if (events.length > 1000) events.shift();
                     localStorage.setItem('bowman_analytics', JSON.stringify(events));
-                } catch(e) { /* Silent fail */ }
-            },
-            getStats: function() {
-                try {
-                    const events = JSON.parse(localStorage.getItem('bowman_analytics') || '[]');
-                    const views = events.filter(e => e.event === 'view').length;
-                    const shares = events.filter(e => e.event === 'share').length;
-                    return { views, shares, totalEvents: events.length };
-                } catch(e) { return { views: 0, shares: 0, totalEvents: 0 }; }
+                } catch(e) {}
             }
         };
 
@@ -415,76 +378,9 @@
             "2025_bowman_chrome.html": { "date": "Sep 23, 2025", "debuted": 4, "total": 105 }
         };
 
-        // --- URL STATE MANAGEMENT ---
-        function updateURL(release) {
-            const url = new URL(window.location);
-            url.searchParams.set('release', release);
-            window.history.pushState({ release }, '', url);
-            analytics.track('view', { release });
-        }
-
-        function getURLRelease() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('release');
-        }
-
-        // --- THEME MANAGEMENT ---
-        function initTheme() {
-            const saved = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', saved);
-            return saved;
-        }
-
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            analytics.track('theme_toggle', { theme: newTheme });
-        }
-
-        // --- QUICK STATS CALCULATION ---
-        function calculateStats() {
-            const entries = Object.values(datasetConfig);
-            const total = entries.reduce((sum, e) => sum + e.total, 0);
-            const debuted = entries.reduce((sum, e) => sum + e.debuted, 0);
-            const rate = total > 0 ? ((debuted / total) * 100).toFixed(1) : 0;
-            
-            // Find best year (highest success rate)
-            const byYear = {};
-            Object.entries(datasetConfig).forEach(([filename, config]) => {
-                const year = filename.match(/^(\d{4})/)?.[1];
-                if (year) {
-                    if (!byYear[year]) byYear[year] = { total: 0, debuted: 0 };
-                    byYear[year].total += config.total;
-                    byYear[year].debuted += config.debuted;
-                }
-            });
-            
-            let bestYear = 'N/A';
-            let bestRate = 0;
-            Object.entries(byYear).forEach(([year, stats]) => {
-                const yearRate = stats.total > 0 ? (stats.debuted / stats.total) * 100 : 0;
-                if (yearRate > bestRate) {
-                    bestRate = yearRate;
-                    bestYear = year;
-                }
-            });
-
-            return { total, debuted, rate, bestYear };
-        }
-
-        function updateStatsOverview() {
-            const stats = calculateStats();
-            document.getElementById('stats-total').textContent = stats.total.toLocaleString();
-            document.getElementById('stats-debuted').textContent = stats.debuted.toLocaleString();
-            document.getElementById('stats-rate').textContent = `${stats.rate}%`;
-            document.getElementById('stats-best-year').textContent = stats.bestYear;
-        }
-
         // --- DYNAMIC SELECT GENERATION ---
-        function generateSelectOptions(targetSelect = null) {
-            const select = targetSelect || document.getElementById('releaseSelect');
+        function generateSelectOptions() {
+            const select = document.getElementById('releaseSelect');
             const entries = Object.entries(datasetConfig);
             
             // Group by year
@@ -557,15 +453,11 @@
             circle.style.strokeDashoffset = offset;
         }
 
-        function updateUI(selectElement, updateURLState = true) {
+        function updateUI(selectElement, skipURL = false) {
             const selectedOption = selectElement.options[selectElement.selectedIndex];
-            
             if (selectedOption.disabled || !selectedOption.value) return;
-
             const filename = selectedOption.value;
-            
-            // Update URL state
-            if (updateURLState) updateURL(filename);
+            if (!skipURL) updateURL(filename);
             
             // 1. Get Data from Config
             const config = datasetConfig[filename] || { date: "Data Unavailable", debuted: 0, total: 0 };
@@ -587,18 +479,25 @@
             }
             document.getElementById('rate-bar').style.width = `${rate}%`;
 
-            // 5. Update Circle & Counter
+            // 5. Update Circle & Counter (ROBUST FIX)
             const indexAttribute = selectedOption.getAttribute('data-index');
             const index = parseInt(indexAttribute);
+            
+            // Safety check for NaN on index
             const safeIndex = isNaN(index) ? 0 : index;
             const percent = (safeIndex / totalReleases) * 100;
+            
             setProgress(percent);
 
             const counterElement = document.getElementById('counter-current');
+            
+            // Get current value, default to 0 if NaN (Fixing the persistent NaN issue)
             let currentVal = parseInt(counterElement.innerText);
             if (isNaN(currentVal)) currentVal = 0;
             
+            // Use a Proxy Object for GSAP 3 stability (Fixing "this.val" scope issue)
             const proxy = { val: currentVal };
+            
             gsap.to(proxy, {
                 val: safeIndex,
                 duration: 0.8,
@@ -609,106 +508,94 @@
             });
         }
 
-        // --- LOAD IFRAME WITH ERROR HANDLING ---
-        function loadIframe(src, isComparison = false) {
-            const iframe = document.getElementById('visualizationFrame');
-            const loader = document.getElementById('loader');
-            const errorMsg = document.getElementById('error-message');
-            const progressBar = document.getElementById('loading-progress');
-            
-            // Reset states
-            errorMsg.classList.remove('show');
-            loader.style.display = 'flex';
-            iframe.style.opacity = '0';
-            progressBar.style.width = '0%';
-            
-            // Simulate progress
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 90) progress = 90;
-                progressBar.style.width = `${progress}%`;
-            }, 100);
-
-            // Set timeout for error handling
-            const timeout = setTimeout(() => {
-                clearInterval(progressInterval);
-                showError('Loading timeout. Please try again.');
-            }, 30000);
-
-            iframe.onload = function() {
-                clearTimeout(timeout);
-                clearInterval(progressInterval);
-                progressBar.style.width = '100%';
-                setTimeout(() => {
-                    iframe.style.opacity = '1';
-                    loader.style.display = 'none';
-                    // Smooth scroll to iframe
-                    iframe.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 300);
-            };
-
-            iframe.onerror = function() {
-                clearTimeout(timeout);
-                clearInterval(progressInterval);
-                showError('Failed to load visualization file.');
-            };
-
-            iframe.src = src;
+        // --- URL STATE ---
+        function updateURL(release) {
+            const url = new URL(window.location);
+            url.searchParams.set('release', release);
+            window.history.pushState({ release }, '', url);
+            analytics.track('view', { release });
+        }
+        function getURLRelease() {
+            return new URLSearchParams(window.location.search).get('release');
         }
 
-        function showError(message) {
-            const loader = document.getElementById('loader');
-            const errorMsg = document.getElementById('error-message');
-            const errorText = document.getElementById('error-text');
-            loader.style.display = 'none';
-            errorMsg.style.display = 'flex';
-            if (errorText) errorText.textContent = message;
+        // --- THEME ---
+        function initTheme() {
+            const saved = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+        }
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            analytics.track('theme_toggle', { theme: newTheme });
         }
 
-        // --- SEARCH/FILTER ---
-        function filterOptions(searchTerm) {
+        // --- STATS ---
+        function calculateStats() {
+            const entries = Object.values(datasetConfig);
+            const total = entries.reduce((sum, e) => sum + e.total, 0);
+            const debuted = entries.reduce((sum, e) => sum + e.debuted, 0);
+            const rate = total > 0 ? ((debuted / total) * 100).toFixed(1) : 0;
+            const byYear = {};
+            Object.entries(datasetConfig).forEach(([filename, config]) => {
+                const year = filename.match(/^(\d{4})/)?.[1];
+                if (year) {
+                    if (!byYear[year]) byYear[year] = { total: 0, debuted: 0 };
+                    byYear[year].total += config.total;
+                    byYear[year].debuted += config.debuted;
+                }
+            });
+            let bestYear = 'N/A', bestRate = 0;
+            Object.entries(byYear).forEach(([year, stats]) => {
+                const yearRate = stats.total > 0 ? (stats.debuted / stats.total) * 100 : 0;
+                if (yearRate > bestRate) { bestRate = yearRate; bestYear = year; }
+            });
+            return { total, debuted, rate, bestYear };
+        }
+        function updateStatsOverview() {
+            const stats = calculateStats();
+            document.getElementById('stats-total').textContent = stats.total.toLocaleString();
+            document.getElementById('stats-debuted').textContent = stats.debuted.toLocaleString();
+            document.getElementById('stats-rate').textContent = `${stats.rate}%`;
+            document.getElementById('stats-best-year').textContent = stats.bestYear;
+        }
+
+        // --- SEARCH ---
+        function filterOptions(term) {
             const select = document.getElementById('releaseSelect');
-            const options = Array.from(select.options);
-            const term = searchTerm.toLowerCase();
-            
-            options.forEach(option => {
-                const text = option.textContent.toLowerCase();
-                const matches = !term || text.includes(term);
+            Array.from(select.options).forEach(option => {
+                const matches = !term || option.textContent.toLowerCase().includes(term.toLowerCase());
                 option.style.display = matches ? '' : 'none';
                 if (option.parentElement.tagName === 'OPTGROUP') {
                     const group = option.parentElement;
-                    const visibleOptions = Array.from(group.options).filter(opt => opt.style.display !== 'none');
-                    group.disabled = visibleOptions.length === 0;
+                    const visible = Array.from(group.options).filter(opt => opt.style.display !== 'none');
+                    group.disabled = visible.length === 0;
                 }
             });
         }
 
-        // --- COMPARISON MODE ---
-        function toggleComparisonMode(enabled) {
-            const comparisonSelects = document.getElementById('comparisonSelects');
-            const iframeContainer = document.getElementById('iframe-container');
-            const mainSelect = document.getElementById('releaseSelect');
-            
+        // --- COMPARISON ---
+        function toggleComparison(enabled) {
+            document.getElementById('comparisonSelects').classList.toggle('hidden', !enabled);
+            const container = document.getElementById('iframe-container');
+            container.classList.toggle('comparison-mode', enabled);
             if (enabled) {
-                comparisonSelects.classList.remove('hidden');
-                iframeContainer.classList.add('comparison-mode');
                 generateSelectOptions(document.getElementById('comparisonSelect1'));
                 generateSelectOptions(document.getElementById('comparisonSelect2'));
             } else {
-                comparisonSelects.classList.add('hidden');
-                iframeContainer.classList.remove('comparison-mode');
-                // Remove comparison iframes
-                const existingFrames = iframeContainer.querySelectorAll('iframe:not(#visualizationFrame)');
-                existingFrames.forEach(f => f.remove());
+                container.innerHTML = '<iframe id="visualizationFrame" loading="lazy" class="relative z-10 w-full h-full border-none rounded-xl opacity-0 transition-opacity duration-700 bg-white"></iframe>';
+                const currentValue = document.getElementById('releaseSelect').value;
+                if (currentValue) {
+                    setTimeout(() => loadIframe(currentValue), 100);
+                }
             }
         }
-
-        function loadComparison(select1, select2) {
+        function loadComparison(s1, s2) {
             const container = document.getElementById('iframe-container');
             container.innerHTML = '';
-            
-            [select1, select2].forEach((src, idx) => {
+            [s1, s2].forEach(src => {
                 if (!src) return;
                 const iframe = document.createElement('iframe');
                 iframe.src = src;
@@ -718,185 +605,123 @@
             });
         }
 
-        // --- SHARE FUNCTIONALITY ---
-        function shareCurrentView() {
-            const currentRelease = document.getElementById('releaseSelect').value;
+        // --- SHARE ---
+        function shareView() {
             const url = new URL(window.location.href);
-            url.searchParams.set('release', currentRelease);
+            url.searchParams.set('release', document.getElementById('releaseSelect').value);
             const shareUrl = url.toString();
-            
             if (navigator.share) {
-                navigator.share({
-                    title: 'Bowman Prospect Analysis',
-                    text: 'Check out this Bowman prospect visualization!',
-                    url: shareUrl
-                }).then(() => {
-                    analytics.track('share', { method: 'native', release: currentRelease });
-                });
+                navigator.share({ title: 'Bowman Prospect Analysis', url: shareUrl });
             } else {
-                navigator.clipboard.writeText(shareUrl).then(() => {
-                    // Show toast notification
-                    const toast = document.createElement('div');
-                    toast.className = 'fixed top-4 right-4 bg-bowman-gold text-black px-4 py-2 rounded-lg shadow-lg z-50';
-                    toast.textContent = 'Link copied to clipboard!';
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.remove(), 2000);
-                    analytics.track('share', { method: 'copy', release: currentRelease });
-                });
+                navigator.clipboard.writeText(shareUrl);
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-4 right-4 bg-bowman-gold text-black px-4 py-2 rounded-lg shadow-lg z-50';
+                toast.textContent = 'Link copied!';
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 2000);
             }
+            analytics.track('share', { release: document.getElementById('releaseSelect').value });
         }
 
-        // --- KEYBOARD SHORTCUTS ---
-        function initKeyboardShortcuts() {
+        // --- KEYBOARD ---
+        function initKeyboard() {
             document.addEventListener('keydown', (e) => {
-                // Ignore if typing in input
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
                     if (e.key === 'Escape') e.target.blur();
                     return;
                 }
-
                 switch(e.key) {
-                    case '/':
-                        e.preventDefault();
-                        document.getElementById('searchInput').focus();
-                        break;
-                    case 't':
-                    case 'T':
-                        toggleTheme();
-                        break;
-                    case 's':
-                    case 'S':
-                        shareCurrentView();
-                        break;
-                    case '?':
-                        document.getElementById('helpModal').classList.remove('hidden');
-                        break;
-                    case 'Escape':
-                        document.getElementById('helpModal').classList.add('hidden');
-                        break;
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        const select = document.getElementById('releaseSelect');
-                        if (select.selectedIndex > 0) {
-                            select.selectedIndex--;
-                            select.dispatchEvent(new Event('change'));
-                        }
-                        break;
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        const select2 = document.getElementById('releaseSelect');
-                        if (select2.selectedIndex < select2.options.length - 1) {
-                            select2.selectedIndex++;
-                            select2.dispatchEvent(new Event('change'));
-                        }
-                        break;
-                    default:
-                        // Number keys 1-9 to jump to years
-                        if (e.key >= '1' && e.key <= '9') {
-                            const year = 2025 - (parseInt(e.key) - 1);
-                            const select3 = document.getElementById('releaseSelect');
-                            const options = Array.from(select3.options);
-                            const yearOption = options.find(opt => opt.value.includes(year.toString()));
-                            if (yearOption) {
-                                select3.value = yearOption.value;
-                                select3.dispatchEvent(new Event('change'));
-                            }
-                        }
+                    case '/': e.preventDefault(); document.getElementById('searchInput').focus(); break;
+                    case 't': case 'T': toggleTheme(); break;
+                    case 's': case 'S': shareView(); break;
+                    case '?': document.getElementById('helpModal').classList.remove('hidden'); break;
+                    case 'Escape': document.getElementById('helpModal').classList.add('hidden'); break;
+                    case 'ArrowUp': e.preventDefault(); const s1 = document.getElementById('releaseSelect'); if (s1.selectedIndex > 0) { s1.selectedIndex--; s1.dispatchEvent(new Event('change')); } break;
+                    case 'ArrowDown': e.preventDefault(); const s2 = document.getElementById('releaseSelect'); if (s2.selectedIndex < s2.options.length - 1) { s2.selectedIndex++; s2.dispatchEvent(new Event('change')); } break;
+                    default: if (e.key >= '1' && e.key <= '9') {
+                        const year = 2025 - (parseInt(e.key) - 1);
+                        const s3 = document.getElementById('releaseSelect');
+                        const opt = Array.from(s3.options).find(o => o.value.includes(year));
+                        if (opt) { s3.value = opt.value; s3.dispatchEvent(new Event('change')); }
+                    }
                 }
             });
+        }
+
+        // --- IFRAME LOADING (FIXED - SIMPLE) ---
+        function loadIframe(src) {
+            const iframe = document.getElementById('visualizationFrame');
+            const loader = document.getElementById('loader');
+            if (!iframe || !src) return;
+            
+            iframe.style.opacity = '0';
+            loader.style.display = 'flex';
+            
+            const handleLoad = function() {
+                iframe.style.opacity = '1';
+                loader.style.display = 'none';
+                iframe.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                iframe.removeEventListener('load', handleLoad);
+            };
+            
+            iframe.addEventListener('load', handleLoad);
+            setTimeout(() => { iframe.src = src; }, 300);
         }
 
         // --- EVENTS ---
         const select = document.getElementById('releaseSelect');
         const iframe = document.getElementById('visualizationFrame');
-        const searchInput = document.getElementById('searchInput');
-        const comparisonMode = document.getElementById('comparisonMode');
-        const comparisonSelect1 = document.getElementById('comparisonSelect1');
-        const comparisonSelect2 = document.getElementById('comparisonSelect2');
-        const themeToggle = document.getElementById('themeToggle');
-        const shareButton = document.getElementById('shareButton');
-        const helpButton = document.getElementById('helpButton');
-        const closeHelp = document.getElementById('closeHelp');
-        const retryButton = document.getElementById('retry-button');
 
-        // Search input
-        searchInput.addEventListener('input', (e) => filterOptions(e.target.value));
-
-        // Main select change
         select.addEventListener('change', (e) => {
-            if (!comparisonMode.checked) {
+            if (!document.getElementById('comparisonMode').checked) {
                 updateUI(e.target);
+                updateURL(e.target.value);
                 loadIframe(e.target.value);
             }
         });
 
-        // Comparison mode toggle
-        comparisonMode.addEventListener('change', (e) => {
-            toggleComparisonMode(e.target.checked);
+        document.getElementById('searchInput').addEventListener('input', (e) => filterOptions(e.target.value));
+        document.getElementById('comparisonMode').addEventListener('change', (e) => toggleComparison(e.target.checked));
+        document.getElementById('comparisonSelect1').addEventListener('change', () => {
+            const s1 = document.getElementById('comparisonSelect1').value;
+            const s2 = document.getElementById('comparisonSelect2').value;
+            if (s1 && s2) loadComparison(s1, s2);
         });
-
-        // Comparison selects
-        comparisonSelect1.addEventListener('change', () => {
-            if (comparisonSelect1.value && comparisonSelect2.value) {
-                loadComparison(comparisonSelect1.value, comparisonSelect2.value);
-            }
+        document.getElementById('comparisonSelect2').addEventListener('change', () => {
+            const s1 = document.getElementById('comparisonSelect1').value;
+            const s2 = document.getElementById('comparisonSelect2').value;
+            if (s1 && s2) loadComparison(s1, s2);
         });
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('shareButton').addEventListener('click', shareView);
+        document.getElementById('helpButton').addEventListener('click', () => document.getElementById('helpModal').classList.remove('hidden'));
+        document.getElementById('closeHelp').addEventListener('click', () => document.getElementById('helpModal').classList.add('hidden'));
 
-        comparisonSelect2.addEventListener('change', () => {
-            if (comparisonSelect1.value && comparisonSelect2.value) {
-                loadComparison(comparisonSelect1.value, comparisonSelect2.value);
-            }
-        });
-
-        // Theme toggle
-        themeToggle.addEventListener('click', toggleTheme);
-
-        // Share button
-        shareButton.addEventListener('click', shareCurrentView);
-
-        // Help modal
-        helpButton.addEventListener('click', () => {
-            document.getElementById('helpModal').classList.remove('hidden');
-        });
-        closeHelp.addEventListener('click', () => {
-            document.getElementById('helpModal').classList.add('hidden');
-        });
-
-        // Retry button
-        retryButton.addEventListener('click', () => {
-            const currentValue = select.value;
-            if (currentValue) loadIframe(currentValue);
-        });
-
-        // URL state management
-        window.addEventListener('popstate', (e) => {
+        window.addEventListener('popstate', () => {
             const urlRelease = getURLRelease();
             if (urlRelease && datasetConfig[urlRelease]) {
                 select.value = urlRelease;
-                updateUI(select, false);
+                updateUI(select);
                 loadIframe(urlRelease);
             }
         });
 
-        // Initialize
         window.addEventListener('load', () => {
             initTheme();
-            initKeyboardShortcuts();
+            initKeyboard();
             generateSelectOptions();
             updateStatsOverview();
-            
             document.getElementById('counter-total').textContent = `/ ${totalReleases}`;
             
-            // Check URL for initial release
             const urlRelease = getURLRelease();
             if (urlRelease && datasetConfig[urlRelease]) {
                 select.value = urlRelease;
             }
             
             updateUI(select);
+            if (urlRelease) updateURL(urlRelease);
             loadIframe(select.value);
             
-            // Animate page elements
             const tl = gsap.timeline();
             tl.to("#title-anim", { opacity: 1, y: 0, duration: 1, ease: "power3.out" })
               .to("#subtitle-anim", { opacity: 1, duration: 0.8 }, "-=0.5")
