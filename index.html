@@ -4,374 +4,201 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bowman Prospect Analysis | Career WAR Visualizations</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'bowman-gold': '#d4af37',
+                        'bowman-dark': '#050b14',
+                        'bowman-card': '#1a2233',
+                    },
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c)',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        /* --- CSS Reset & Base --- */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: 'Inter', sans-serif;
-            /* Deep, dynamic dark background */
-            background-color: #0f172a; 
+            background-color: #050b14;
             background-image: 
-                radial-gradient(at 40% 20%, hsla(210, 100%, 16%, 1) 0px, transparent 50%),
-                radial-gradient(at 80% 0%, hsla(189, 100%, 26%, 1) 0px, transparent 50%),
-                radial-gradient(at 0% 50%, hsla(255, 100%, 26%, 1) 0px, transparent 50%),
-                radial-gradient(at 80% 50%, hsla(210, 100%, 16%, 1) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, hsla(222, 100%, 27%, 1) 0px, transparent 50%),
-                radial-gradient(at 80% 100%, hsla(210, 100%, 16%, 1) 0px, transparent 50%),
-                radial-gradient(at 0% 0%, hsla(210, 100%, 16%, 1) 0px, transparent 50%);
-            background-attachment: fixed;
-            background-size: 200% 200%;
-            animation: meshGradient 20s ease infinite alternate;
-            color: #e2e8f0;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        @keyframes meshGradient {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
-        }
-
-        /* --- Layout Container --- */
-        .app-container {
-            width: 100%;
-            max-width: 1440px;
-            margin-top: 40px;
-            /* Glassmorphism Effect */
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: slideUp FadeIn 0.8s ease-out;
-        }
-
-        @keyframes slideUpFadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Header Section --- */
-        .header {
-            padding: 40px 40px 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            /* Gradient Text */
-            background: linear-gradient(to right, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(41, 66, 112, 0.1) 0%, transparent 40%);
+            overflow-x: hidden;
         }
         
-        .header .subtitle {
-            margin-top: 12px;
-            font-size: 1.125rem;
-            color: #94a3b8;
-            font-weight: 500;
-            max-width: 600px;
-        }
-
-        /* --- Controls Section --- */
-        .controls-section {
-            padding: 20px 40px;
-            background: rgba(15, 23, 42, 0.4);
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .release-selector-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex: 1;
-        }
-
-        .release-selector-wrapper label {
-            font-weight: 600;
-            color: #eab308; /* Accent Gold/Yellow */
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
-        }
-
-        /* Custom Select Styling */
-        .select-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .form-select {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 100%;
-            padding: 14px 20px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #f8fafc;
-            background-color: rgba(30, 41, 59, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 1.5rem center;
-            background-size: 16px 12px;
-        }
-
-        .form-select:hover {
-            background-color: rgba(51, 65, 85, 0.9);
-            border-color: #eab308; /* Accent hover border */
-        }
-
-        .form-select:focus {
-            outline: none;
-            border-color: #eab308;
-            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.15);
-        }
-        
-        /* Styling options is notoriously difficult cross-browser. 
-           Basic styling for support. */
-        .form-select option {
-            background-color: #1e293b;
+        /* Custom Scrollbar for the select menu */
+        select option {
+            background: #1a2233;
             color: white;
             padding: 10px;
         }
 
-
-        /* --- Visualization Container (The Iframe) --- */
-        .visualization-container {
-            position: relative;
-            /* A slightly lighter background to frame the iframe */
-            background-color: rgba(255, 255, 255, 0.02); 
-            padding: 20px;
-            min-height: 750px;
-        }
-        
-        .visualization-wrapper {
-             /* Clean frame around the iframe content */
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: white; /* Ensure iframe has its native white background */
-        }
-
-        .visualization-container iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-            display: block;
-            /* Ensure smooth rendering */
-            transform: translateZ(0);
-        }
-
-        /* --- Footer Stats Summary --- */
-        .stats-summary {
-            padding: 25px 40px;
-            background: rgba(15, 23, 42, 0.6);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-        }
-
-        .stat-card {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .stat-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(234, 179, 8, 0.1); /* Gold tint */
-            border-radius: 8px;
-            color: #eab308;
-        }
-
-        .stat-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-label {
-            font-weight: 600;
-            color: #94a3b8;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .stat-value {
-            font-weight: 800;
-            color: #ffffff;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .app-container {
-                margin-top: 20px;
-                border-radius: 16px;
-            }
-            .header {
-                padding: 30px 25px;
-            }
-            .header h1 {
-                font-size: 2.25rem;
-            }
-            .controls-section {
-                padding: 25px;
-            }
-            .release-selector-wrapper {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-            .select-container {
-                max-width: 100%;
-            }
-             .visualization-container {
-                padding: 10px;
-            }
-             .visualization-container iframe {
-                height: 600px;
-            }
-            .stats-summary {
-                padding: 25px;
-            }
+        .glass-panel {
+            background: rgba(26, 34, 51, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
-<body>
-    <main class="app-container">
-        <header class="header">
-            <h1>Bowman Prospect Analysis</h1>
-            <p class="subtitle">Analyzing career WAR outcomes vs games played to highlight prospect success rates across historical releases.</p>
+<body class="min-h-screen text-slate-300 flex flex-col items-center justify-center p-4 lg:p-8">
+
+    <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-bowman-gold to-transparent opacity-50"></div>
+
+    <main class="w-full max-w-7xl relative z-10">
+        
+        <header class="text-center mb-10 space-y-4">
+            <div class="inline-block px-3 py-1 border border-bowman-gold/30 rounded-full mb-4 opacity-0" id="badge-anim">
+                <span class="text-xs font-serif italic text-bowman-gold tracking-widest uppercase">Select Release</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-serif font-bold text-white tracking-tight opacity-0" id="title-anim">
+                Bowman <span class="bg-gold-gradient text-transparent bg-clip-text">Analysis</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl font-light text-slate-400 max-w-2xl mx-auto opacity-0" id="subtitle-anim">
+                Visualize Career WAR vs Games Played. <br class="hidden md:block" />
+                Historical success rates of prospect checklists.
+            </p>
         </header>
-        
-        <section class="controls-section">
-            <div class="release-selector-wrapper">
-                <label for="releaseSelect">Select Checklist Release</label>
-                <div class="select-container">
-                    <select id="releaseSelect" class="form-select">
-                        <option value="2025_bowman.html">2025 Bowman</option>
-                        <option value="2025_bowman_chrome.html">2025 Bowman Chrome</option>
-                        <option value="2024_bowman.html">2024 Bowman</option>
-                        <option value="2024_bowman_chrome.html">2024 Bowman Chrome</option>
-                        <option value="2024_bowman_draft.html">2024 Bowman Draft</option>
-                        <option value="2023_bowman.html">2023 Bowman</option>
-                        <option value="2023_bowman_chrome.html">2023 Bowman Chrome</option>
-                        <option value="2023_bowman_draft.html">2023 Bowman Draft</option>
-                        <option value="2022_bowman.html">2022 Bowman</option>
-                        <option value="2022_bowman_chrome.html">2022 Bowman Chrome</option>
-                        <option value="2022_bowman_draft.html">2022 Bowman Draft</option>
-                        <option value="2021_bowman.html">2021 Bowman</option>
-                        <option value="2021_bowman_chrome.html">2021 Bowman Chrome</option>
-                        <option value="2021_bowman_draft.html">2021 Bowman Draft</option>
-                        <option value="2020_bowman.html">2020 Bowman</option>
-                        <option value="2020_bowman_chrome.html">2020 Bowman Chrome</option>
-                        <option value="2020_bowman_draft.html">2020 Bowman Draft</option>
-                        <option value="2019_bowman.html">2019 Bowman</option>
-                        <option value="2019_bowman_chrome.html">2019 Bowman Chrome</option>
-                        <option value="2019_bowman_draft.html">2019 Bowman Draft</option>
-                        <option value="2018_bowman.html">2018 Bowman</option>
-                        <option value="2018_bowman_chrome.html">2018 Bowman Chrome</option>
-                        <option value="2018_bowman_draft.html">2018 Bowman Draft</option>
-                        <option value="2017_bowman.html">2017 Bowman</option>
-                        <option value="2017_bowman_chrome.html">2017 Bowman Chrome</option>
-                        <option value="2017_bowman_draft.html">2017 Bowman Draft</option>
-                        <option value="2016_bowman.html">2016 Bowman</option>
-                        <option value="2016_bowman_chrome.html">2016 Bowman Chrome</option>
-                        <option value="2016_bowman_draft.html">2016 Bowman Draft</option>
-                        <option value="2015_bowman.html">2015 Bowman</option>
-                        <option value="2015_bowman_chrome.html">2015 Bowman Chrome</option>
-                        <option value="2015_bowman_draft.html">2015 Bowman Draft</option>
-                        <option value="2014_bowman.html">2014 Bowman</option>
-                        <option value="2014_bowman_chrome.html">2014 Bowman Chrome</option>
-                        <option value="2014_bowman_draft.html">2014 Bowman Draft</option>
-                        <option value="2013_bowman.html">2013 Bowman</option>
-                        <option value="2013_bowman_chrome.html">2013 Bowman Chrome</option>
-                        <option value="2013_bowman_draft_picks_prospects.html">2013 Bowman Draft Picks Prospects</option>
-                        <option value="2012_bowman.html">2012 Bowman</option>
-                        <option value="2012_bowman_chrome.html">2012 Bowman Chrome</option>
-                        <option value="2012_bowman_draft_picks_prospects.html">2012 Bowman Draft Picks Prospects</option>
-                        <option value="2011_bowman.html">2011 Bowman</option>
-                        <option value="2011_bowman_chrome.html">2011 Bowman Chrome</option>
-                        <option value="2011_bowman_draft_picks_prospects.html">2011 Bowman Draft Picks Prospects</option>
-                        <option value="2010_bowman.html">2010 Bowman</option>
-                        <option value="2010_bowman_chrome.html">2010 Bowman Chrome</option>
-                        <option value="2010_bowman_draft_picks_prospects.html">2010 Bowman Draft Picks Prospects</option>
-                        <option value="2009_bowman.html">2009 Bowman</option>
-                    </select>
+
+        <div class="glass-panel rounded-3xl overflow-hidden opacity-0 translate-y-10" id="main-card">
+            
+            <div class="border-b border-white/5 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 bg-black/20">
+                <div class="w-full md:w-1/2">
+                    <label class="block text-xs font-bold text-bowman-gold uppercase tracking-wider mb-2 ml-1">Select Checklist</label>
+                    <div class="relative group">
+                        <select id="releaseSelect" class="w-full bg-bowman-dark/80 border border-white/10 text-white text-lg rounded-xl px-5 py-4 appearance-none focus:outline-none focus:border-bowman-gold transition-colors cursor-pointer font-serif">
+                             <option value="2025_bowman.html">2025 Bowman</option>
+                            <option value="2025_bowman_chrome.html">2025 Bowman Chrome</option>
+                            <option value="2024_bowman.html">2024 Bowman</option>
+                            <option value="2024_bowman_chrome.html">2024 Bowman Chrome</option>
+                            <option value="2024_bowman_draft.html">2024 Bowman Draft</option>
+                            <option value="2023_bowman.html">2023 Bowman</option>
+                            <option value="2023_bowman_chrome.html">2023 Bowman Chrome</option>
+                            <option value="2023_bowman_draft.html">2023 Bowman Draft</option>
+                            <option value="2022_bowman.html">2022 Bowman</option>
+                            <option value="2022_bowman_chrome.html">2022 Bowman Chrome</option>
+                            <option value="2022_bowman_draft.html">2022 Bowman Draft</option>
+                            <option value="2021_bowman.html">2021 Bowman</option>
+                            <option value="2021_bowman_chrome.html">2021 Bowman Chrome</option>
+                            <option value="2021_bowman_draft.html">2021 Bowman Draft</option>
+                            <option value="2020_bowman.html">2020 Bowman</option>
+                            <option value="2020_bowman_chrome.html">2020 Bowman Chrome</option>
+                            <option value="2020_bowman_draft.html">2020 Bowman Draft</option>
+                            <option value="2019_bowman.html">2019 Bowman</option>
+                            <option value="2019_bowman_chrome.html">2019 Bowman Chrome</option>
+                            <option value="2019_bowman_draft.html">2019 Bowman Draft</option>
+                            <option value="2018_bowman.html">2018 Bowman</option>
+                            <option value="2018_bowman_chrome.html">2018 Bowman Chrome</option>
+                            <option value="2018_bowman_draft.html">2018 Bowman Draft</option>
+                            <option value="2017_bowman.html">2017 Bowman</option>
+                            <option value="2017_bowman_chrome.html">2017 Bowman Chrome</option>
+                            <option value="2017_bowman_draft.html">2017 Bowman Draft</option>
+                            <option value="2016_bowman.html">2016 Bowman</option>
+                            <option value="2016_bowman_chrome.html">2016 Bowman Chrome</option>
+                            <option value="2016_bowman_draft.html">2016 Bowman Draft</option>
+                            <option value="2015_bowman.html">2015 Bowman</option>
+                            <option value="2015_bowman_chrome.html">2015 Bowman Chrome</option>
+                            <option value="2015_bowman_draft.html">2015 Bowman Draft</option>
+                            <option value="2014_bowman.html">2014 Bowman</option>
+                            <option value="2014_bowman_chrome.html">2014 Bowman Chrome</option>
+                            <option value="2014_bowman_draft.html">2014 Bowman Draft</option>
+                            <option value="2013_bowman.html">2013 Bowman</option>
+                            <option value="2013_bowman_chrome.html">2013 Bowman Chrome</option>
+                            <option value="2013_bowman_draft_picks_prospects.html">2013 Bowman Draft Picks Prospects</option>
+                            <option value="2012_bowman.html">2012 Bowman</option>
+                            <option value="2012_bowman_chrome.html">2012 Bowman Chrome</option>
+                            <option value="2012_bowman_draft_picks_prospects.html">2012 Bowman Draft Picks Prospects</option>
+                            <option value="2011_bowman.html">2011 Bowman</option>
+                            <option value="2011_bowman_chrome.html">2011 Bowman Chrome</option>
+                            <option value="2011_bowman_draft_picks_prospects.html">2011 Bowman Draft Picks Prospects</option>
+                            <option value="2010_bowman.html">2010 Bowman</option>
+                            <option value="2010_bowman_chrome.html">2010 Bowman Chrome</option>
+                            <option value="2010_bowman_draft_picks_prospects.html">2010 Bowman Draft Picks Prospects</option>
+                            <option value="2009_bowman.html">2009 Bowman</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-bowman-gold">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <p class="text-xs text-slate-500 uppercase tracking-widest font-bold">Database</p>
+                        <p class="text-2xl text-white font-serif italic">48 Sets</p>
+                    </div>
+                    <div class="h-12 w-12 rounded-full border border-bowman-gold/50 flex items-center justify-center text-bowman-gold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
-        </section>
-        
-        <section class="visualization-container">
-            <div class="visualization-wrapper">
-                <iframe id="visualizationFrame" src="2025_bowman.html" title="Data Visualization"></iframe>
-            </div>
-        </section>
-        
-        <footer class="stats-summary">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s 9-1.34 9-3V5"/></svg>
+
+            <div class="relative bg-white h-[700px] w-full">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none" id="loader">
+                    <div class="w-8 h-8 border-4 border-bowman-gold border-t-transparent rounded-full animate-spin"></div>
                 </div>
-                <div class="stat-content">
-                    <span class="stat-label">Total Releases Analyzed</span>
-                    <span class="stat-value">48</span>
-                </div>
+                <iframe id="visualizationFrame" src="2025_bowman.html" class="w-full h-full border-none opacity-0 transition-opacity duration-500" onload="this.style.opacity='1'; document.getElementById('loader').style.display='none'"></iframe>
             </div>
-        </footer>
+            
+            <div class="bg-bowman-dark p-4 flex justify-between items-center text-xs text-slate-600 border-t border-white/5">
+                <span>BOWMAN PROSPECT ANALYTICS © 2025</span>
+                <span>SECURE CONNECTION</span>
+            </div>
+        </div>
     </main>
-    
+
     <script>
-        // Your original script works perfectly.
-        document.getElementById('releaseSelect').addEventListener('change', function(e) {
-            const selectedFile = e.target.value;
-            // Add a subtle fade effect when changing source
-            const iframe = document.getElementById('visualizationFrame');
-            iframe.style.opacity = '0.5';
+        // GSAP Entrance Animations
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            
+            tl.to("#badge-anim", { opacity: 1, duration: 1, ease: "power2.out" })
+              .to("#title-anim", { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
+              .to("#subtitle-anim", { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+              .to("#main-card", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.4");
+        });
+
+        // Frame Logic
+        const select = document.getElementById('releaseSelect');
+        const iframe = document.getElementById('visualizationFrame');
+        const loader = document.getElementById('loader');
+
+        select.addEventListener('change', (e) => {
+            iframe.style.opacity = '0';
+            loader.style.display = 'flex';
+            
             setTimeout(() => {
-                 iframe.src = selectedFile;
-                 iframe.style.opacity = '1';
-            }, 200);
+                iframe.src = e.target.value;
+            }, 300); // Wait for fade out
+        });
+        
+        iframe.addEventListener('load', () => {
+            iframe.style.opacity = '1';
+            loader.style.display = 'none';
         });
     </script>
 </body>
