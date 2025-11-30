@@ -255,7 +255,7 @@
     </main>
 
     <script>
-        // --- REAL DATASET CONFIGURATION (Pre-Filled) ---
+        // --- REAL DATASET CONFIGURATION ---
         const datasetConfig = {
             "2009_bowman.html": { "date": "May 11, 2009", "debuted": 11, "total": 17 },
             "2010_bowman.html": { "date": "May 10, 2010", "debuted": 21, "total": 22 },
@@ -308,7 +308,6 @@
         };
 
         // --- ANIMATION LOGIC ---
-        // Exactly 48 releases mapped
         const totalReleases = 48; 
         const circle = document.getElementById('progress-circle');
         const radius = circle.r.baseVal.value;
@@ -349,26 +348,31 @@
             }
             document.getElementById('rate-bar').style.width = `${rate}%`;
 
-            // 5. Update Circle & Counter
+            // 5. Update Circle & Counter (ROBUST FIX)
             const indexAttribute = selectedOption.getAttribute('data-index');
             const index = parseInt(indexAttribute);
             
-            // !!! SAFETY CHECK FOR NaN !!!
+            // Safety check for NaN on index
             const safeIndex = isNaN(index) ? 0 : index;
             const percent = (safeIndex / totalReleases) * 100;
             
             setProgress(percent);
 
             const counterElement = document.getElementById('counter-current');
+            
+            // Get current value, default to 0 if NaN (Fixing the persistent NaN issue)
             let currentVal = parseInt(counterElement.innerText);
             if (isNaN(currentVal)) currentVal = 0;
             
-            gsap.to({ val: currentVal }, {
+            // Use a Proxy Object for GSAP 3 stability (Fixing "this.val" scope issue)
+            const proxy = { val: currentVal };
+            
+            gsap.to(proxy, {
                 val: safeIndex,
                 duration: 0.8,
                 ease: "power2.out",
                 onUpdate: function() {
-                    counterElement.innerText = Math.round(this.val);
+                    counterElement.innerText = Math.round(proxy.val);
                 }
             });
         }
