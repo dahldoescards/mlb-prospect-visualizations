@@ -107,8 +107,8 @@
                 <span class="stat-value">AA</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Avg Career Length</span>
-                <span class="stat-value">6.3</span>
+                <span class="stat-label">Avg MiLB Games per Season</span>
+                <span class="stat-value">0.0</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
     <script>
         var data = [{
             x: [5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 4, 5, 5, 4, 4, 3, 4, 3, 3],
-            y: [6, 8, 5, 8, 5, 7, 6, 6, 7, 7, 6, 5, 7, 7, 8, 3, 8, 4, 7],
+            y: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["A.J. Puckett", "Abrahan Gutierrez", "Andrew Sopko", "C.J. Hinojosa", "David Thompson", "Elniery Garcia", "Francisco Rios", "Jacob Heyward", "Jalen Miller", "Jason Groome", "Jose Pujols", "Jose Taveras", "Josh Ockimey", "Justin Maese", "Kevin Maitan", "Luis Almanzar", "Luis Carpio", "Roniel Raudes", "Wuilmer Becerra"],
@@ -134,12 +134,13 @@
                     color: '#ffffff'
                 }
             },
-            customdata: [["AAA", 2016, 6, "N/A"], ["AAA", 2017, 8, "2025-08-05"], ["AAA", 2015, 5, "2020-11-19"], ["AAA", 2016, 8, "N/A"], ["AAA", 2016, 5, "N/A"], ["AAA", 2012, 7, "N/A"], ["AAA", 2013, 6, "N/A"], ["AAA", 2016, 6, "N/A"], ["AA", 2015, 7, "2023-05-25"], ["AAA", 2016, 7, "N/A"], ["AA", 2013, 6, "2020-07-08"], ["AAA", 2014, 5, "2020-02-13"], ["AAA", 2014, 7, "N/A"], ["AA", 2015, 7, "2023-05-30"], ["AA", 2017, 8, "2025-05-30"], ["High-A", 2018, 3, "N/A"], ["AA", 2014, 8, "2022-08-30"], ["High-A", 2015, 4, "2022-07-02"], ["High-A", 2012, 7, "N/A"]],
+            customdata: [["AAA", 2016, 6, 0.0, "N/A"], ["AAA", 2017, 8, 0.0, "2025-08-05"], ["AAA", 2015, 5, 0.0, "2020-11-19"], ["AAA", 2016, 8, 0.0, "N/A"], ["AAA", 2016, 5, 0.0, "N/A"], ["AAA", 2012, 7, 0.0, "N/A"], ["AAA", 2013, 6, 0.0, "N/A"], ["AAA", 2016, 6, 0.0, "N/A"], ["AA", 2015, 7, 0.0, "2023-05-25"], ["AAA", 2016, 7, 0.0, "N/A"], ["AA", 2013, 6, 0.0, "2020-07-08"], ["AAA", 2014, 5, 0.0, "2020-02-13"], ["AAA", 2014, 7, 0.0, "N/A"], ["AA", 2015, 7, 0.0, "2023-05-30"], ["AA", 2017, 8, 0.0, "2025-05-30"], ["High-A", 2018, 3, 0.0, "N/A"], ["AA", 2014, 8, 0.0, "2022-08-30"], ["High-A", 2015, 4, 0.0, "2022-07-02"], ["High-A", 2012, 7, 0.0, "N/A"]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'MiLB Highest Level: %{customdata[0]}<br>' +
                           'MiLB First Season: %{customdata[1]}<br>' +
                           'MiLB Career Length: %{customdata[2]} years<br>' +
-                          'Release Date: %{customdata[3]}<extra></extra>'
+                          'MiLB Games per Season: %{customdata[3]:.1f}<br>' +
+                          'Release Date: %{customdata[4]}<extra></extra>'
         }];
 
         var layout = {
@@ -166,7 +167,7 @@
             },
             yaxis: {
                 title: {
-                    text: 'MiLB Career Length (years)',
+                    text: 'MiLB Games per Season',
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
@@ -176,7 +177,7 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [2.2, 8.8],
+                range: [0.0, 1.0],
                 tickformat: 'd'
             },
             plot_bgcolor: '#ffffff',
