@@ -91,6 +91,16 @@
         body.light-mode #debut-stat-display {
             color: #b45309 !important;
         }
+        /* Light-mode contrast for inner white panels and progress rail */
+        body.light-mode .bg-white\/5 {
+            background-color: #f9fafb !important;  /* subtle card vs page */
+        }
+        body.light-mode .border-white\/5 {
+            border-color: #d1d5db !important;      /* soft but visible edge */
+        }
+        body.light-mode .bg-white\/10 {
+            background-color: #e5e7eb !important;  /* progress rail stands off white */
+        }
     </style>
 </head>
 <body class="min-h-screen text-slate-300 flex flex-col items-center justify-center p-4 lg:p-6">
