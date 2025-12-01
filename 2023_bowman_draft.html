@@ -73,11 +73,6 @@
         .tab-content.active {
             display: block;
         }
-        .tab-content.both {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
         #plotDebuted, #plotNonDebuted {
             width: 100%;
             height: 650px;
@@ -159,8 +154,8 @@
             <button class="tab " data-tab="non-debuted" >
                 Non-Debuted (89)
             </button>
-            <button class="tab" data-tab="both" >
-                Both
+            <button class="tab" data-tab="accolades">
+                Accolades & Trajectories
             </button>
         </div>
         
@@ -183,33 +178,72 @@
         </div>
         
         <div class="tab-content" id="tab-non-debuted">
+            <div id="nonDebutedFilters" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;margin-bottom:5px;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#6c757d;margin-right:6px;">Filter by Level:</span>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="1" checked> Rookie</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="2" checked> Low-A</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="3" checked> High-A</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="4" checked> AA</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="5" checked> AAA</label>
+            </div>
             <div id="plotNonDebuted"></div>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">89</span>
+                    <span class="stat-value" id="nonDebutedPlayersCount">89</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Level</span>
-                    <span class="stat-value">High-A</span>
+                    <span class="stat-value" id="nonDebutedAvgLevel">High-A</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Games per Season</span>
-                    <span class="stat-value">58.5</span>
+                    <span class="stat-value" id="nonDebutedAvgGps">58.5</span>
                 </div>
             </div>
         </div>
         
-        <div class="tab-content" id="tab-both">
-            <div class="both-charts">
-                <div class="chart-container">
-                    <h3 style="color: #1e3c72; margin-bottom: 15px; font-size: 1.2rem;">Debuted Players</h3>
-                    <div id="plotDebutedBoth"></div>
+        <div class="tab-content" id="tab-accolades">
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total Players</span>
+                    <span class="stat-value">101</span>
                 </div>
-                <div class="chart-container">
-                    <h3 style="color: #1e3c72; margin-bottom: 15px; font-size: 1.2rem;">Non-Debuted Players</h3>
-                    <div id="plotNonDebutedBoth"></div>
+                <div class="stat-item">
+                    <span class="stat-label">All-Stars</span>
+                    <span class="stat-value">29</span>
                 </div>
+                <div class="stat-item">
+                    <span class="stat-label">MVP Awards</span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Cy Young Awards</span>
+                    <span class="stat-value">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Gold Gloves</span>
+                    <span class="stat-value">4</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Silver Sluggers</span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Rookie of Year</span>
+                    <span class="stat-value">2</span>
+                </div>
+            </div>
+            <div style="margin-top:32px;">
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
+                    1 reached Rookie, 10 reached Low-A, 36 reached High-A, 31 reached AA, 11 reached AAA, 12 reached Unknown.
+                </p>
+                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
+                    <li>Average MLB career length: <strong>1.2</strong> seasons.</li>
+                    <li>Average MiLB career length: <strong>2.7</strong> seasons.</li>
+                    <li>Debuted players in this release: <strong>12</strong>; non-debuted with MiLB data: <strong>89</strong>.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -239,16 +273,14 @@
         var debutedData = [{
             x: [-0.168936, 0.160484, 1.70708, 0.784357, -0.0307083, -0.17973, 1.55915, 1.45756, 1.20677, 10.77, 0.859745, 7.13813],
             y: [10.0, 44.0, 36.0, 6.0, 12.0, 67.0, 49.0, 126.0, 8.0, 27.5, 6.0, 134.0],
-            mode: 'markers+text',
+            mode: 'markers',
             type: 'scatter',
             text: ["Bryce Eldridge", "C.J. Kayfus", "Grant Taylor", "Hurston Waldrep", "Jacob Wilson", "Kristian Campbell", "Luke Keaschall", "Matt Shaw", "Nolan McLean", "Paul Skenes", "Rhett Lowder", "Wyatt Langford"],
-            textposition: 'top center',
-            textfont: { size: 10, color: '#333' },
             marker: {
-                size: 10,
+                size: 9,
                 color: '#2a5298',
-                opacity: 0.8,
-                line: { width: 2, color: '#ffffff' }
+                opacity: 0.85,
+                line: { width: 1.5, color: '#ffffff' }
             },
             customdata: [10.0, 44.0, 36.0, 12.0, 12.0, 67.0, 49.0, 126.0, 8.0, 55.0, 6.0, 268.0],
             hovertemplate: '<b>%{text}</b><br>' +
@@ -292,33 +324,104 @@
         Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
         
-        var nonDebutedData = [{
+        // Base arrays for non-debuted players
+        var nonDebutedBase = {
             x: [4, 3, 3, 4, 5, 3, 3, 3, 4, 4, 3, 3, 3, 4, 3, 4, 3, 4, 4, 4, 3, 2, 3, 5, 4, 4, 5, 3, 3, 5, 4, 1, 5, 2, 4, 3, 3, 2, 4, 3, 2, 4, 4, 4, 4, 5, 3, 3, 5, 4, 4, 3, 4, 3, 3, 4, 5, 3, 3, 2, 3, 3, 3, 3, 5, 4, 2, 4, 3, 3, 2, 3, 4, 4, 4, 4, 3, 4, 3, 2, 3, 3, 5, 3, 5, 2, 4, 4, 2],
             y: [73.67, 67.33, 45.0, 37.5, 101.0, 14.33, 61.33, 77.67, 82.33, 68.67, 107.0, 28.0, 7.0, 63.0, 59.67, 93.33, 12.0, 86.33, 105.5, 91.33, 55.33, 15.0, 79.0, 74.67, 84.33, 65.67, 76.67, 61.33, 58.0, 16.33, 83.67, 41.67, 69.67, 69.67, 85.33, 65.67, 18.5, 19.5, 131.0, 71.67, 6.0, 73.67, 77.0, 16.33, 32.5, 99.33, 60.67, 69.5, 18.5, 96.33, 62.33, 55.67, 18.33, 87.0, 37.5, 60.0, 80.33, 75.0, 61.33, 10.5, 51.33, 110.33, 76.67, 48.5, 93.33, 80.33, 5.67, 58.67, 57.67, 14.33, 7.0, 84.33, 76.33, 94.0, 118.0, 14.67, 16.0, 86.0, 88.0, 30.0, 9.0, 53.67, 74.67, 51.0, 68.67, 8.0, 70.67, 17.0, 16.0],
-            mode: 'markers+text',
-            type: 'scatter',
-            text: ["AJ Ewing", "Adrian Santana", "Alberto Rios", "Alex Clemmey", "Andrew Pinckney", "Austin Troesser", "Blake Mitchell", "Brandon Winokur", "Brayden Taylor", "Brock Rodden", "Brock Vradenburg", "Cade Denton", "Cade Kuehler", "Calvin Harris", "Cam Fisher", "Carson Roccaforte", "Charlee Soto", "Chase Davis", "Christian Knapczyk", "Cole Carrigg", "Cole Foster", "Cole Miller", "Colin Houck", "Colt Emerson", "Colton Ledbetter", "Connor Burns", "Cooper Ingle", "Devin Saltiban", "Dillon Head", "Drue Hackenberg", "Dylan Campbell", "Elian Soto", "Enrique Bradfield Jr.", "Eric Bitonti", "Ethan O'Donnell", "Garret Forrester", "Grayson Hitt", "Hiro Wyatt", "Homer Bush Jr.", "Hunter Haas", "Hunter Hollan", "Jace Bohrofen", "Jack Hurley", "Jack Mahoney", "Jackson Baumeister", "Jacob Gonzalez", "Jake Cunningham", "Jake DeLeo", "Jaxon Wiggins", "Jay Beshears", "Joe Redfield", "Joe Vetrano", "Joe Whitman", "Jonah Cox", "Jonny Farmelo", "Justin Riemer", "Kemp Alderman", "Kendall George", "Kevin Sim", "Landen Maroudis", "Luke Shliger", "Mac Horvath", "Marcus Brown", "Maui Ahuna", "Max Anderson", "Max Clark", "Michael Carico", "Mike Boeve", "Nazzan Zanetello", "Noble Meyer", "Paul Wilson", "Quinn McDaniel", "Ralphy Velazquez", "Roc Riggio", "Sabin Ceballos", "Sean Sullivan", "Seth Keener", "Spencer Nivens", "Tai Peete", "TayShaun Walton", "Teddy McGraw", "Tommy Hawke", "Tommy Troy", "Travis Honeyman", "Tre' Morgan", "Ty Floyd", "Zach Levenson", "Zach Thornton", "Zander Mueth"],
-            textposition: 'top center',
-            textfont: { size: 10, color: '#333' },
-            marker: {
-                size: 10,
-                color: '#d32f2f',
-                opacity: 0.8,
-                line: { width: 2, color: '#ffffff' }
-            },
-            customdata: [["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["AA", 2024, 2, "N/A"], ["AAA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 2, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "2025-07-29"], ["AA", 2023, 3, "N/A"], ["High-A", 2024, 2, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2024, 2, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["Low-A", 2025, 1, "N/A"], ["High-A", 2023, 3, "N/A"], ["AAA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AAA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["AAA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["Rookie", 2023, 3, "N/A"], ["AAA", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2024, 2, "N/A"], ["Low-A", 2024, 2, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2024, 2, "N/A"], ["AAA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 2, "2025-03-29"], ["AAA", 2024, 2, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2024, 2, "N/A"], ["AA", 2024, 2, "N/A"], ["AAA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "2025-08-11"], ["Low-A", 2024, 2, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2024, 2, "N/A"], ["AAA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["High-A", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["High-A", 2024, 2, "N/A"], ["High-A", 2023, 3, "N/A"], ["AAA", 2023, 3, "N/A"], ["High-A", 2024, 2, "N/A"], ["AAA", 2023, 3, "N/A"], ["Low-A", 2025, 1, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2024, 2, "N/A"], ["Low-A", 2024, 2, "N/A"]],
-            hovertemplate: '<b>%{text}</b><br>' +
-                          'MiLB Highest Level: %{customdata[0]}<br>' +
-                          'MiLB First Season: %{customdata[1]}<br>' +
-                          'MiLB Career Length: %{customdata[2]} years<br>' +
-                          'Release Date: %{customdata[3]}<extra></extra>',
-            name: 'Non-Debuted Players'
-        }];
-        
+            names: ["AJ Ewing", "Adrian Santana", "Alberto Rios", "Alex Clemmey", "Andrew Pinckney", "Austin Troesser", "Blake Mitchell", "Brandon Winokur", "Brayden Taylor", "Brock Rodden", "Brock Vradenburg", "Cade Denton", "Cade Kuehler", "Calvin Harris", "Cam Fisher", "Carson Roccaforte", "Charlee Soto", "Chase Davis", "Christian Knapczyk", "Cole Carrigg", "Cole Foster", "Cole Miller", "Colin Houck", "Colt Emerson", "Colton Ledbetter", "Connor Burns", "Cooper Ingle", "Devin Saltiban", "Dillon Head", "Drue Hackenberg", "Dylan Campbell", "Elian Soto", "Enrique Bradfield Jr.", "Eric Bitonti", "Ethan O'Donnell", "Garret Forrester", "Grayson Hitt", "Hiro Wyatt", "Homer Bush Jr.", "Hunter Haas", "Hunter Hollan", "Jace Bohrofen", "Jack Hurley", "Jack Mahoney", "Jackson Baumeister", "Jacob Gonzalez", "Jake Cunningham", "Jake DeLeo", "Jaxon Wiggins", "Jay Beshears", "Joe Redfield", "Joe Vetrano", "Joe Whitman", "Jonah Cox", "Jonny Farmelo", "Justin Riemer", "Kemp Alderman", "Kendall George", "Kevin Sim", "Landen Maroudis", "Luke Shliger", "Mac Horvath", "Marcus Brown", "Maui Ahuna", "Max Anderson", "Max Clark", "Michael Carico", "Mike Boeve", "Nazzan Zanetello", "Noble Meyer", "Paul Wilson", "Quinn McDaniel", "Ralphy Velazquez", "Roc Riggio", "Sabin Ceballos", "Sean Sullivan", "Seth Keener", "Spencer Nivens", "Tai Peete", "TayShaun Walton", "Teddy McGraw", "Tommy Hawke", "Tommy Troy", "Travis Honeyman", "Tre' Morgan", "Ty Floyd", "Zach Levenson", "Zach Thornton", "Zander Mueth"],
+            levelsLabel: ["AA", "High-A", "High-A", "AA", "AAA", "High-A", "High-A", "High-A", "AA", "AA", "High-A", "High-A", "High-A", "AA", "High-A", "AA", "High-A", "AA", "AA", "AA", "High-A", "Low-A", "High-A", "AAA", "AA", "AA", "AAA", "High-A", "High-A", "AAA", "AA", "Rookie", "AAA", "Low-A", "AA", "High-A", "High-A", "Low-A", "AA", "High-A", "Low-A", "AA", "AA", "AA", "AA", "AAA", "High-A", "High-A", "AAA", "AA", "AA", "High-A", "AA", "High-A", "High-A", "AA", "AAA", "High-A", "High-A", "Low-A", "High-A", "High-A", "High-A", "High-A", "AAA", "AA", "Low-A", "AA", "High-A", "High-A", "Low-A", "High-A", "AA", "AA", "AA", "AA", "High-A", "AA", "High-A", "Low-A", "High-A", "High-A", "AAA", "High-A", "AAA", "Low-A", "AA", "AA", "Low-A"],
+            careerLengths: [3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 2, 3, 2, 3, 3, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3, 2, 2, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 2, 3, 1, 3, 2, 2],
+            firstSeasons: [2023, 2023, 2023, 2024, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2024, 2023, 2024, 2023, 2023, 2025, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2024, 2024, 2023, 2023, 2024, 2023, 2023, 2023, 2024, 2023, 2023, 2023, 2024, 2023, 2023, 2023, 2023, 2023, 2024, 2024, 2023, 2023, 2023, 2024, 2023, 2023, 2023, 2024, 2023, 2023, 2023, 2023, 2023, 2023, 2024, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2024, 2023, 2023, 2024, 2023, 2025, 2023, 2024, 2024],
+            releaseDates: ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2025-07-29", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2025-03-29", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2025-08-11", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"]
+        };
+
+        // Deterministic jitter for readability (stable across renders)
+        function hashFloat(i, seed) {
+            var x = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453;
+            return x - Math.floor(x);
+        }
+
+        function buildNonDebutedTrace(activeLevels) {
+            var x = [];
+            var y = [];
+            var text = [];
+            var customdata = [];
+
+            var totalGps = 0;
+            var levelNumeric = nonDebutedBase.x;
+
+            for (var i = 0; i < levelNumeric.length; i++) {
+                var lvl = levelNumeric[i];
+                if (activeLevels && activeLevels.length &&
+                    activeLevels.indexOf(String(lvl)) === -1) {
+                    continue;
+                }
+
+                var baseX = lvl;
+                var baseY = nonDebutedBase.y[i];
+
+                // Horizontal jitter within level band
+                var jx = (hashFloat(i, 1) - 0.5) * 0.35;
+                // Vertical jitter scaled to axis range (small but visible)
+                var jy = (hashFloat(i, 2) - 0.5) * (144.1000 - 0.0000) * 0.03;
+
+                x.push(baseX + jx);
+                y.push(Math.max(0.0000, baseY + jy));
+                text.push(nonDebutedBase.names[i]);
+                customdata.push([
+                    nonDebutedBase.levelsLabel[i],
+                    nonDebutedBase.firstSeasons[i],
+                    nonDebutedBase.careerLengths[i],
+                    nonDebutedBase.releaseDates[i]
+                ]);
+                totalGps += baseY;
+            }
+
+            return {
+                trace: {
+                    x: x,
+                    y: y,
+                    mode: 'markers',
+                    type: 'scatter',
+                    text: text,
+                    marker: {
+                        size: 9,
+                        color: '#d32f2f',
+                        opacity: 0.85,
+                        line: { width: 1.5, color: '#ffffff' }
+                    },
+                    customdata: customdata,
+                    hovertemplate: '<b>%{text}</b><br>' +
+                                  'MiLB Highest Level: %{customdata[0]}<br>' +
+                                  'MiLB First Season: %{customdata[1]}<br>' +
+                                  'MiLB Career Length: %{customdata[2]} years<br>' +
+                                  'Release Date: %{customdata[3]}<extra></extra>',
+                    name: 'Non-Debuted Players'
+                },
+                count: x.length,
+                avgGps: (x.length ? totalGps / x.length : 0),
+                avgLevel: (function() {
+                    if (!x.length) return null;
+                    var sum = 0, n = 0;
+                    for (var j = 0; j < levelNumeric.length; j++) {
+                        var lvl2 = levelNumeric[j];
+                        if (activeLevels && activeLevels.length &&
+                            activeLevels.indexOf(String(lvl2)) === -1) {
+                            continue;
+                        }
+                        sum += lvl2;
+                        n += 1;
+                    }
+                    return n ? sum / n : null;
+                })()
+            };
+        }
+
         var nonDebutedLayout = {
             title: { text: '', font: { size: 0 } },
             xaxis: {
                 title: { text: 'MiLB Highest Level', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
+                type: 'linear',
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
@@ -348,23 +451,51 @@
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, { responsive: true, displayModeBar: true });
-        
-        
-        // Generate plots for "Both" tab (create copies of data for side-by-side display)
-        
-        if (typeof debutedData !== 'undefined' && typeof debutedLayout !== 'undefined') {
-            var debutedDataBoth = JSON.parse(JSON.stringify(debutedData));
-            var debutedLayoutBoth = JSON.parse(JSON.stringify(debutedLayout));
-            debutedLayoutBoth.margin = { l: 60, r: 20, t: 20, b: 50 };
-            Plotly.newPlot('plotDebutedBoth', debutedDataBoth, debutedLayoutBoth, { responsive: true, displayModeBar: true });
+        // Configuration object reused for updates
+        var nonDebutedConfig = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        function getActiveLevelsNonDebuted() {
+            var checks = document.querySelectorAll('.level-filter');
+            var active = [];
+            checks.forEach(function(cb) {
+                if (cb.checked) active.push(cb.value);
+            });
+            if (!active.length) {
+                active = ['1','2','3','4','5'];
+                checks.forEach(function(cb) { cb.checked = true; });
+            }
+            return active;
         }
-        if (typeof nonDebutedData !== 'undefined' && typeof nonDebutedLayout !== 'undefined') {
-            var nonDebutedDataBoth = JSON.parse(JSON.stringify(nonDebutedData));
-            var nonDebutedLayoutBoth = JSON.parse(JSON.stringify(nonDebutedLayout));
-            nonDebutedLayoutBoth.margin = { l: 60, r: 20, t: 20, b: 50 };
-            Plotly.newPlot('plotNonDebutedBoth', nonDebutedDataBoth, nonDebutedLayoutBoth, { responsive: true, displayModeBar: true });
+
+        function updateNonDebutedMainPlot() {
+            var active = getActiveLevelsNonDebuted();
+            var res = buildNonDebutedTrace(active);
+            Plotly.react('plotNonDebuted', [res.trace], nonDebutedLayout, nonDebutedConfig);
+
+            var countEl = document.getElementById('nonDebutedPlayersCount');
+            var avgGpsEl = document.getElementById('nonDebutedAvgGps');
+            var avgLevelEl = document.getElementById('nonDebutedAvgLevel');
+            if (countEl) countEl.textContent = res.count;
+            if (avgGpsEl) avgGpsEl.textContent = res.avgGps.toFixed(1);
+            if (avgLevelEl && res.avgLevel !== null) {
+                var levelMap = {1:'Rookie',2:'Low-A',3:'High-A',4:'AA',5:'AAA'};
+                var rounded = Math.round(res.avgLevel);
+                avgLevelEl.textContent = levelMap[rounded] || 'Unknown';
+            }
         }
+
+        // Initial render for non-debuted main plot and "Both" tab (unfiltered)
+        var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
+        var nonDebutedData = [nonDebutedFull.trace];
+        Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
+
+        // Wire up filters
+        document.querySelectorAll('.level-filter').forEach(function(cb) {
+            cb.addEventListener('change', updateNonDebutedMainPlot);
+        });
         
     </script>
 </body>

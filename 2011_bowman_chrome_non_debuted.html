@@ -96,52 +96,125 @@
             <h1>2011 Bowman Chrome</h1>
             <p class="subtitle">MiLB Highest Level vs Career Length Analysis (Non-Debuted Players)</p>
         </div>
+        <div id="nonDebutedFilters" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;margin-bottom:5px;">
+            <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#6c757d;margin-right:6px;">Filter by Level:</span>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="1" checked> Rookie</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="2" checked> Low-A</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="3" checked> High-A</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="4" checked> AA</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="5" checked> AAA</label>
+        </div>
         <div id="plot"></div>
         <div class="stats">
             <div class="stat-item">
                 <span class="stat-label">Players Shown</span>
-                <span class="stat-value">16</span>
+                <span class="stat-value" id="nonDebutedPlayersCount">16</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Level</span>
-                <span class="stat-value">AAA</span>
+                <span class="stat-value" id="nonDebutedAvgLevel">AAA</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Games per Season</span>
-                <span class="stat-value">52.6</span>
+                <span class="stat-value" id="nonDebutedAvgGps">52.6</span>
             </div>
         </div>
     </div>
 
     <script>
-        var data = [{
+        // Base arrays for non-debuted players
+        var nonDebutedBase = {
             x: [5, 4, 5, 5, 5, 5, 4, 4, 5, 4, 3, 5, 5, 5, 5, 5],
             y: [53.25, 23.17, 62.8, 95.0, 100.8, 27.67, 76.33, 23.5, 104.67, 32.0, 42.75, 32.14, 43.38, 64.4, 26.5, 33.12],
-            mode: 'markers+text',
-            type: 'scatter',
-            text: ["Brad Holt", "Brody Colvin", "Christopher Wallace", "Cutter Dykstra", "Dan Brewer", "David Bromberg", "Dickie Joe Thon", "Garrett Gould", "Hunter Morris", "Jordan Swagerty", "Kendrick Perkins", "Luis Heredia", "Matt Lollis", "Reese Havens", "Shaeffer Hall", "Trey McNutt"],
-            textposition: 'top center',
-            textfont: {
-                size: 10,
-                color: '#333'
-            },
-            marker: {
-                size: 10,
-                color: '#d32f2f',
-                opacity: 0.8,
-                line: {
-                    width: 2,
-                    color: '#ffffff'
+            names: ["Brad Holt", "Brody Colvin", "Christopher Wallace", "Cutter Dykstra", "Dan Brewer", "David Bromberg", "Dickie Joe Thon", "Garrett Gould", "Hunter Morris", "Jordan Swagerty", "Kendrick Perkins", "Luis Heredia", "Matt Lollis", "Reese Havens", "Shaeffer Hall", "Trey McNutt"],
+            levelsLabel: ["AAA", "AA", "AAA", "AAA", "AAA", "AAA", "AA", "AA", "AAA", "AA", "High-A", "AAA", "AAA", "AAA", "AAA", "AAA"],
+            careerLengths: [4, 6, 5, 9, 5, 9, 6, 6, 6, 3, 4, 7, 8, 5, 4, 8],
+            firstSeasons: [2009, 2009, 2010, 2008, 2009, 2006, 2011, 2009, 2010, 2011, 2010, 2011, 2009, 2009, 2010, 2009],
+            releaseDates: ["2013-03-30", "2014-06-20", "2015-04-03", "2016-06-14", "2014-03-23", "2014-07-01", "2017-07-07", "N/A", "N/A", "2015-07-16", "2015-03-30", "N/A", "N/A", "N/A", "N/A", "2020-05-28"]
+        };
+
+        function hashFloat(i, seed) {
+            var x = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453;
+            return x - Math.floor(x);
+        }
+
+        function buildNonDebutedTrace(activeLevels) {
+            var x = [];
+            var y = [];
+            var text = [];
+            var customdata = [];
+
+            var totalGps = 0;
+            var levelNumeric = nonDebutedBase.x;
+
+            for (var i = 0; i < levelNumeric.length; i++) {
+                var lvl = levelNumeric[i];
+                if (activeLevels && activeLevels.length &&
+                    activeLevels.indexOf(String(lvl)) === -1) {
+                    continue;
                 }
-            },
-            customdata: [["AAA", 2009, 4, 53.25, "2013-03-30"], ["AA", 2009, 6, 23.17, "2014-06-20"], ["AAA", 2010, 5, 62.8, "2015-04-03"], ["AAA", 2008, 9, 95.0, "2016-06-14"], ["AAA", 2009, 5, 100.8, "2014-03-23"], ["AAA", 2006, 9, 27.67, "2014-07-01"], ["AA", 2011, 6, 76.33, "2017-07-07"], ["AA", 2009, 6, 23.5, "N/A"], ["AAA", 2010, 6, 104.67, "N/A"], ["AA", 2011, 3, 32.0, "2015-07-16"], ["High-A", 2010, 4, 42.75, "2015-03-30"], ["AAA", 2011, 7, 32.14, "N/A"], ["AAA", 2009, 8, 43.38, "N/A"], ["AAA", 2009, 5, 64.4, "N/A"], ["AAA", 2010, 4, 26.5, "N/A"], ["AAA", 2009, 8, 33.12, "2020-05-28"]],
-            hovertemplate: '<b>%{text}</b><br>' +
-                          'MiLB Highest Level: %{customdata[0]}<br>' +
-                          'MiLB First Season: %{customdata[1]}<br>' +
-                          'MiLB Career Length: %{customdata[2]} years<br>' +
-                          'MiLB Games per Season: %{customdata[3]:.1f}<br>' +
-                          'Release Date: %{customdata[4]}<extra></extra>'
-        }];
+
+                var baseX = lvl;
+                var baseY = nonDebutedBase.y[i];
+
+                var jx = (hashFloat(i, 1) - 0.5) * 0.45;
+                var jy = (hashFloat(i, 2) - 0.5) * (115.1370 - 12.7030) * 0.05;
+
+                x.push(baseX + jx);
+                y.push(Math.max(12.7030, baseY + jy));
+                text.push(nonDebutedBase.names[i]);
+                customdata.push([
+                    nonDebutedBase.levelsLabel[i],
+                    nonDebutedBase.firstSeasons[i],
+                    nonDebutedBase.careerLengths[i],
+                    nonDebutedBase.y[i],
+                    nonDebutedBase.releaseDates[i]
+                ]);
+                totalGps += baseY;
+            }
+
+            return {
+                trace: {
+                    x: x,
+                    y: y,
+                    mode: 'markers',
+                    type: 'scatter',
+                    text: text,
+                    marker: {
+                        size: 9,
+                        color: '#d32f2f',
+                        opacity: 0.85,
+                        line: {
+                            width: 1.5,
+                            color: '#ffffff'
+                        }
+                    },
+                    customdata: customdata,
+                    hovertemplate: '<b>%{text}</b><br>' +
+                                  'MiLB Highest Level: %{customdata[0]}<br>' +
+                                  'MiLB First Season: %{customdata[1]}<br>' +
+                                  'MiLB Career Length: %{customdata[2]} years<br>' +
+                                  'MiLB Games per Season: %{customdata[3]:.1f}<br>' +
+                                  'Release Date: %{customdata[4]}<extra></extra>'
+                },
+                count: x.length,
+                avgGps: (x.length ? totalGps / x.length : 0),
+                avgLevel: (function() {
+                    if (!x.length) return null;
+                    var sum = 0, n = 0;
+                    for (var i = 0; i < levelNumeric.length; i++) {
+                        var lvl = levelNumeric[i];
+                        if (activeLevels && activeLevels.length &&
+                            activeLevels.indexOf(String(lvl)) === -1) {
+                            continue;
+                        }
+                        sum += lvl;
+                        n += 1;
+                    }
+                    return n ? sum / n : null;
+                })()
+            };
+        }
 
         var layout = {
             title: {
@@ -154,6 +227,7 @@
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
+                type: 'linear',
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
@@ -200,8 +274,44 @@
             responsive: true,
             displayModeBar: true
         };
+        
+        function getActiveLevels() {
+            var checks = document.querySelectorAll('.level-filter');
+            var active = [];
+            checks.forEach(function(cb) {
+                if (cb.checked) active.push(cb.value);
+            });
+            if (!active.length) {
+                // If user unchecks everything, fall back to all levels
+                active = ['1','2','3','4','5'];
+                checks.forEach(function(cb) { cb.checked = true; });
+            }
+            return active;
+        }
 
-        Plotly.newPlot('plot', data, layout, config);
+        function updateNonDebutedPlot() {
+            var active = getActiveLevels();
+            var res = buildNonDebutedTrace(active);
+            Plotly.react('plot', [res.trace], layout, config);
+
+            var countEl = document.getElementById('nonDebutedPlayersCount');
+            var avgGpsEl = document.getElementById('nonDebutedAvgGps');
+            var avgLevelEl = document.getElementById('nonDebutedAvgLevel');
+            if (countEl) countEl.textContent = res.count;
+            if (avgGpsEl) avgGpsEl.textContent = res.avgGps.toFixed(1);
+            if (avgLevelEl && res.avgLevel !== null) {
+                var levelMap = {1:'Rookie',2:'Low-A',3:'High-A',4:'AA',5:'AAA'};
+                var rounded = Math.round(res.avgLevel);
+                avgLevelEl.textContent = levelMap[rounded] || 'Unknown';
+            }
+        }
+
+        // Initial render
+        updateNonDebutedPlot();
+
+        document.querySelectorAll('.level-filter').forEach(function(cb) {
+            cb.addEventListener('change', updateNonDebutedPlot);
+        });
     </script>
 </body>
 </html>

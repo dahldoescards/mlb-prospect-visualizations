@@ -96,52 +96,125 @@
             <h1>2018 Bowman Draft</h1>
             <p class="subtitle">MiLB Highest Level vs Career Length Analysis (Non-Debuted Players)</p>
         </div>
+        <div id="nonDebutedFilters" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;margin-bottom:5px;">
+            <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#6c757d;margin-right:6px;">Filter by Level:</span>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="1" checked> Rookie</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="2" checked> Low-A</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="3" checked> High-A</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="4" checked> AA</label>
+            <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="5" checked> AAA</label>
+        </div>
         <div id="plot"></div>
         <div class="stats">
             <div class="stat-item">
                 <span class="stat-label">Players Shown</span>
-                <span class="stat-value">21</span>
+                <span class="stat-value" id="nonDebutedPlayersCount">21</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Level</span>
-                <span class="stat-value">AA</span>
+                <span class="stat-value" id="nonDebutedAvgLevel">AA</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Games per Season</span>
-                <span class="stat-value">54.7</span>
+                <span class="stat-value" id="nonDebutedAvgGps">54.7</span>
             </div>
         </div>
     </div>
 
     <script>
-        var data = [{
+        // Base arrays for non-debuted players
+        var nonDebutedBase = {
             x: [5, 5, 4, 4, 5, 5, 4, 2, 4, 4, 5, 4, 5, 3, 5, 3, 2, 5, 5, 5, 4],
             y: [73.4, 70.0, 84.14, 4.8, 111.5, 80.6, 12.0, 16.0, 75.2, 79.6, 56.29, 96.25, 27.5, 22.0, 66.57, 72.4, 27.33, 49.0, 31.67, 50.33, 41.5],
-            mode: 'markers+text',
-            type: 'scatter',
-            text: ["Cadyn Grenier", "Cole Roederer", "Connor Scott", "Ethan Hankins", "Grant Lavigne", "Greyson Jenista", "Griffin Roberts", "Jayson Schroeder", "Jeremy Eierman", "Joe Gray", "Josh Breaux", "Josh Stowers", "Lenny Torres", "Mason Denaburg", "Nick Schnell", "Osiris Johnson", "Ryder Green", "Tanner Dodson", "Tim Cate", "Tristan Pompey", "Tyler Frank"],
-            textposition: 'top center',
-            textfont: {
-                size: 10,
-                color: '#333'
-            },
-            marker: {
-                size: 10,
-                color: '#d32f2f',
-                opacity: 0.8,
-                line: {
-                    width: 2,
-                    color: '#ffffff'
+            names: ["Cadyn Grenier", "Cole Roederer", "Connor Scott", "Ethan Hankins", "Grant Lavigne", "Greyson Jenista", "Griffin Roberts", "Jayson Schroeder", "Jeremy Eierman", "Joe Gray", "Josh Breaux", "Josh Stowers", "Lenny Torres", "Mason Denaburg", "Nick Schnell", "Osiris Johnson", "Ryder Green", "Tanner Dodson", "Tim Cate", "Tristan Pompey", "Tyler Frank"],
+            levelsLabel: ["AAA", "AAA", "AA", "AA", "AAA", "AAA", "AA", "Low-A", "AA", "AA", "AAA", "AA", "AAA", "High-A", "AAA", "High-A", "Low-A", "AAA", "AAA", "AAA", "AA"],
+            careerLengths: [5, 6, 7, 5, 6, 5, 4, 4, 5, 5, 7, 4, 6, 4, 7, 5, 3, 6, 6, 3, 2],
+            firstSeasons: [2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2019, 2018, 2018, 2019, 2018, 2019, 2018, 2018, 2018, 2019, 2018, 2018, 2019],
+            releaseDates: ["N/A", "2025-03-23", "N/A", "2024-07-20", "2025-06-06", "2023-07-04", "2023-03-30", "2022-12-17", "N/A", "2024-06-09", "N/A", "2025-06-26", "N/A", "N/A", "N/A", "2024-08-02", "2023-04-04", "N/A", "N/A", "2022-06-14", "N/A"]
+        };
+
+        function hashFloat(i, seed) {
+            var x = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453;
+            return x - Math.floor(x);
+        }
+
+        function buildNonDebutedTrace(activeLevels) {
+            var x = [];
+            var y = [];
+            var text = [];
+            var customdata = [];
+
+            var totalGps = 0;
+            var levelNumeric = nonDebutedBase.x;
+
+            for (var i = 0; i < levelNumeric.length; i++) {
+                var lvl = levelNumeric[i];
+                if (activeLevels && activeLevels.length &&
+                    activeLevels.indexOf(String(lvl)) === -1) {
+                    continue;
                 }
-            },
-            customdata: [["AAA", 2018, 5, 73.4, "N/A"], ["AAA", 2018, 6, 70.0, "2025-03-23"], ["AA", 2018, 7, 84.14, "N/A"], ["AA", 2018, 5, 4.8, "2024-07-20"], ["AAA", 2018, 6, 111.5, "2025-06-06"], ["AAA", 2018, 5, 80.6, "2023-07-04"], ["AA", 2018, 4, 12.0, "2023-03-30"], ["Low-A", 2018, 4, 16.0, "2022-12-17"], ["AA", 2019, 5, 75.2, "N/A"], ["AA", 2018, 5, 79.6, "2024-06-09"], ["AAA", 2018, 7, 56.29, "N/A"], ["AA", 2019, 4, 96.25, "2025-06-26"], ["AAA", 2018, 6, 27.5, "N/A"], ["High-A", 2019, 4, 22.0, "N/A"], ["AAA", 2018, 7, 66.57, "N/A"], ["High-A", 2018, 5, 72.4, "2024-08-02"], ["Low-A", 2018, 3, 27.33, "2023-04-04"], ["AAA", 2019, 6, 49.0, "N/A"], ["AAA", 2018, 6, 31.67, "N/A"], ["AAA", 2018, 3, 50.33, "2022-06-14"], ["AA", 2019, 2, 41.5, "N/A"]],
-            hovertemplate: '<b>%{text}</b><br>' +
-                          'MiLB Highest Level: %{customdata[0]}<br>' +
-                          'MiLB First Season: %{customdata[1]}<br>' +
-                          'MiLB Career Length: %{customdata[2]} years<br>' +
-                          'MiLB Games per Season: %{customdata[3]:.1f}<br>' +
-                          'Release Date: %{customdata[4]}<extra></extra>'
-        }];
+
+                var baseX = lvl;
+                var baseY = nonDebutedBase.y[i];
+
+                var jx = (hashFloat(i, 1) - 0.5) * 0.45;
+                var jy = (hashFloat(i, 2) - 0.5) * (122.6500 - 0.0000) * 0.05;
+
+                x.push(baseX + jx);
+                y.push(Math.max(0.0000, baseY + jy));
+                text.push(nonDebutedBase.names[i]);
+                customdata.push([
+                    nonDebutedBase.levelsLabel[i],
+                    nonDebutedBase.firstSeasons[i],
+                    nonDebutedBase.careerLengths[i],
+                    nonDebutedBase.y[i],
+                    nonDebutedBase.releaseDates[i]
+                ]);
+                totalGps += baseY;
+            }
+
+            return {
+                trace: {
+                    x: x,
+                    y: y,
+                    mode: 'markers',
+                    type: 'scatter',
+                    text: text,
+                    marker: {
+                        size: 9,
+                        color: '#d32f2f',
+                        opacity: 0.85,
+                        line: {
+                            width: 1.5,
+                            color: '#ffffff'
+                        }
+                    },
+                    customdata: customdata,
+                    hovertemplate: '<b>%{text}</b><br>' +
+                                  'MiLB Highest Level: %{customdata[0]}<br>' +
+                                  'MiLB First Season: %{customdata[1]}<br>' +
+                                  'MiLB Career Length: %{customdata[2]} years<br>' +
+                                  'MiLB Games per Season: %{customdata[3]:.1f}<br>' +
+                                  'Release Date: %{customdata[4]}<extra></extra>'
+                },
+                count: x.length,
+                avgGps: (x.length ? totalGps / x.length : 0),
+                avgLevel: (function() {
+                    if (!x.length) return null;
+                    var sum = 0, n = 0;
+                    for (var i = 0; i < levelNumeric.length; i++) {
+                        var lvl = levelNumeric[i];
+                        if (activeLevels && activeLevels.length &&
+                            activeLevels.indexOf(String(lvl)) === -1) {
+                            continue;
+                        }
+                        sum += lvl;
+                        n += 1;
+                    }
+                    return n ? sum / n : null;
+                })()
+            };
+        }
 
         var layout = {
             title: {
@@ -154,6 +227,7 @@
                     font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
                 },
                 titlefont: { size: 16, family: 'Inter, sans-serif' },
+                type: 'linear',
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
@@ -200,8 +274,44 @@
             responsive: true,
             displayModeBar: true
         };
+        
+        function getActiveLevels() {
+            var checks = document.querySelectorAll('.level-filter');
+            var active = [];
+            checks.forEach(function(cb) {
+                if (cb.checked) active.push(cb.value);
+            });
+            if (!active.length) {
+                // If user unchecks everything, fall back to all levels
+                active = ['1','2','3','4','5'];
+                checks.forEach(function(cb) { cb.checked = true; });
+            }
+            return active;
+        }
 
-        Plotly.newPlot('plot', data, layout, config);
+        function updateNonDebutedPlot() {
+            var active = getActiveLevels();
+            var res = buildNonDebutedTrace(active);
+            Plotly.react('plot', [res.trace], layout, config);
+
+            var countEl = document.getElementById('nonDebutedPlayersCount');
+            var avgGpsEl = document.getElementById('nonDebutedAvgGps');
+            var avgLevelEl = document.getElementById('nonDebutedAvgLevel');
+            if (countEl) countEl.textContent = res.count;
+            if (avgGpsEl) avgGpsEl.textContent = res.avgGps.toFixed(1);
+            if (avgLevelEl && res.avgLevel !== null) {
+                var levelMap = {1:'Rookie',2:'Low-A',3:'High-A',4:'AA',5:'AAA'};
+                var rounded = Math.round(res.avgLevel);
+                avgLevelEl.textContent = levelMap[rounded] || 'Unknown';
+            }
+        }
+
+        // Initial render
+        updateNonDebutedPlot();
+
+        document.querySelectorAll('.level-filter').forEach(function(cb) {
+            cb.addEventListener('change', updateNonDebutedPlot);
+        });
     </script>
 </body>
 </html>
