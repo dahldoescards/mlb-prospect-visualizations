@@ -194,8 +194,8 @@
                     <span class="stat-value">High-A</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Avg Career Length</span>
-                    <span class="stat-value">4.6</span>
+                    <span class="stat-label">Avg MiLB Games per Season</span>
+                    <span class="stat-value">0.0</span>
                 </div>
             </div>
         </div>
@@ -294,7 +294,7 @@
         
         var nonDebutedData = [{
             x: [4, 4, 4, 5, 3, 3, 4, 3, 3, 3, 5, 5, 3, 4, 5, 4, 3, 5, 4, 5, 2, 2, 4, 3, 3, 4, 5, 5, 4, 1, 2, 3, 1, 5, 3, 3, 3, 5, 3, 3, 3, 4, 5, 4, 4, 2, 4, 4, 2, 4, 5, 2, 3, 4, 5, 4, 4, 1, 3, 4, 5, 5, 4, 5, 5, 3, 5, 3, 2, 2, 3, 3, 3, 3, 4, 2, 4, 4, 2, 5, 2, 4, 4, 2, 4, 3, 2, 3, 2, 3, 3],
-            y: [5, 5, 6, 5, 5, 4, 4, 4, 6, 3, 5, 5, 5, 5, 5, 5, 3, 4, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 6, 3, 4, 4, 2, 5, 5, 4, 5, 5, 6, 5, 4, 5, 5, 4, 5, 4, 5, 5, 4, 6, 7, 3, 3, 5, 3, 5, 6, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 5, 6, 4, 4, 5, 3, 5, 3, 5, 4, 4, 6, 4, 4, 5, 4, 5, 4],
+            y: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Adrian Placencia", "Adrian Sugastey", "Alex De Jesus", "Alexander Ovalles", "Alexander Suarez", "Alexis Hernandez", "Andy Thomas", "Anthony Gutierrez", "Antonio Pinero", "Austin Schultz", "BJ Murray Jr.", "Benjamin Cowles", "Brandol Mezquita", "CJ Rodriguez", "Cal Conley", "Cameron Cauley", "Charlie Welch", "Christian Franklin", "Collin Burns", "Cooper Bowman", "Cristhian Vaquero", "Daniel McElveny", "Daniel Vazquez", "Danny De Andrade", "Danyer Cueva", "Diego Velasquez", "Donta Williams", "Dru Baker", "Eddinson Paulino", "Erick Hernandez", "Estanli Castillo", "Estiven Machado", "Gavin Tonkel", "Greg Cullen", "Herard Gonzalez", "Ian Lewis", "Isaac De Leon", "JT Schwartz", "Jack Herman", "Jaden Rudd", "Jaison Chourio", "Jake Fox", "Jake Rucker", "Jarlin Susana", "Jheremy Vargas", "JoJo Blackmon", "John Fox", "John Rhodes", "Jonathan Mejia", "Juan Guerrero", "Junior Perez", "Junior Sanchez", "Kevin Kendall", "Leonardo Balcazar", "Liam Spence", "Logan Cerny", "Luis Chevalier", "Luis Meza", "Maikol Hernandez", "Mason Auer", "Nathan Hickey", "Noah Miller", "Norge Vera", "Parker Chavers", "Quincy Hamilton", "Rayne Doncon", "Reed Trimble", "Ricardo Cabrera", "Roderick Arias", "Roilan Machandy", "Rosman Verdugo", "Ryan Reckley", "Samuel Munoz", "Samuel Zavala", "Sebastian Espino", "Simon Juan", "Tanner McDougal", "Thomas Farr", "Tyler Collins", "Victor Labrada", "Victor Mesia", "Wilfred Veras", "William Bergolla", "Willy Fanas", "Willy Vasquez", "Won-Bin Cho", "Yasser Mercedes", "Yeison Morrobel", "Yendry Rojas", "Yerlin Confidan", "Yordany De Los Santos"],
@@ -331,14 +331,14 @@
                 ticktext: ['Rookie', 'Low-A', 'High-A', 'AA', 'AAA']
             },
             yaxis: {
-                title: { text: 'MiLB Career Length (years)', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
+                title: { text: 'MiLB Games per Season', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [1.3, 7.7],
+                range: [0.0, 1.0],
                 tickformat: 'd'
             },
             plot_bgcolor: '#ffffff',

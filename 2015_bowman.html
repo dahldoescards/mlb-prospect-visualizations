@@ -194,8 +194,8 @@
                     <span class="stat-value">AA</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Avg Career Length</span>
-                    <span class="stat-value">6.0</span>
+                    <span class="stat-label">Avg MiLB Games per Season</span>
+                    <span class="stat-value">0.0</span>
                 </div>
             </div>
         </div>
@@ -294,7 +294,7 @@
         
         var nonDebutedData = [{
             x: [3, 4, 4, 5, 5, 4, 5, 5, 3, 5, 5],
-            y: [6, 5, 6, 8, 4, 7, 5, 6, 3, 9, 7],
+            y: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Adrian Rondon", "Austin Kubitza", "Avery Romero", "Drew Ward", "Jordan Betts", "Juan Herrera", "Logan Moon", "Marcos Molina", "Seth Streich", "Tim Berry", "Trey Michalczewski"],
@@ -331,14 +331,14 @@
                 ticktext: ['Rookie', 'Low-A', 'High-A', 'AA', 'AAA']
             },
             yaxis: {
-                title: { text: 'MiLB Career Length (years)', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
+                title: { text: 'MiLB Games per Season', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [2.1, 9.9],
+                range: [0.0, 1.0],
                 tickformat: 'd'
             },
             plot_bgcolor: '#ffffff',
