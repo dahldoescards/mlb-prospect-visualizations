@@ -251,6 +251,7 @@
                     <li>Debuted players in this release: <strong>28</strong>; non-debuted with MiLB data: <strong>6</strong>.</li>
                 </ul>
             </div>
+            <div id="levelStacked" style="width:100%;height:200px;margin-top:24px;"></div>
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Player Accolades</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>All-Star Selections:</strong> Blake Snell (2018), C.J. Cron (2022), Daniel Vogelbach (2019), Francisco Lindor (2016, 2017, 2018, 2019, 2025), George Springer (2017, 2018, 2019, 2022), Javier Baez (2018, 2019, 2025), Joe Panik (2015), Jose Fernandez (2013, 2016), Matt Barnes (2021), Michael Fulmer (2017), Sonny Gray (2015, 2019, 2023), Trevor Bauer (2018), Trevor Story (2018, 2019), Tyler Anderson (2022, 2024)</p>
@@ -336,7 +337,8 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
+            height: 650
         };
         
         Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false, displaylogo: false });
@@ -466,7 +468,8 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
+            height: 650
         };
         
         // Configuration object reused for updates
@@ -515,6 +518,46 @@
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
         
+
+        // 100% stacked level graph
+        (function() {
+            var labels = ["Low-A", "AA", "AAA", "MLB"];
+            var values = [5.9, 5.9, 5.9, 82.4];
+            if (!labels.length) return;
+
+            var traces = [];
+            for (var i = 0; i < labels.length; i++) {
+                traces.push({
+                    name: labels[i],
+                    x: [values[i]],
+                    y: [''],
+                    type: 'bar',
+                    orientation: 'h',
+                    text: values[i].toFixed(1) + '%',
+                    textposition: 'inside',
+                    hovertemplate: labels[i] + ': %{x:.1f}%<extra></extra>'
+                });
+            }
+
+            var levelLayout = {
+                barmode: 'stack',
+                xaxis: {
+                    range: [0, 100],
+                    ticksuffix: '%',
+                    showgrid: false
+                },
+                yaxis: {
+                    showticklabels: false
+                },
+                margin: { l: 40, r: 20, t: 10, b: 40 },
+                showlegend: true,
+                plot_bgcolor: '#ffffff',
+                paper_bgcolor: '#ffffff',
+                font: { family: 'Inter, sans-serif', size: 11, color: '#495057' }
+            };
+
+            Plotly.newPlot('levelStacked', traces, levelLayout, {responsive:true, displayModeBar:false, displaylogo:false});
+        })();
     </script>
 </body>
 </html>
