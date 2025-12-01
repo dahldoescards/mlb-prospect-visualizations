@@ -100,7 +100,7 @@
         <div class="stats">
             <div class="stat-item">
                 <span class="stat-label">Players Shown</span>
-                <span class="stat-value">12</span>
+                <span class="stat-value">15</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Level</span>
@@ -108,18 +108,18 @@
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Games per Season</span>
-                <span class="stat-value">0.0</span>
+                <span class="stat-value">65.2</span>
             </div>
         </div>
     </div>
 
     <script>
         var data = [{
-            x: [5, 4, 3, 2, 3, 4, 5, 5, 1, 5, 5, 5],
-            y: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            x: [5, 4, 3, 2, 5, 3, 4, 5, 5, 1, 5, 5, 5, 5, 5],
+            y: [111.86, 24.57, 57.25, 18.0, 93.43, 76.33, 83.86, 27.2, 32.57, 10.0, 112.12, 59.0, 100.83, 48.5, 122.25],
             mode: 'markers+text',
             type: 'scatter',
-            text: ["Adam Walker", "Adys Portillo", "Austin Schotts", "Dan Langfield", "Jeremy Baltz", "Keury de la Cruz", "Kyle Smith", "Luis Mateo", "Luis Merejo", "Patrick Leonard", "Rafael De Paula", "Victor Roache"],
+            text: ["Adam Walker", "Adys Portillo", "Austin Schotts", "Dan Langfield", "Danry Vasquez", "Jeremy Baltz", "Keury de la Cruz", "Kyle Smith", "Luis Mateo", "Luis Merejo", "Patrick Leonard", "Rafael De Paula", "Victor Roache", "Wilfredo Rodriguez", "Yeison Asencio"],
             textposition: 'top center',
             textfont: {
                 size: 10,
@@ -134,7 +134,7 @@
                     color: '#ffffff'
                 }
             },
-            customdata: [["AAA", 2012, 7, 0.0, "N/A"], ["AA", 2009, 7, 0.0, "N/A"], ["High-A", 2012, 4, 0.0, "2016-03-26"], ["Low-A", 2012, 2, 0.0, "N/A"], ["High-A", 2013, 3, 0.0, "2015-05-27"], ["AA", 2009, 7, 0.0, "2017-07-02"], ["AAA", 2012, 5, 0.0, "2017-07-24"], ["AAA", 2011, 7, 0.0, "2019-05-02"], ["Rookie", 2012, 2, 0.0, "2015-04-05"], ["AAA", 2012, 8, 0.0, "2020-05-31"], ["AAA", 2012, 8, 0.0, "2020-11-18"], ["AAA", 2013, 6, 0.0, "N/A"]],
+            customdata: [["AAA", 2012, 7, 111.86, "N/A"], ["AA", 2009, 7, 24.57, "N/A"], ["High-A", 2012, 4, 57.25, "2016-03-26"], ["Low-A", 2012, 2, 18.0, "N/A"], ["AAA", 2011, 7, 93.43, "2016-08-17"], ["High-A", 2013, 3, 76.33, "2015-05-27"], ["AA", 2009, 7, 83.86, "2017-07-02"], ["AAA", 2012, 5, 27.2, "2017-07-24"], ["AAA", 2011, 7, 32.57, "2019-05-02"], ["Rookie", 2012, 2, 10.0, "2015-04-05"], ["AAA", 2012, 8, 112.12, "2020-05-31"], ["AAA", 2012, 8, 59.0, "2020-11-18"], ["AAA", 2013, 6, 100.83, "N/A"], ["AAA", 2012, 4, 48.5, "2018-04-17"], ["AAA", 2010, 8, 122.25, "2023-06-20"]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'MiLB Highest Level: %{customdata[0]}<br>' +
                           'MiLB First Season: %{customdata[1]}<br>' +
@@ -177,7 +177,7 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0.0, 1.0],
+                range: [0.0, 134.5],
                 tickformat: 'd'
             },
             plot_bgcolor: '#ffffff',

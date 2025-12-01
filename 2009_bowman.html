@@ -157,7 +157,7 @@
                 Debuted (11)
             </button>
             <button class="tab " data-tab="non-debuted" >
-                Non-Debuted (5)
+                Non-Debuted (6)
             </button>
             <button class="tab" data-tab="both" >
                 Both
@@ -187,7 +187,7 @@
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">5</span>
+                    <span class="stat-value">6</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Level</span>
@@ -195,7 +195,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Games per Season</span>
-                    <span class="stat-value">0.0</span>
+                    <span class="stat-value">44.1</span>
                 </div>
             </div>
         </div>
@@ -293,11 +293,11 @@
         
         
         var nonDebutedData = [{
-            x: [5, 5, 3, 2, 4],
-            y: [0.0, 0.0, 0.0, 0.0, 0.0],
+            x: [5, 5, 3, 2, 5, 4],
+            y: [59.17, 32.67, 18.75, 35.25, 86.17, 32.67],
             mode: 'markers+text',
             type: 'scatter',
-            text: ["Beamer Weems", "Bobby Lanigan", "Jason Knapp", "Javier Rodriguez", "Quinton Miller"],
+            text: ["Beamer Weems", "Bobby Lanigan", "Jason Knapp", "Javier Rodriguez", "Jay Austin", "Quinton Miller"],
             textposition: 'top center',
             textfont: { size: 10, color: '#333' },
             marker: {
@@ -306,7 +306,7 @@
                 opacity: 0.8,
                 line: { width: 2, color: '#ffffff' }
             },
-            customdata: [["AAA", 2008, 6, "2016-04-05"], ["AAA", 2008, 6, "N/A"], ["High-A", 2008, 4, "N/A"], ["Low-A", 2008, 4, "2012-03-28"], ["AA", 2009, 6, "N/A"]],
+            customdata: [["AAA", 2008, 6, "2016-04-05"], ["AAA", 2008, 6, "N/A"], ["High-A", 2008, 4, "N/A"], ["Low-A", 2008, 4, "2012-03-28"], ["AAA", 2008, 6, "2022-02-18"], ["AA", 2009, 6, "N/A"]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'MiLB Highest Level: %{customdata[0]}<br>' +
                           'MiLB First Season: %{customdata[1]}<br>' +
@@ -338,7 +338,7 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0.0, 1.0],
+                range: [10.1, 94.8],
                 tickformat: 'd'
             },
             plot_bgcolor: '#ffffff',

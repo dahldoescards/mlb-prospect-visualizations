@@ -157,7 +157,7 @@
                 Debuted (37)
             </button>
             <button class="tab " data-tab="non-debuted" >
-                Non-Debuted (15)
+                Non-Debuted (16)
             </button>
             <button class="tab" data-tab="both" >
                 Both
@@ -187,7 +187,7 @@
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">15</span>
+                    <span class="stat-value">16</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Level</span>
@@ -195,7 +195,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Games per Season</span>
-                    <span class="stat-value">0.0</span>
+                    <span class="stat-value">60.1</span>
                 </div>
             </div>
         </div>
@@ -293,11 +293,11 @@
         
         
         var nonDebutedData = [{
-            x: [5, 4, 5, 1, 5, 5, 5, 5, 4, 5, 3, 3, 3, 5, 5],
-            y: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            x: [5, 5, 4, 5, 1, 5, 5, 5, 5, 4, 5, 3, 3, 3, 5, 5],
+            y: [118.17, 76.5, 97.75, 30.5, 13.5, 24.14, 25.29, 15.83, 92.5, 92.5, 26.89, 61.67, 14.83, 65.67, 99.8, 106.11],
             mode: 'markers+text',
             type: 'scatter',
-            text: ["Alex Yarbrough", "Brandon Trinkwon", "Casey Meisner", "Chris Kohler", "Christian Binford", "Daniel McGrath", "Gabriel Encinas", "Jacob Scavuzzo", "Javier Betancourt", "Joan Gregorio", "Leonardo Molina", "Rony Bautista", "Tucker Neuhaus", "Wendell Rijo", "Zach Borenstein"],
+            text: ["Alex Yarbrough", "Armando Rivero", "Brandon Trinkwon", "Casey Meisner", "Chris Kohler", "Christian Binford", "Daniel McGrath", "Gabriel Encinas", "Jacob Scavuzzo", "Javier Betancourt", "Joan Gregorio", "Leonardo Molina", "Rony Bautista", "Tucker Neuhaus", "Wendell Rijo", "Zach Borenstein"],
             textposition: 'top center',
             textfont: { size: 10, color: '#333' },
             marker: {
@@ -306,7 +306,7 @@
                 opacity: 0.8,
                 line: { width: 2, color: '#ffffff' }
             },
-            customdata: [["AAA", 2012, 6, "N/A"], ["AA", 2013, 4, "N/A"], ["AAA", 2013, 6, "N/A"], ["Rookie", 2013, 2, "2019-03-25"], ["AAA", 2012, 7, "2018-12-18"], ["AAA", 2013, 7, "N/A"], ["AAA", 2011, 6, "N/A"], ["AAA", 2012, 8, "2019-07-31"], ["AA", 2012, 6, "N/A"], ["AAA", 2010, 9, "2019-06-28"], ["High-A", 2014, 6, "N/A"], ["High-A", 2010, 6, "2016-06-23"], ["High-A", 2013, 6, "N/A"], ["AAA", 2013, 10, "2024-06-02"], ["AAA", 2011, 9, "2020-04-07"]],
+            customdata: [["AAA", 2012, 6, "N/A"], ["AAA", 2013, 4, "2017-11-03"], ["AA", 2013, 4, "N/A"], ["AAA", 2013, 6, "N/A"], ["Rookie", 2013, 2, "2019-03-25"], ["AAA", 2012, 7, "2018-12-18"], ["AAA", 2013, 7, "N/A"], ["AAA", 2011, 6, "N/A"], ["AAA", 2012, 8, "2019-07-31"], ["AA", 2012, 6, "N/A"], ["AAA", 2010, 9, "2019-06-28"], ["High-A", 2014, 6, "N/A"], ["High-A", 2010, 6, "2016-06-23"], ["High-A", 2013, 6, "N/A"], ["AAA", 2013, 10, "2024-06-02"], ["AAA", 2011, 9, "2020-04-07"]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'MiLB Highest Level: %{customdata[0]}<br>' +
                           'MiLB First Season: %{customdata[1]}<br>' +
@@ -338,7 +338,7 @@
                 zeroline: false,
                 linecolor: '#dee2e6',
                 linewidth: 1,
-                range: [0.0, 1.0],
+                range: [1.7, 130.0],
                 tickformat: 'd'
             },
             plot_bgcolor: '#ffffff',
