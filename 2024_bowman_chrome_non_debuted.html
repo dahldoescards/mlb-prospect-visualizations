@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Bowman Chrome (Non-Debuted) | Bowman Prospect Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        .header-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        h1 {
+            color: #1e3c72;
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .subtitle {
+            color: #6c757d;
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        #plot {
+            width: 100%;
+            height: 650px;
+            margin: 30px 0;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-label {
+            display: block;
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .stat-value {
+            display: block;
+            font-size: 1.75rem;
+            color: #1e3c72;
+            font-weight: 700;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            #plot {
+                height: 500px;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1>2024 Bowman Chrome</h1>
+            <p class="subtitle">MiLB Highest Level vs Career Length Analysis (Non-Debuted Players)</p>
+        </div>
+        <div id="plot"></div>
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-label">Players Shown</span>
+                <span class="stat-value">126</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Avg MiLB Level</span>
+                <span class="stat-value">Low-A</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Avg Career Length</span>
+                <span class="stat-value">3.1</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var data = [{
+            x: [2, 2, 1, 1, 3, 1, 1, 2, 2, 1, 2, 2, 1, 1, 3, 2, 1, 1, 2, 4, 1, 2, 4, 2, 1, 1, 1, 2, 1, 1, 2, 4, 3, 2, 1, 3, 1, 1, 2, 5, 1, 2, 1, 1, 1, 1, 4, 1, 3, 1, 3, 1, 1, 1, 1, 1, 1, 2, 5, 3, 1, 2, 2, 1, 4, 1, 3, 1, 3, 3, 1, 1, 4, 2, 5, 4, 2, 2, 4, 2, 4, 3, 1, 2, 1, 4, 2, 5, 2, 2, 2, 5, 2, 4, 2, 4, 3, 1, 2, 1, 4, 3, 2, 2, 2, 5, 4, 4, 4, 1, 1, 1, 2, 3, 4, 3, 2, 2, 2, 1, 3, 2, 2, 5, 4, 1],
+            y: [4, 3, 1, 2, 5, 2, 3, 4, 3, 2, 3, 2, 3, 3, 3, 3, 2, 2, 3, 4, 3, 4, 6, 4, 2, 2, 2, 3, 3, 2, 4, 3, 4, 2, 2, 3, 2, 3, 2, 5, 2, 3, 2, 4, 2, 2, 4, 3, 3, 2, 4, 3, 2, 3, 2, 3, 3, 3, 5, 4, 3, 3, 3, 2, 5, 2, 3, 2, 4, 3, 3, 2, 3, 1, 5, 2, 3, 4, 2, 3, 4, 5, 3, 3, 3, 4, 2, 6, 4, 3, 3, 6, 3, 3, 2, 4, 3, 3, 3, 2, 4, 4, 3, 3, 2, 3, 5, 3, 4, 2, 2, 2, 4, 5, 3, 3, 3, 2, 3, 4, 5, 3, 2, 5, 5, 2],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Abdias De La Cruz", "Abraham Nunez", "Adler Cecil", "Adolfo Sanchez", "Adrian De Leon", "Adriel Radney", "Aldalay Kolokie", "Alexander Albertus", "Alfredo Alcantara", "Andres Arias", "Andres Valor", "Angel Feliz", "Anibal Salas", "Bairon Ledesma", "Bennett Lee", "Bernard Moon", "Brady Cerkownyk", "Bralyn Brazoban", "Braylin Morel", "Brooks Brannon", "Carlos Batista", "Carlos Sanchez", "Christopher Familia", "Clayton Campbell", "Cristopher Larez", "Curley Martha", "Daiber De Los Santos", "Dameury Pena", "Darling Fernandez", "Dawel Joseph", "Derek Bernard", "Dominic Pitelli", "Echedry Vargas", "Eduardo Beltre", "Eduardo Herrera", "Eduardo Tait", "Edward Lantigua", "Elias Medina", "Emil Morales", "Emiliano Teodo", "Emilio Sanchez", "Enrique Jimenez", "Eriel Dihigo", "Felix Taveras", "Fernando Cruz", "Francisco Vilorio", "Fraymi De Leon", "Gabriel Lara", "Gavin Dugas", "Greylin De La Paz", "Guillermo Williamson", "Heriberto Rincon", "Iverson Allen", "Jaeden Calderon", "Jalvin Arias", "Jancory De La Cruz", "Janero Miller", "Jaron Elkins", "Javier Francisco", "Jeral Perez", "Jeremy Ciriaco", "Jeremy Rodriguez", "Jeter Martinez", "Jose Castro", "Jose Fernandez", "Jose Perdomo", "Josh Adamczewski", "Joswa Lugo", "Juan Baez", "Juan Flores", "Julio Zayas", "Jurdrick Profar", "Kalae Harrison", "Kannon Kemp", "Kendry Rojas", "Khristian Curtis", "Kyle Henley", "Leiker Figueroa", "Leo De Vries", "Lisbel Diaz", "Luis De Le\u00f3n", "Luis Suisbel", "Maikol Orozco", "Marco Corcho", "Mario Baez", "Marvin Alcantara", "Mason McGwire", "Miguel Palma", "Milo Rushford", "Myles Naylor", "Nehomar Ochoa Jr.", "Neyfy Castillo", "Pablo Guerrero", "Pascanel Ferreras", "Paulino Santana", "Peyton Graham", "Quincy Scott", "Ramon Landaeta", "Raudi Rodriguez", "Robert Arias", "Romeo Sanabria", "Samuel Gil", "Sheng-En Lin", "Starlyn Nunez", "Stiven Martinez", "Stone Russell", "Thayron Liranzo", "Thomas Ireland", "Thomas Sosa", "Victor Hurtado", "Vladi Guerrero", "Vladimir Asencio", "Waner Luciano", "Wilfredo Lara", "Will Bush", "Will Verdung", "Yaikel Mijares", "Yandel Ricardo", "Yassel Soler", "Yoffry Solano", "Yohairo Cuevas", "Yoiber Ocopio", "Yolfran Castillo", "Yoniel Curet", "Yordanny Monegro", "Yovanny Rodriguez"],
+            textposition: 'top center',
+            textfont: {
+                size: 10,
+                color: '#333'
+            },
+            marker: {
+                size: 10,
+                color: '#d32f2f',
+                opacity: 0.8,
+                line: {
+                    width: 2,
+                    color: '#ffffff'
+                }
+            },
+            customdata: [["Low-A", 2022, 4, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2024, 1, "N/A"], ["Rookie", 2024, 2, "N/A"], ["High-A", 2021, 5, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Low-A", 2022, 4, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Rookie", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2023, 2, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Low-A", 2023, 3, "N/A"], ["AA", 2022, 4, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Low-A", 2022, 4, "N/A"], ["AA", 2019, 6, "2025-06-11"], ["Low-A", 2022, 4, "N/A"], ["Rookie", 2023, 2, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Low-A", 2022, 4, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2022, 4, "N/A"], ["Low-A", 2024, 2, "N/A"], ["Rookie", 2024, 2, "N/A"], ["High-A", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["AAA", 2021, 5, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2021, 4, "2024-09-03"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2024, 2, "N/A"], ["AA", 2022, 4, "N/A"], ["Rookie", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["High-A", 2022, 4, "2025-07-31"], ["Rookie", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["AAA", 2021, 5, "2025-07-31"], ["High-A", 2022, 4, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2023, 2, "N/A"], ["AA", 2021, 5, "N/A"], ["Rookie", 2024, 2, "N/A"], ["High-A", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["High-A", 2022, 4, "N/A"], ["High-A", 2023, 3, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["AA", 2023, 3, "2025-07-28"], ["Low-A", 2025, 1, "N/A"], ["AAA", 2021, 5, "N/A"], ["AA", 2024, 2, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2022, 4, "N/A"], ["AA", 2024, 2, "N/A"], ["Low-A", 2023, 3, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2021, 5, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2023, 3, "N/A"], ["AA", 2022, 4, "N/A"], ["Low-A", 2023, 2, "N/A"], ["AAA", 2019, 6, "N/A"], ["Low-A", 2022, 4, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["AAA", 2018, 6, "N/A"], ["Low-A", 2023, 3, "N/A"], ["AA", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2023, 3, "N/A"], ["Rookie", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2024, 2, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2022, 4, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["AAA", 2023, 3, "N/A"], ["AA", 2021, 5, "N/A"], ["AA", 2023, 3, "N/A"], ["AA", 2022, 4, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2024, 2, "N/A"], ["Rookie", 2024, 2, "2025-11-07"], ["Low-A", 2022, 4, "N/A"], ["High-A", 2021, 5, "N/A"], ["AA", 2023, 3, "N/A"], ["High-A", 2023, 3, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Rookie", 2022, 4, "N/A"], ["High-A", 2021, 5, "N/A"], ["Low-A", 2023, 3, "N/A"], ["Low-A", 2024, 2, "N/A"], ["AAA", 2021, 5, "N/A"], ["AA", 2021, 5, "N/A"], ["Rookie", 2024, 2, "N/A"]],
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'MiLB Highest Level: %{customdata[0]}<br>' +
+                          'MiLB First Season: %{customdata[1]}<br>' +
+                          'MiLB Career Length: %{customdata[2]} years<br>' +
+                          'Release Date: %{customdata[3]}<extra></extra>'
+        }];
+
+        var layout = {
+            title: {
+                text: '',
+                font: { size: 0 }
+            },
+            xaxis: {
+                title: {
+                    text: 'MiLB Highest Level',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0.50, 5.50],
+                tickmode: 'array',
+                tickvals: [1, 2, 3, 4, 5],
+                ticktext: ['Rookie', 'Low-A', 'High-A', 'AA', 'AAA']
+            },
+            yaxis: {
+                title: {
+                    text: 'MiLB Career Length (years)',
+                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
+                },
+                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0.4, 6.6],
+                tickformat: 'd'
+            },
+            plot_bgcolor: '#ffffff',
+            paper_bgcolor: '#ffffff',
+            hovermode: 'closest',
+            margin: {
+                l: 80,
+                r: 40,
+                t: 20,
+                b: 60
+            },
+            font: {
+                family: 'Inter, sans-serif',
+                size: 12,
+                color: '#495057'
+            }
+        };
+
+        var config = {
+            responsive: true,
+            displayModeBar: true
+        };
+
+        Plotly.newPlot('plot', data, layout, config);
+    </script>
+</body>
+</html>

@@ -41,25 +41,59 @@
             font-size: 1rem;
             font-weight: 400;
         }
-        #plot {
-            width: 100%;
-            height: 650px;
-            margin: 30px 0;
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 30px;
         }
-        #plot-non-debuted {
-            width: 100%;
-            height: 650px;
-            margin: 30px 0;
-        }
-        .plot-section {
-            margin-bottom: 50px;
-        }
-        .plot-section h2 {
-            color: #1e3c72;
-            margin: 0 0 15px 0;
-            font-size: 1.5rem;
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
             font-weight: 600;
-            letter-spacing: -0.2px;
+            font-size: 1rem;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+        .tab:hover {
+            color: #2a5298;
+            background-color: #f8f9fa;
+        }
+        .tab.active {
+            color: #2a5298;
+            border-bottom-color: #2a5298;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content.both {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        #plotDebuted, #plotNonDebuted {
+            width: 100%;
+            height: 650px;
+            margin: 30px 0;
+        }
+        .both-charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .both-charts .chart-container {
+            width: 100%;
+        }
+        .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
+            width: 100%;
+            height: 600px;
         }
         .stats {
             display: grid;
@@ -88,15 +122,6 @@
             color: #1e3c72;
             font-weight: 700;
         }
-        .footnote {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-            color: #6c757d;
-            font-size: 0.85rem;
-            font-style: italic;
-        }
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
@@ -104,10 +129,13 @@
             h1 {
                 font-size: 1.5rem;
             }
-            #plot {
+            .both-charts {
+                grid-template-columns: 1fr;
+            }
+            #plotDebuted, #plotNonDebuted {
                 height: 500px;
             }
-            #plot-non-debuted {
+            .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
                 height: 500px;
             }
             .stats {
@@ -121,62 +149,119 @@
     <div class="container">
         <div class="header-section">
             <h1>2023 Bowman</h1>
-            <p class="subtitle">Career WAR vs Games per Season Analysis</p>
+            <p class="subtitle">Prospect Analysis - Career Performance Visualizations</p>
         </div>
-        <div class="plot-section"><h2>Debuted Players</h2><div id="plot"></div></div>
         
-        <div class="stats">
-            <div class="stat-item"><span class="stat-label">Debuted Players</span><span class="stat-value">19</span></div>
-            <div class="stat-item"><span class="stat-label">Average WAR</span><span class="stat-value">1.10</span></div>
-            <div class="stat-item"><span class="stat-label">Avg Games/Season</span><span class="stat-value">39.3</span></div>
-            
+        <div class="tabs">
+            <button class="tab active" data-tab="debuted" >
+                Debuted (19)
+            </button>
+            <button class="tab " data-tab="non-debuted" >
+                Non-Debuted (81)
+            </button>
+            <button class="tab" data-tab="both" >
+                Both
+            </button>
         </div>
-        <div class="footnote">
-            Data: Fangraphs, MLB
+        
+        <div class="tab-content active" id="tab-debuted">
+            <div id="plotDebuted"></div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Players Shown</span>
+                    <span class="stat-value">19</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Average WAR</span>
+                    <span class="stat-value">1.10</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Avg Games/Season</span>
+                    <span class="stat-value">39.3</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tab-non-debuted">
+            <div id="plotNonDebuted"></div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Players Shown</span>
+                    <span class="stat-value">81</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Avg MiLB Level</span>
+                    <span class="stat-value">AA</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Avg Career Length</span>
+                    <span class="stat-value">4.5</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tab-both">
+            <div class="both-charts">
+                <div class="chart-container">
+                    <h3 style="color: #1e3c72; margin-bottom: 15px; font-size: 1.2rem;">Debuted Players</h3>
+                    <div id="plotDebutedBoth"></div>
+                </div>
+                <div class="chart-container">
+                    <h3 style="color: #1e3c72; margin-bottom: 15px; font-size: 1.2rem;">Non-Debuted Players</h3>
+                    <div id="plotNonDebutedBoth"></div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            if (!tab.disabled) {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById('tab-' + tabName).classList.add('active');
+                });
+            }
+        });
         
-        // Plot for debuted players
-        var data = [{
+        // Generate plots
+        
+        var debutedData = [{
             x: [2.36364, -0.0998158, 0.857108, 0.0, 0.0029808, 1.16383, 1.85896, 5.29016, 1.18644, 0.00397548, 0.290915, 0.290915, 0.0887142, 2.7248, -0.632204, -0.719482, 0.014713, 0.18005, 6.11266],
             y: [20.0, 20.0, 9.0, 5.0, 49.0, 69.33333333333333, 89.0, 68.0, 14.0, 26.0, 20.0, 20.0, 9.5, 71.0, 27.0, 20.0, 74.0, 44.0, 91.66666666666667],
             mode: 'markers+text',
             type: 'scatter',
             text: ["Ben Brown", "Blaine Crim", "Brandon Walter", "Caden Dana", "Colby Thomas", "Dominic Canzone", "Edouard Julien", "Junior Caminero", "Kyle Harrison", "Matt Mervis", "Moises Ballesteros", "Mois\u00e9s Ballesteros", "Prelander Berroa", "Roman Anthony", "Ronny Simon", "Shay Whitcomb", "Tim Tawa", "Troy Johnston", "Wilyer Abreu"],
             textposition: 'top center',
-            textfont: {
-                size: 10,
-                color: '#333'
-            },
+            textfont: { size: 10, color: '#333' },
             marker: {
                 size: 10,
                 color: '#2a5298',
                 opacity: 0.8,
-                line: {
-                    width: 2,
-                    color: '#ffffff'
-                }
+                line: { width: 2, color: '#ffffff' }
             },
-            customdata: [[40.0, 2.0], [20.0, 1.0], [18.0, 2.0], [10.0, 2.0], [49.0, 1.0], [208.0, 3.0], [267.0, 3.0], [204.0, 3.0], [42.0, 3.0], [78.0, 3.0], [20.0, 1.0], [20.0, 1.0], [19.0, 2.0], [71.0, 1.0], [27.0, 1.0], [40.0, 2.0], [74.0, 1.0], [44.0, 1.0], [275.0, 3.0]],
+            customdata: [40.0, 20.0, 18.0, 10.0, 49.0, 208.0, 267.0, 204.0, 42.0, 78.0, 20.0, 20.0, 19.0, 71.0, 27.0, 40.0, 74.0, 44.0, 275.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Games Played: %{customdata[0]}<br>' +
-                          'Seasons Played: %{customdata[1]}<extra></extra>'
+                          'Games per Season: %{y:.1f}<br>' +
+                          'Career Games Played: %{customdata}<extra></extra>',
+            name: 'Debuted Players'
         }];
-
-        var layout = {
-            title: {
-                text: '',
-                font: { size: 0 }
-            },
+        
+        var debutedLayout = {
+            title: { text: '', font: { size: 0 } },
             xaxis: {
-                title: {
-                    text: 'Career WAR',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                title: { text: 'Career WAR', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
@@ -187,11 +272,7 @@
                 tickformat: '.1f'
             },
             yaxis: {
-                title: {
-                    text: 'Games per Season',
-                    font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' }
-                },
-                titlefont: { size: 16, family: 'Inter, sans-serif' },
+                title: { text: 'Games per Season', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
                 showgrid: true,
                 gridcolor: '#e9ecef',
                 gridwidth: 1,
@@ -204,26 +285,86 @@
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
-            margin: {
-                l: 80,
-                r: 40,
-                t: 20,
-                b: 60
-            },
-            font: {
-                family: 'Inter, sans-serif',
-                size: 12,
-                color: '#495057'
-            }
+            margin: { l: 80, r: 40, t: 20, b: 60 },
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
-
-        var config = {
-            responsive: true,
-            displayModeBar: true
-        };
-
-        Plotly.newPlot('plot', data, layout, config);
         
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
+        
+        
+        var nonDebutedData = [{
+            x: [5, 2, 4, 4, 2, 3, 4, 3, 3, 2, 2, 5, 4, 3, 5, 4, 2, 5, 5, 1, 4, 3, 4, 4, 1, 3, 5, 4, 3, 5, 5, 5, 5, 4, 4, 5, 3, 5, 4, 3, 3, 4, 3, 4, 4, 3, 5, 4, 3, 5, 5, 4, 3, 3, 2, 4, 4, 3, 2, 4, 4, 5, 4, 4, 4, 3, 3, 4, 4, 3, 5, 5, 1, 5, 2, 4, 4, 5, 4, 4, 2],
+            y: [5, 2, 5, 4, 3, 3, 5, 5, 4, 4, 5, 4, 4, 5, 5, 5, 4, 6, 6, 3, 7, 3, 4, 4, 3, 4, 5, 6, 5, 5, 5, 5, 5, 4, 3, 4, 5, 6, 4, 4, 3, 6, 5, 4, 4, 4, 6, 5, 5, 4, 5, 4, 4, 5, 3, 5, 4, 4, 5, 4, 4, 4, 6, 6, 4, 3, 3, 5, 5, 4, 7, 4, 4, 4, 3, 5, 6, 5, 4, 5, 5],
+            mode: 'markers+text',
+            type: 'scatter',
+            text: ["Abel Bastidas", "Adam Crampton", "Alex Ramirez", "Ambioris Tavarez", "Andres Mesa", "Andrew Taylor", "Angel Genao", "Ariel Almonte", "Austin Charles", "Braylin Tavera", "Braylon Bishop", "Brock Jones", "Cam Collier", "Carlos Jorge", "Colin Peluse", "Damon Keith", "Daniel Montesino", "Dayan Frias", "Dayan Fr\u00edas", "Derniche Valdez", "Diego Hernandez", "Druw Jones", "Dyan Jorge", "Emaarion Boyd", "Enmanuel Bonilla", "Freili Encarnacion", "Gabriel Gonzalez", "Gabriel Martinez", "Gleider Figuereo", "Hao Yu Lee", "Hayden Juenger", "Hector Rodriguez", "Hector Rodr\u00edguez", "Jace Avina", "Jackson Ferris", "Jacob Berry", "Jadiel Sanchez", "Jase Bowen", "Jefferson Rojas", "Jesus Baez", "Joe Stewart", "Jorge Burgos", "Jorge Ruiz", "Josh Hood", "Josue De Paula", "Juan Alonso", "Juan Brito", "Juan Carela", "Junior Tilien", "Justin Crawford", "Kyler Fedko", "Lazaro Montes", "Leandro Arias", "Lizandro Rodriguez", "Luis Garcia", "Luis Ravelo", "L\u00e1zaro Montes", "Mairoshendrick Martinus", "Manuel Beltre", "Matthew Wood", "Michael Arroyo", "Nelson Rada", "Nerwilian Cedeno", "Nerwilian Cede\u00f1o", "Nick Morabito", "Nick Vogt", "Nikau Pouaka-Grego", "Pedro Ramirez", "Pedro Ram\u00edrez", "Randy De Jesus", "Robert Perez Jr.", "Ryan Clifford", "Samil De La Rosa", "Spencer Jones", "Tommy Specht", "Vaun Brown", "William Lugo", "Wilmer Flores", "Xavier Isaac", "Yeiner Fernandez", "Yhoangel Aponte"],
+            textposition: 'top center',
+            textfont: { size: 10, color: '#333' },
+            marker: {
+                size: 10,
+                color: '#d32f2f',
+                opacity: 0.8,
+                line: { width: 2, color: '#ffffff' }
+            },
+            customdata: [["AAA", 2021, 5, "N/A"], ["Low-A", 2022, 2, "N/A"], ["AA", 2021, 5, "2025-06-27"], ["AA", 2022, 4, "N/A"], ["Low-A", 2021, 3, "2023-08-03"], ["High-A", 2023, 3, "N/A"], ["AA", 2021, 5, "N/A"], ["High-A", 2021, 5, "N/A"], ["High-A", 2022, 4, "N/A"], ["Low-A", 2022, 4, "N/A"], ["Low-A", 2021, 5, "2025-08-02"], ["AAA", 2022, 4, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2021, 5, "N/A"], ["AAA", 2021, 5, "N/A"], ["AA", 2021, 5, "N/A"], ["Low-A", 2021, 4, "2025-04-13"], ["AAA", 2019, 6, "N/A"], ["AAA", 2019, 6, "N/A"], ["Rookie", 2023, 3, "N/A"], ["AA", 2018, 7, "2025-07-21"], ["High-A", 2023, 3, "N/A"], ["AA", 2022, 4, "N/A"], ["AA", 2022, 4, "N/A"], ["Rookie", 2023, 3, "N/A"], ["High-A", 2022, 4, "N/A"], ["AAA", 2021, 5, "N/A"], ["AA", 2019, 6, "N/A"], ["High-A", 2021, 5, "N/A"], ["AAA", 2021, 5, "N/A"], ["AAA", 2021, 5, "N/A"], ["AAA", 2021, 5, "N/A"], ["AAA", 2021, 5, "N/A"], ["AA", 2022, 4, "N/A"], ["AA", 2023, 3, "N/A"], ["AAA", 2022, 4, "N/A"], ["High-A", 2019, 5, "2025-03-20"], ["AAA", 2019, 6, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2022, 4, "N/A"], ["High-A", 2022, 3, "2024-06-20"], ["AA", 2019, 6, "N/A"], ["High-A", 2021, 5, "N/A"], ["AA", 2022, 4, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2021, 4, "2024-11-19"], ["AAA", 2019, 6, "N/A"], ["AA", 2019, 5, "N/A"], ["High-A", 2021, 5, "N/A"], ["AAA", 2022, 4, "N/A"], ["AAA", 2021, 5, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2022, 4, "N/A"], ["High-A", 2021, 5, "2025-07-29"], ["Low-A", 2021, 3, "2024-03-24"], ["AA", 2021, 5, "2025-07-14"], ["AA", 2022, 4, "N/A"], ["High-A", 2022, 4, "N/A"], ["Low-A", 2021, 5, "N/A"], ["AA", 2022, 4, "N/A"], ["AA", 2022, 4, "N/A"], ["AAA", 2022, 4, "N/A"], ["AA", 2019, 6, "N/A"], ["AA", 2019, 6, "N/A"], ["AA", 2022, 4, "N/A"], ["High-A", 2022, 3, "N/A"], ["High-A", 2022, 3, "N/A"], ["AA", 2021, 5, "N/A"], ["AA", 2021, 5, "N/A"], ["High-A", 2022, 4, "N/A"], ["AAA", 2017, 7, "N/A"], ["AAA", 2022, 4, "N/A"], ["Rookie", 2021, 4, "2024-10-08"], ["AAA", 2022, 4, "N/A"], ["Low-A", 2022, 3, "2025-03-27"], ["AA", 2021, 5, "2025-07-14"], ["AA", 2019, 6, "N/A"], ["AAA", 2021, 5, "2025-09-11"], ["AA", 2022, 4, "N/A"], ["AA", 2021, 5, "N/A"], ["Low-A", 2021, 5, "2025-07-29"]],
+            hovertemplate: '<b>%{text}</b><br>' +
+                          'MiLB Highest Level: %{customdata[0]}<br>' +
+                          'MiLB First Season: %{customdata[1]}<br>' +
+                          'MiLB Career Length: %{customdata[2]} years<br>' +
+                          'Release Date: %{customdata[3]}<extra></extra>',
+            name: 'Non-Debuted Players'
+        }];
+        
+        var nonDebutedLayout = {
+            title: { text: '', font: { size: 0 } },
+            xaxis: {
+                title: { text: 'MiLB Highest Level', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [0.50, 5.50],
+                tickmode: 'array',
+                tickvals: [1, 2, 3, 4, 5],
+                ticktext: ['Rookie', 'Low-A', 'High-A', 'AA', 'AAA']
+            },
+            yaxis: {
+                title: { text: 'MiLB Career Length (years)', font: { size: 16, family: 'Inter, sans-serif', color: '#1e3c72' } },
+                showgrid: true,
+                gridcolor: '#e9ecef',
+                gridwidth: 1,
+                zeroline: false,
+                linecolor: '#dee2e6',
+                linewidth: 1,
+                range: [1.3, 7.7],
+                tickformat: 'd'
+            },
+            plot_bgcolor: '#ffffff',
+            paper_bgcolor: '#ffffff',
+            hovermode: 'closest',
+            margin: { l: 80, r: 40, t: 20, b: 60 },
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
+        };
+        
+        Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, { responsive: true, displayModeBar: true });
+        
+        
+        // Generate plots for "Both" tab (create copies of data for side-by-side display)
+        
+        if (typeof debutedData !== 'undefined' && typeof debutedLayout !== 'undefined') {
+            var debutedDataBoth = JSON.parse(JSON.stringify(debutedData));
+            var debutedLayoutBoth = JSON.parse(JSON.stringify(debutedLayout));
+            debutedLayoutBoth.margin = { l: 60, r: 20, t: 20, b: 50 };
+            Plotly.newPlot('plotDebutedBoth', debutedDataBoth, debutedLayoutBoth, { responsive: true, displayModeBar: true });
+        }
+        if (typeof nonDebutedData !== 'undefined' && typeof nonDebutedLayout !== 'undefined') {
+            var nonDebutedDataBoth = JSON.parse(JSON.stringify(nonDebutedData));
+            var nonDebutedLayoutBoth = JSON.parse(JSON.stringify(nonDebutedLayout));
+            nonDebutedLayoutBoth.margin = { l: 60, r: 20, t: 20, b: 50 };
+            Plotly.newPlot('plotNonDebutedBoth', nonDebutedDataBoth, nonDebutedLayoutBoth, { responsive: true, displayModeBar: true });
+        }
         
     </script>
 </body>
