@@ -1,35 +1,6 @@
-# Python - Keep script local, don't push to GitHub
-*.py
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-
-# Data files - Never push data
-*.json
-*.csv
-*.xlsx
-*.xls
-
-# Documentation - Not needed for site to work
-*.md
+# Ignore everything except HTML files and documentation
+*
+!*.html
+!.gitignore
 !README.md
-
-# Deployment scripts - Not needed on GitHub
-*.sh
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
+!.git/

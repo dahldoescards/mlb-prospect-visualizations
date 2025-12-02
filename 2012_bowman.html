@@ -75,7 +75,9 @@
         }
         #plotDebuted, #plotNonDebuted {
             width: 100%;
-            height: 650px;
+            height: calc(100vh - 350px);
+            min-height: 450px;
+            max-height: 800px;
             margin: 30px 0;
         }
         .both-charts {
@@ -85,6 +87,10 @@
         }
         .both-charts .chart-container {
             width: 100%;
+        }
+        .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
+            width: 100%;
+            height: 600px;
         }
         .stats {
             display: grid;
@@ -124,7 +130,9 @@
                 grid-template-columns: 1fr;
             }
             #plotDebuted, #plotNonDebuted {
-                height: 500px;
+                height: calc(100vh - 300px);
+                min-height: 350px;
+                max-height: 600px;
             }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
                 height: 500px;
@@ -157,7 +165,7 @@
         
         <div class="tab-content active" id="tab-debuted">
             <div id="plotDebuted"></div>
-            <div class="stats" id="trajectory-summary">
+            <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
                     <span class="stat-value">28</span>
@@ -231,38 +239,15 @@
                 </div>
             </div>
             <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Career Outcomes & Progression</h3>
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    2 reached Rookie, 1 reached Low-A, 4 reached AA, 3 reached AAA, 28 reached MLB.
+                    2 reached Rookie, 1 reached Low-A, 4 reached AA, 3 reached AAA, 28 reached Unknown.
                 </p>
                 <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
-                    <li>
-                        Average MLB career length: <strong>7.6</strong> seasons.
-                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MLB (last season = 2025): <strong>8</strong> players.
-                        </div>
-                    </li>
-                    <li>
-                        Average MiLB career length: <strong>5.4</strong> seasons.
-                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>0</strong> players.
-                        </div>
-                    </li>
+                    <li>Average MLB career length: <strong>7.6</strong> seasons.</li>
+                    <li>Average MiLB career length: <strong>5.4</strong> seasons.</li>
                     <li>Debuted players in this release: <strong>28</strong>; non-debuted with MiLB data: <strong>10</strong>.</li>
                 </ul>
-            </div>
-            <div id="levelStacked" style="width:100%;height:200px;margin-top:24px;"></div>
-            <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Player Accolades</h3>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>All-Star Selections:</strong> Anthony Rendon (2019), Carlos Martinez (2015, 2017), Clay Holmes (2022, 2024), Gerrit Cole (2015, 2018, 2019, 2021, 2022, 2023), Jackie Bradley Jr. (2016), Joc Pederson (2015, 2022), Josh Bell (2019), Xander Bogaerts (2016, 2019, 2021, 2022)</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>MVP Awards:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Cy Young Awards:</strong> Gerrit Cole (2023)</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Gold Gloves:</strong> Andrelton Simmons (2013, 2014, 2017, 2018), Jackie Bradley Jr. (2018)</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Silver Sluggers:</strong> Anthony Rendon (2014, 2019), Brandon Drury (2022), Josh Bell (2022), Xander Bogaerts (2015, 2016, 2019, 2021, 2022)</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Rookie of the Year:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>CS MVP (AL/NL):</strong> Eddie Rosario (2021), Jackie Bradley Jr. (2018)</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series MVP:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series Champions:</strong> Andrew Susac (2014), Anthony Rendon (2019), Austin Hedges (2023), Eddie Rosario (2021), Jackie Bradley Jr. (2018), Joc Pederson (2020, 2021), Joe Ross (2019), Xander Bogaerts (2013, 2018)</p>
             </div>
         </div>
     </div>
@@ -338,10 +323,10 @@
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            height: 650
+            showlegend: false
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false, displaylogo: false });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
         
         // Base arrays for non-debuted players
@@ -469,7 +454,7 @@
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            height: 650
+            showlegend: false
         };
         
         // Configuration object reused for updates
@@ -518,46 +503,6 @@
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
         
-
-        // 100% stacked level graph
-        (function() {
-            var labels = ["Rookie", "Low-A", "AA", "AAA", "MLB"];
-            var values = [5.3, 2.6, 10.5, 7.9, 73.7];
-            if (!labels.length) return;
-
-            var traces = [];
-            for (var i = 0; i < labels.length; i++) {
-                traces.push({
-                    name: labels[i],
-                    x: [values[i]],
-                    y: [''],
-                    type: 'bar',
-                    orientation: 'h',
-                    text: values[i].toFixed(1) + '%',
-                    textposition: 'inside',
-                    hovertemplate: labels[i] + ': %{x:.1f}%<extra></extra>'
-                });
-            }
-
-            var levelLayout = {
-                barmode: 'stack',
-                xaxis: {
-                    range: [0, 100],
-                    ticksuffix: '%',
-                    showgrid: false
-                },
-                yaxis: {
-                    showticklabels: false
-                },
-                margin: { l: 40, r: 20, t: 10, b: 40 },
-                showlegend: true,
-                plot_bgcolor: '#ffffff',
-                paper_bgcolor: '#ffffff',
-                font: { family: 'Inter, sans-serif', size: 11, color: '#495057' }
-            };
-
-            Plotly.newPlot('levelStacked', traces, levelLayout, {responsive:true, displayModeBar:false, displaylogo:false});
-        })();
     </script>
 </body>
 </html>

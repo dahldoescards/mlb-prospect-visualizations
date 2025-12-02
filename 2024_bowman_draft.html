@@ -75,7 +75,9 @@
         }
         #plotDebuted, #plotNonDebuted {
             width: 100%;
-            height: 650px;
+            height: calc(100vh - 350px);
+            min-height: 450px;
+            max-height: 800px;
             margin: 30px 0;
         }
         .both-charts {
@@ -85,6 +87,10 @@
         }
         .both-charts .chart-container {
             width: 100%;
+        }
+        .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
+            width: 100%;
+            height: 600px;
         }
         .stats {
             display: grid;
@@ -124,7 +130,9 @@
                 grid-template-columns: 1fr;
             }
             #plotDebuted, #plotNonDebuted {
-                height: 500px;
+                height: calc(100vh - 300px);
+                min-height: 350px;
+                max-height: 600px;
             }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
                 height: 500px;
@@ -145,7 +153,7 @@
         
         <div class="tabs">
             <button class="tab active" data-tab="debuted" >
-                Debuted (8)
+                Debuted (9)
             </button>
             <button class="tab " data-tab="non-debuted" >
                 Non-Debuted (86)
@@ -157,18 +165,18 @@
         
         <div class="tab-content active" id="tab-debuted">
             <div id="plotDebuted"></div>
-            <div class="stats" id="trajectory-summary">
+            <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">8</span>
+                    <span class="stat-value">9</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Average WAR</span>
-                    <span class="stat-value">0.76</span>
+                    <span class="stat-value">0.88</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">50.4</span>
+                    <span class="stat-value">54.7</span>
                 </div>
             </div>
         </div>
@@ -207,7 +215,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">All-Stars</span>
-                    <span class="stat-value">18</span>
+                    <span class="stat-value">19</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">MVP Awards</span>
@@ -219,7 +227,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Gold Gloves</span>
-                    <span class="stat-value">1</span>
+                    <span class="stat-value">2</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Silver Sluggers</span>
@@ -231,38 +239,15 @@
                 </div>
             </div>
             <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Career Outcomes & Progression</h3>
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    2 reached Rookie, 31 reached Low-A, 26 reached High-A, 24 reached AA, 3 reached AAA, 8 reached MLB, 7 reached Unknown.
+                    2 reached Rookie, 31 reached Low-A, 26 reached High-A, 24 reached AA, 3 reached AAA, 15 reached Unknown.
                 </p>
                 <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
-                    <li>
-                        Average MLB career length: <strong>1.0</strong> seasons.
-                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MLB (last season = 2025): <strong>8</strong> players.
-                        </div>
-                    </li>
-                    <li>
-                        Average MiLB career length: <strong>1.5</strong> seasons.
-                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>85</strong> players.
-                        </div>
-                    </li>
-                    <li>Debuted players in this release: <strong>8</strong>; non-debuted with MiLB data: <strong>86</strong>.</li>
+                    <li>Average MLB career length: <strong>1.3</strong> seasons.</li>
+                    <li>Average MiLB career length: <strong>1.5</strong> seasons.</li>
+                    <li>Debuted players in this release: <strong>9</strong>; non-debuted with MiLB data: <strong>86</strong>.</li>
                 </ul>
-            </div>
-            <div id="levelStacked" style="width:100%;height:200px;margin-top:24px;"></div>
-            <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Player Accolades</h3>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>All-Star Selections:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>MVP Awards:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Cy Young Awards:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Gold Gloves:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Silver Sluggers:</strong> Nick Kurtz (2025)</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Rookie of the Year:</strong> Nick Kurtz (2025)</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>CS MVP (AL/NL):</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series MVP:</strong> None</p>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series Champions:</strong> None</p>
             </div>
         </div>
     </div>
@@ -290,18 +275,18 @@
         // Generate plots
         
         var debutedData = [{
-            x: [1.03533, 1.37366, 0.194082, -1.56783, 4.5932, 0.0, 0.0, 0.447],
-            y: [134.0, 13.0, 53.0, 62.0, 117.0, 7.0, 14.0, 3.0],
+            x: [1.03533, 1.37366, 0.194082, -1.56783, 1.82415, 4.5932, 0.0, 0.0, 0.447],
+            y: [134.0, 13.0, 53.0, 62.0, 89.5, 117.0, 7.0, 14.0, 3.0],
             mode: 'markers',
             type: 'scatter',
-            text: ["Cam Smith", "Chase Burns", "Christian Moore", "Jac Caglianone", "Nick Kurtz", "Payton Tolle", "Ryan Johnson", "Trey Yesavage"],
+            text: ["Cam Smith", "Chase Burns", "Christian Moore", "Jac Caglianone", "Michael Massey", "Nick Kurtz", "Payton Tolle", "Ryan Johnson", "Trey Yesavage"],
             marker: {
                 size: 9,
                 color: '#2a5298',
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [134.0, 13.0, 53.0, 62.0, 117.0, 7.0, 14.0, 3.0],
+            customdata: [134.0, 13.0, 53.0, 62.0, 358.0, 117.0, 7.0, 14.0, 3.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
@@ -338,10 +323,10 @@
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            height: 650
+            showlegend: false
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false, displaylogo: false });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
         
         // Base arrays for non-debuted players
@@ -469,7 +454,7 @@
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            height: 650
+            showlegend: false
         };
         
         // Configuration object reused for updates
@@ -518,46 +503,6 @@
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
         
-
-        // 100% stacked level graph
-        (function() {
-            var labels = ["Rookie", "Low-A", "High-A", "AA", "AAA", "MLB", "Unknown"];
-            var values = [2.0, 30.7, 25.7, 23.8, 3.0, 7.9, 6.9];
-            if (!labels.length) return;
-
-            var traces = [];
-            for (var i = 0; i < labels.length; i++) {
-                traces.push({
-                    name: labels[i],
-                    x: [values[i]],
-                    y: [''],
-                    type: 'bar',
-                    orientation: 'h',
-                    text: values[i].toFixed(1) + '%',
-                    textposition: 'inside',
-                    hovertemplate: labels[i] + ': %{x:.1f}%<extra></extra>'
-                });
-            }
-
-            var levelLayout = {
-                barmode: 'stack',
-                xaxis: {
-                    range: [0, 100],
-                    ticksuffix: '%',
-                    showgrid: false
-                },
-                yaxis: {
-                    showticklabels: false
-                },
-                margin: { l: 40, r: 20, t: 10, b: 40 },
-                showlegend: true,
-                plot_bgcolor: '#ffffff',
-                paper_bgcolor: '#ffffff',
-                font: { family: 'Inter, sans-serif', size: 11, color: '#495057' }
-            };
-
-            Plotly.newPlot('levelStacked', traces, levelLayout, {responsive:true, displayModeBar:false, displaylogo:false});
-        })();
     </script>
 </body>
 </html>

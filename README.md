@@ -1,26 +1,27 @@
 # MLB Prospect Success Rate Visualizations
 
-Interactive visualizations showing Career WAR vs Career Length for each MLB prospect card release from 2009-2025.
+Interactive visualizations showing Career WAR vs Games per Season for each MLB prospect card release from 2009-2025.
 
 ## Overview
 
-This repository contains HTML visualizations for 48 different Bowman releases, plotting each player's career WAR against their career length. Only players who have debuted and achieved positive WAR are displayed.
+This repository contains HTML visualizations for 48 different Bowman releases, plotting each player's career WAR against their games per season. Includes both debuted and non-debuted players.
 
 ## Features
 
-- **Interactive Scatter Plots**: Each release has its own visualization showing player performance
-- **Tabbed Navigation**: Easy browsing through all releases via tabs
-- **Player Labels**: Each point is labeled with the player's name
-- **Hover Details**: Hover over any point to see detailed information
+* **Interactive Scatter Plots**: Each release has its own visualization showing player performance
+* **Tabbed Navigation**: Easy browsing through all releases via dropdown selector
+* **Player Labels**: Each point is labeled with the player's name
+* **Hover Details**: Hover over any point to see detailed information
+* **Multiple Views**: 
+  - Debuted players: Career WAR vs Games per Season
+  - Non-debuted players: MiLB Highest Level vs MiLB Games per Season
+  - Accolades & Trajectories: Award information
 
 ## How to View
 
 1. Visit the GitHub Pages URL (once deployed)
-2. Use the tabs at the top to navigate between different releases
-3. Each release shows a scatter plot with:
-   - X-axis: Career WAR (Wins Above Replacement)
-   - Y-axis: Career Length (years)
-   - Each point represents a player who debuted with positive WAR
+2. Use the dropdown at the top to navigate between different releases
+3. Each release shows interactive scatter plots with detailed player information
 
 ## Data Source
 
@@ -28,26 +29,21 @@ The visualizations are based on analysis of over 3,200 prospects across 48 diffe
 
 ## Releases Included
 
-- Bowman (2009-2025)
-- Bowman Chrome (2010-2025)
-- Bowman Draft (2010-2024)
+* Bowman (2009-2025)
+* Bowman Chrome (2010-2025)
+* Bowman Draft (2010-2024)
 
 ## Notes
 
-- Only players who have debuted and have WAR > 0 are displayed
-- Recent releases (2020-2025) may show fewer players as many prospects are still developing
-- Career length is calculated from debut year to last active year
+* Only players who have debuted are shown in the "Debuted" tab
+* Non-debuted players show MiLB progression data
+* Recent releases (2020-2025) may show fewer debuted players as many prospects are still developing
+* Career WAR and games per season are calculated from FanGraphs data
 
 ## Local Development
 
-To regenerate the HTML files:
+To regenerate the HTML files, see the main project repository.
 
-```bash
-python3 generate_visualizations.py
-```
+## About
 
-Requires the `mlb_analysis_results.json` file in the Downloads folder.
-
-
-
-
+This visualization project tracks MLB prospect card performance over time, analyzing career outcomes for players featured in Bowman releases from 2009-2025.
