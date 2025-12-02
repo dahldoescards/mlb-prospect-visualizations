@@ -19,9 +19,8 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 40px 30px;
         }
         .header-section {
@@ -75,22 +74,9 @@
             display: block;
         }
         #plotDebuted, #plotNonDebuted {
-            width: 100% !important;
-            height: calc(100vh - 350px);
-            min-height: 450px;
-            max-height: 800px;
+            width: 100%;
+            height: 650px;
             margin: 30px 0;
-            box-sizing: border-box;
-        }
-        #tab-non-debuted #nonDebutedFilters {
-            margin-bottom: 15px;
-        }
-        #tab-non-debuted #plotNonDebuted {
-            margin-top: 0;
-            width: 100% !important;
-        }
-        #tab-debuted #plotDebuted {
-            width: 100% !important;
         }
         .both-charts {
             display: grid;
@@ -142,9 +128,7 @@
                 grid-template-columns: 1fr;
             }
             #plotDebuted, #plotNonDebuted {
-                height: calc(100vh - 300px);
-                min-height: 350px;
-                max-height: 600px;
+                height: 500px;
             }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
                 height: 500px;
@@ -153,10 +137,6 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-        }
-        .js-plotly-plot, .plotly {
-            width: 100% !important;
-            max-width: 100% !important;
         }
     </style>
 </head>
@@ -188,11 +168,11 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Average WAR</span>
-                    <span class="stat-value">2.66</span>
+                    <span class="stat-value">2.68</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">34.7</span>
+                    <span class="stat-value">33.5</span>
                 </div>
             </div>
         </div>
@@ -257,26 +237,35 @@
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    46 reached MLB, 14 reached AAA, 2 reached AA, 2 reached High-A, 1 reached Low-A, 1 reached Rookie.
+                    1 reached Rookie, 1 reached Low-A, 2 reached High-A, 2 reached AA, 14 reached AAA, 46 reached MLB.
                 </p>
-                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;">
-                    <li>Average MLB career length: <strong>4.0</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MLB Players: <strong>38</strong> / Inactive: <strong>8</strong> (Total Debuted: 46)</li>
-                        </ul>
+                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
+                    <li>
+                        Average MLB career length: <strong>4.1</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MLB (last season = 2025): <strong>29</strong> players.
+                        </div>
                     </li>
-                    <li>Average MiLB career length: <strong>5.8</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MiLB Players: <strong>9</strong> / Inactive: <strong>11</strong> (Total Non-Debuted: 20)</li>
-                        </ul>
+                    <li>
+                        Average MiLB career length: <strong>5.8</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>2</strong> players.
+                        </div>
                     </li>
+                    <li>Debuted players in this release: <strong>46</strong>; non-debuted with MiLB data: <strong>20</strong>.</li>
                 </ul>
             </div>
             <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Award Winners</h3>
-                <ul style="padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;max-height:400px;overflow-y:auto;">
-                    <li><strong>MVP:</strong> None</li><li><strong>Cy Young:</strong> None</li><li><strong>Rookie of the Year:</strong> Luis Gil (2024)</li><li><strong>All-Star:</strong> Alejandro Kirk (2022, 2025), Cal Raleigh (2025), Geraldo Perdomo (2023)</li><li><strong>Gold Glove:</strong> Cal Raleigh (2024)</li><li><strong>Silver Slugger:</strong> Alejandro Kirk (2022), Cal Raleigh (2025), Geraldo Perdomo (2025)</li><li><strong>CS MVP:</strong> None</li><li><strong>WS MVP:</strong> None</li><li><strong>WS Champion:</strong> Bryan Abreu (2022), Cristian Javier (2022)</li>
-                </ul>
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Player Accolades</h3>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>All-Star Selections:</strong> Alejandro Kirk (2022, 2025), Cal Raleigh (2025), Geraldo Perdomo (2023)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>MVP Awards:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Cy Young Awards:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Gold Gloves:</strong> Cal Raleigh (2024)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Silver Sluggers:</strong> Alejandro Kirk (2022), Cal Raleigh (2025), Geraldo Perdomo (2025)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Rookie of the Year:</strong> Luis Gil (2024)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>CS MVP (AL/NL):</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series MVP:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series Champions:</strong> Bryan Abreu (2022), Cristian Javier (2022)</p>
             </div>
         </div>
     </div>
@@ -304,8 +293,8 @@
         // Generate plots
         
         var debutedData = [{
-            x: [0.0799413, 0.0161979, 14.8176, -0.204377, 0.0, 0.0, 1.07637, 6.17546, 22.9051, 1.3426, 4.35915, 7.58039, 0.53919, 2.5669, 0.988574, 0.0, 6.50103, 11.8912, -0.223166, 0.0, -0.488827, 5.92182, -0.238172, 0.486976, 0.0, -0.137881, 0.0, 0.253678, 0.656391, 3.31702, 3.23144, 0.0, 9.46379, 0.469203, 0.203033, -0.0666966, 0.705896, 8.85802, 0.0169432, 4.09753, 2.79099, 0.391947, -0.745427, -0.222968, 0.0805791, 2.73468],
-            y: [63.142857142857146, 1.0, 94.0, 36.0, 1.0, 15.2, 93.66666666666667, 45.285714285714285, 124.6, 31.833333333333332, 22.333333333333332, 20.666666666666668, 7.5, 25.0, 46.0, 3.0, 33.0, 112.4, 4.0, 3.5, 13.0, 61.5, 10.666666666666666, 7.0, 28.571428571428573, 12.0, 16.0, 40.5, 11.666666666666666, 100.66666666666667, 11.75, 24.0, 23.0, 40.0, 63.666666666666664, 1.0, 60.6, 17.833333333333332, 10.0, 13.6, 42.0, 23.25, 21.5, 22.666666666666668, 31.0, 106.0],
+            x: [0.0799413, 0.0161979, 14.8176, -0.204377, 0.0, 0.0, 1.07637, 6.17546, 22.9051, 1.3426, 4.35915, 7.58039, 0.53919, 2.5669, 0.988574, 0.0, 6.50103, 11.8912, -0.223166, 0.0, -0.488827, 5.92182, -0.238172, 0.486976, 0.0, -0.137881, 0.0, 0.253678, 0.656391, 4.53888, 3.23144, 0.0, 9.46379, 0.469203, 0.203033, -0.0666966, 0.705896, 8.85802, 0.0169432, 4.09753, 2.79099, 0.391947, -0.745427, -0.222968, 0.0805791, 2.73468],
+            y: [63.142857142857146, 1.0, 94.0, 36.0, 1.0, 15.2, 93.66666666666667, 45.285714285714285, 124.6, 31.833333333333332, 22.333333333333332, 20.666666666666668, 7.5, 25.0, 46.0, 3.0, 33.0, 112.4, 4.0, 3.5, 13.0, 61.5, 10.666666666666666, 7.0, 28.571428571428573, 12.0, 16.0, 40.5, 11.666666666666666, 46.38461538461539, 11.75, 24.0, 23.0, 40.0, 63.666666666666664, 1.0, 60.6, 17.833333333333332, 10.0, 13.6, 42.0, 23.25, 21.5, 22.666666666666668, 31.0, 106.0],
             mode: 'markers',
             type: 'scatter',
             text: ["Abraham Toro", "Adam Kloffenstein", "Alejandro Kirk", "Alexander Canario", "Brailyn Marquez", "Brandon Bielak", "Brayan Rocchio", "Bryan Abreu", "Cal Raleigh", "Carlos Hernandez", "Cole Irvin", "Cristian Javier", "Deivi Garcia", "Edwin Uceta", "Eli White", "Francisco Morales", "Garrett Whitlock", "Geraldo Perdomo", "Israel Pineda", "James Bourque", "Jared Oliva", "Jhoan Duran", "Jonathan Ornelas", "Jordan Yamamoto", "Jorge Alcala", "Jose Devers", "Konnor Pilkington", "Leonardo Jimenez", "Livan Soto", "Luis Garcia", "Luis Gil", "Mason Englert", "Michael King", "Mike Siani", "Noelvi Marte", "Orelvis Martinez", "Owen Miller", "Patrick Sandoval", "Payton Henry", "Ryan Feltner", "Sam Hentges", "Sean Hjelle", "Seth Beer", "Terrin Vavra", "Tyler Phillips", "Wenceel Perez"],
@@ -315,11 +304,12 @@
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [442.0, 1.0, 564.0, 108.0, 1.0, 76.0, 281.0, 317.0, 623.0, 191.0, 134.0, 124.0, 30.0, 125.0, 276.0, 3.0, 165.0, 562.0, 4.0, 7.0, 26.0, 246.0, 32.0, 21.0, 200.0, 24.0, 48.0, 81.0, 35.0, 604.0, 47.0, 72.0, 161.0, 160.0, 191.0, 1.0, 303.0, 107.0, 20.0, 68.0, 168.0, 93.0, 43.0, 68.0, 62.0, 212.0],
+            customdata: [442.0, 1.0, 564.0, 108.0, 1.0, 76.0, 281.0, 317.0, 623.0, 191.0, 134.0, 124.0, 30.0, 125.0, 276.0, 3.0, 165.0, 562.0, 4.0, 7.0, 26.0, 246.0, 32.0, 21.0, 200.0, 24.0, 48.0, 81.0, 35.0, 603.0, 47.0, 72.0, 161.0, 160.0, 191.0, 1.0, 303.0, 107.0, 20.0, 68.0, 168.0, 93.0, 43.0, 68.0, 62.0, 212.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>'
+                          'Career Games Played: %{customdata}<extra></extra>',
+            name: 'Debuted Players'
         }];
         
         var debutedLayout = {
@@ -350,11 +340,10 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true, displaylogo: false });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
         
         // Base arrays for non-debuted players
@@ -428,7 +417,8 @@
                                   'MiLB Highest Level: %{customdata[0]}<br>' +
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
-                                  'Release Date: %{customdata[3]}<extra></extra>'
+                                  'Release Date: %{customdata[3]}<extra></extra>',
+                    name: 'Non-Debuted Players'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
@@ -480,15 +470,13 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
         // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: true,
-            displaylogo: false
+            displayModeBar: true
         };
 
         function getActiveLevelsNonDebuted() {

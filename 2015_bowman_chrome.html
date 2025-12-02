@@ -19,9 +19,8 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 40px 30px;
         }
         .header-section {
@@ -75,22 +74,9 @@
             display: block;
         }
         #plotDebuted, #plotNonDebuted {
-            width: 100% !important;
-            height: calc(100vh - 350px);
-            min-height: 450px;
-            max-height: 800px;
+            width: 100%;
+            height: 650px;
             margin: 30px 0;
-            box-sizing: border-box;
-        }
-        #tab-non-debuted #nonDebutedFilters {
-            margin-bottom: 15px;
-        }
-        #tab-non-debuted #plotNonDebuted {
-            margin-top: 0;
-            width: 100% !important;
-        }
-        #tab-debuted #plotDebuted {
-            width: 100% !important;
         }
         .both-charts {
             display: grid;
@@ -142,9 +128,7 @@
                 grid-template-columns: 1fr;
             }
             #plotDebuted, #plotNonDebuted {
-                height: calc(100vh - 300px);
-                min-height: 350px;
-                max-height: 600px;
+                height: 500px;
             }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
                 height: 500px;
@@ -153,10 +137,6 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-        }
-        .js-plotly-plot, .plotly {
-            width: 100% !important;
-            max-width: 100% !important;
         }
     </style>
 </head>
@@ -192,7 +172,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">41.9</span>
+                    <span class="stat-value">40.2</span>
                 </div>
             </div>
         </div>
@@ -257,26 +237,35 @@
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    46 reached MLB, 16 reached AAA, 4 reached AA, 2 reached High-A, 3 reached Low-A, 1 reached Rookie.
+                    1 reached Rookie, 3 reached Low-A, 2 reached High-A, 4 reached AA, 16 reached AAA, 46 reached MLB.
                 </p>
-                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;">
-                    <li>Average MLB career length: <strong>6.0</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MLB Players: <strong>20</strong> / Inactive: <strong>26</strong> (Total Debuted: 46)</li>
-                        </ul>
+                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
+                    <li>
+                        Average MLB career length: <strong>6.0</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MLB (last season = 2025): <strong>15</strong> players.
+                        </div>
                     </li>
-                    <li>Average MiLB career length: <strong>5.9</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MiLB Players: <strong>2</strong> / Inactive: <strong>24</strong> (Total Non-Debuted: 26)</li>
-                        </ul>
+                    <li>
+                        Average MiLB career length: <strong>5.9</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>0</strong> players.
+                        </div>
                     </li>
+                    <li>Debuted players in this release: <strong>46</strong>; non-debuted with MiLB data: <strong>26</strong>.</li>
                 </ul>
             </div>
             <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Award Winners</h3>
-                <ul style="padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;max-height:400px;overflow-y:auto;">
-                    <li><strong>MVP:</strong> Cody Bellinger (2019)</li><li><strong>Cy Young:</strong> None</li><li><strong>Rookie of the Year:</strong> Cody Bellinger (2017)</li><li><strong>All-Star:</strong> Cody Bellinger (2017, 2019), Gleyber Torres (2018, 2019, 2025), Joe Wendle (2021), Justin Steele (2023), Reynaldo Lopez (2024)</li><li><strong>Gold Glove:</strong> Cody Bellinger (2019)</li><li><strong>Silver Slugger:</strong> Cody Bellinger (2019, 2023)</li><li><strong>CS MVP:</strong> Cody Bellinger (2018)</li><li><strong>WS MVP:</strong> None</li><li><strong>WS Champion:</strong> Brent Honeywell (2024), Cody Bellinger (2020)</li>
-                </ul>
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Player Accolades</h3>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>All-Star Selections:</strong> Cody Bellinger (2017, 2019), Gleyber Torres (2018, 2019, 2025), Joe Wendle (2021), Justin Steele (2023), Reynaldo Lopez (2024)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>MVP Awards:</strong> Cody Bellinger (2019)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Cy Young Awards:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Gold Gloves:</strong> Cody Bellinger (2019)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Silver Sluggers:</strong> Cody Bellinger (2019, 2023)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Rookie of the Year:</strong> Cody Bellinger (2017)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>CS MVP (AL/NL):</strong> Cody Bellinger (2018)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series MVP:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series Champions:</strong> Brent Honeywell (2024), Cody Bellinger (2020)</p>
             </div>
         </div>
     </div>
@@ -305,7 +294,7 @@
         
         var debutedData = [{
             x: [1.29176, 0.0, 0.341976, 8.78141, -0.858014, 1.44386, -0.280692, 0.0, 0.0, -0.0214925, 3.89251, 2.50216, 28.6739, -0.377623, 0.194905, -0.672636, 7.91849, 18.5026, -0.869588, -0.338253, 6.83616, 0.0, 2.09823, 0.0304968, 0.0374535, 9.05211, 0.015114, 10.2628, 1.02301, 5.00888, 0.0, 0.157956, 13.7691, 15.534, -0.823758, 12.4187, 0.676625, 0.122733, 6.63548, 2.05029, 1.41427, 6.68479, 25.4703, 1.55137, 0.0, 0.0],
-            y: [14.4, 6.0, 41.0, 19.77777777777778, 25.2, 29.571428571428573, 32.333333333333336, 5.666666666666667, 21.0, 21.0, 56.42857142857143, 21.6, 128.55555555555554, 19.5, 39.0, 35.4, 85.1, 129.125, 27.8, 15.0, 71.77777777777777, 6.0, 74.71428571428571, 47.5, 12.666666666666666, 74.11111111111111, 4.0, 20.4, 7.0, 88.4, 14.0, 38.63636363636363, 120.14285714285714, 28.22222222222222, 46.25, 26.8, 48.25, 26.5, 11.571428571428571, 42.5, 29.0, 80.11111111111111, 130.0, 61.5, 24.2, 17.666666666666668],
+            y: [14.4, 6.0, 41.0, 19.77777777777778, 25.2, 29.571428571428573, 32.333333333333336, 5.666666666666667, 21.0, 21.0, 56.42857142857143, 21.6, 128.55555555555554, 19.5, 39.0, 35.4, 85.1, 129.125, 27.8, 15.0, 71.77777777777777, 6.0, 0.0, 47.5, 12.666666666666666, 74.11111111111111, 4.0, 20.4, 7.0, 88.4, 14.0, 38.63636363636363, 120.14285714285714, 28.22222222222222, 46.25, 26.8, 48.25, 26.5, 11.571428571428571, 42.5, 29.0, 80.11111111111111, 130.0, 61.5, 24.2, 17.666666666666668],
             mode: 'markers',
             type: 'scatter',
             text: ["Adrian Sampson", "Akeel Morris", "Amir Garrett", "Antonio Senzatela", "Austin Dean", "Austin Voth", "Bobby Bradley", "Bobby Wahl", "Brent Honeywell", "Brett Graves", "Brett Phillips", "Carson Smith", "Cody Bellinger", "Darnell Sweeney", "Dermis Garcia", "Dixon Machado", "Giovanny Urshela", "Gleyber Torres", "Grayson Greiner", "Hector Olivera", "J.D. Davis", "Jairo Labourt", "Jake Cave", "Jarlin Garcia", "Jefry Rodriguez", "Joe Wendle", "Jon Moscot", "Justin Steele", "Luiz Gohara", "Mallex Smith", "Marcos Diplan", "Miguel Castro", "Mike Yastrzemski", "Nick Pivetta", "Pedro Severino", "Reynaldo Lopez", "Sergio Alcantara", "Spencer Kieboom", "Spencer Turnbull", "Steven Okert", "Victor Arano", "Victor Caratini", "Willy Adames", "Wilmer Difo", "Yoan Lopez", "Zac Reininger"],
@@ -315,11 +304,12 @@
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [72.0, 18.0, 328.0, 178.0, 126.0, 207.0, 97.0, 17.0, 63.0, 21.0, 395.0, 108.0, 1157.0, 39.0, 39.0, 177.0, 851.0, 1033.0, 139.0, 30.0, 646.0, 6.0, 523.0, 285.0, 38.0, 667.0, 8.0, 102.0, 14.0, 442.0, 28.0, 425.0, 841.0, 254.0, 370.0, 268.0, 193.0, 53.0, 81.0, 340.0, 116.0, 721.0, 1040.0, 492.0, 121.0, 53.0],
+            customdata: [72.0, 18.0, 328.0, 178.0, 126.0, 207.0, 97.0, 17.0, 63.0, 21.0, 395.0, 108.0, 1157.0, 39.0, 39.0, 177.0, 851.0, 1033.0, 139.0, 30.0, 646.0, 6.0, 0, 285.0, 38.0, 667.0, 8.0, 102.0, 14.0, 442.0, 28.0, 425.0, 841.0, 254.0, 370.0, 268.0, 193.0, 53.0, 81.0, 340.0, 116.0, 721.0, 1040.0, 492.0, 121.0, 53.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>'
+                          'Career Games Played: %{customdata}<extra></extra>',
+            name: 'Debuted Players'
         }];
         
         var debutedLayout = {
@@ -350,11 +340,10 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true, displaylogo: false });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
         
         // Base arrays for non-debuted players
@@ -428,7 +417,8 @@
                                   'MiLB Highest Level: %{customdata[0]}<br>' +
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
-                                  'Release Date: %{customdata[3]}<extra></extra>'
+                                  'Release Date: %{customdata[3]}<extra></extra>',
+                    name: 'Non-Debuted Players'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
@@ -480,15 +470,13 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
         // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: true,
-            displaylogo: false
+            displayModeBar: true
         };
 
         function getActiveLevelsNonDebuted() {

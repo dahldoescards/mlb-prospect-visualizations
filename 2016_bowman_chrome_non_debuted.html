@@ -19,9 +19,8 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 40px 30px;
         }
         .header-section {
@@ -44,9 +43,7 @@
         }
         #plot {
             width: 100%;
-            height: calc(100vh - 350px);
-            min-height: 450px;
-            max-height: 800px;
+            height: 650px;
             margin: 30px 0;
         }
         .stats {
@@ -84,18 +81,12 @@
                 font-size: 1.5rem;
             }
             #plot {
-                height: calc(100vh - 300px);
-                min-height: 350px;
-                max-height: 600px;
+                height: 500px;
             }
             .stats {
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-        }
-        .js-plotly-plot, .plotly {
-            width: 100% !important;
-            max-width: 100% !important;
         }
     </style>
 </head>
@@ -276,14 +267,12 @@
                 family: 'Inter, sans-serif',
                 size: 12,
                 color: '#495057'
-            },
-            showlegend: false
+            }
         };
 
         var config = {
             responsive: true,
-            displayModeBar: true,
-            displaylogo: false
+            displayModeBar: true
         };
         
         function getActiveLevels() {

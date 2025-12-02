@@ -19,9 +19,8 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 40px 30px;
         }
         .header-section {
@@ -44,9 +43,7 @@
         }
         #plot {
             width: 100%;
-            height: calc(100vh - 350px);
-            min-height: 450px;
-            max-height: 800px;
+            height: 650px;
             margin: 30px 0;
         }
         .stats {
@@ -84,18 +81,12 @@
                 font-size: 1.5rem;
             }
             #plot {
-                height: calc(100vh - 300px);
-                min-height: 350px;
-                max-height: 600px;
+                height: 500px;
             }
             .stats {
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-        }
-        .js-plotly-plot, .plotly {
-            width: 100% !important;
-            max-width: 100% !important;
         }
     </style>
 </head>
@@ -117,15 +108,15 @@
         <div class="stats">
             <div class="stat-item">
                 <span class="stat-label">Players Shown</span>
-                <span class="stat-value" id="nonDebutedPlayersCount">90</span>
+                <span class="stat-value" id="nonDebutedPlayersCount">91</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Level</span>
-                <span class="stat-value" id="nonDebutedAvgLevel">AA</span>
+                <span class="stat-value" id="nonDebutedAvgLevel">High-A</span>
             </div>
             <div class="stat-item">
                 <span class="stat-label">Avg MiLB Games per Season</span>
-                <span class="stat-value" id="nonDebutedAvgGps">66.8</span>
+                <span class="stat-value" id="nonDebutedAvgGps">66.5</span>
             </div>
         </div>
     </div>
@@ -133,13 +124,13 @@
     <script>
         // Base arrays for non-debuted players
         var nonDebutedBase = {
-            x: [4, 4, 4, 5, 3, 3, 4, 3, 3, 3, 5, 5, 3, 4, 5, 4, 3, 5, 4, 5, 2, 2, 4, 3, 3, 4, 5, 5, 4, 1, 2, 3, 1, 5, 3, 3, 3, 5, 3, 3, 3, 4, 5, 4, 4, 2, 4, 4, 2, 4, 5, 2, 3, 4, 5, 4, 4, 1, 3, 4, 5, 5, 4, 5, 5, 3, 5, 3, 2, 2, 3, 3, 3, 3, 4, 2, 4, 4, 5, 2, 4, 4, 2, 4, 3, 2, 3, 2, 3, 3],
-            y: [99.6, 66.8, 108.83, 54.6, 64.0, 48.75, 106.5, 84.75, 56.0, 33.33, 92.6, 135.4, 54.4, 57.8, 109.0, 81.8, 37.67, 113.75, 62.75, 104.8, 79.25, 28.4, 82.4, 70.6, 57.8, 92.0, 65.2, 96.6, 91.5, 27.33, 35.75, 56.5, 13.0, 73.0, 80.0, 70.5, 77.6, 81.0, 40.33, 45.2, 68.25, 80.4, 94.4, 19.5, 81.6, 54.5, 80.4, 87.6, 52.25, 91.17, 96.29, 39.67, 20.67, 63.4, 39.33, 67.6, 31.5, 21.25, 58.6, 69.0, 84.8, 95.6, 12.0, 64.4, 80.0, 68.4, 45.2, 53.75, 71.25, 49.75, 97.0, 41.25, 76.25, 88.6, 71.83, 60.25, 19.25, 20.4, 101.6, 32.67, 105.6, 95.5, 46.5, 69.83, 83.0, 56.5, 66.0, 54.25, 71.6, 78.5],
-            names: ["Adrian Placencia", "Adrian Sugastey", "Alex De Jesus", "Alexander Ovalles", "Alexander Suarez", "Alexis Hernandez", "Andy Thomas", "Anthony Gutierrez", "Antonio Pinero", "Austin Schultz", "BJ Murray Jr.", "Benjamin Cowles", "Brandol Mezquita", "CJ Rodriguez", "Cal Conley", "Cameron Cauley", "Charlie Welch", "Christian Franklin", "Collin Burns", "Cooper Bowman", "Cristhian Vaquero", "Daniel McElveny", "Daniel Vazquez", "Danny De Andrade", "Danyer Cueva", "Diego Velasquez", "Donta Williams", "Dru Baker", "Eddinson Paulino", "Erick Hernandez", "Estanli Castillo", "Estiven Machado", "Gavin Tonkel", "Greg Cullen", "Herard Gonzalez", "Ian Lewis", "Isaac De Leon", "JT Schwartz", "Jack Herman", "Jaden Rudd", "Jaison Chourio", "Jake Fox", "Jake Rucker", "Jarlin Susana", "Jheremy Vargas", "JoJo Blackmon", "John Fox", "John Rhodes", "Jonathan Mejia", "Juan Guerrero", "Junior Perez", "Junior Sanchez", "Kevin Kendall", "Leonardo Balcazar", "Liam Spence", "Logan Cerny", "Luis Chevalier", "Luis Meza", "Maikol Hernandez", "Mason Auer", "Nathan Hickey", "Noah Miller", "Norge Vera", "Parker Chavers", "Quincy Hamilton", "Rayne Doncon", "Reed Trimble", "Ricardo Cabrera", "Roderick Arias", "Roilan Machandy", "Rosman Verdugo", "Ryan Reckley", "Samuel Munoz", "Samuel Zavala", "Sebastian Espino", "Simon Juan", "Tanner McDougal", "Thomas Farr", "Victor Labrada", "Victor Mesia", "Wilfred Veras", "William Bergolla", "Willy Fanas", "Willy Vasquez", "Won-Bin Cho", "Yasser Mercedes", "Yeison Morrobel", "Yendry Rojas", "Yerlin Confidan", "Yordany De Los Santos"],
-            levelsLabel: ["AA", "AA", "AA", "AAA", "High-A", "High-A", "AA", "High-A", "High-A", "High-A", "AAA", "AAA", "High-A", "AA", "AAA", "AA", "High-A", "AAA", "AA", "AAA", "Low-A", "Low-A", "AA", "High-A", "High-A", "AA", "AAA", "AAA", "AA", "Rookie", "Low-A", "High-A", "Rookie", "AAA", "High-A", "High-A", "High-A", "AAA", "High-A", "High-A", "High-A", "AA", "AAA", "AA", "AA", "Low-A", "AA", "AA", "Low-A", "AA", "AAA", "Low-A", "High-A", "AA", "AAA", "AA", "AA", "Rookie", "High-A", "AA", "AAA", "AAA", "AA", "AAA", "AAA", "High-A", "AAA", "High-A", "Low-A", "Low-A", "High-A", "High-A", "High-A", "High-A", "AA", "Low-A", "AA", "AA", "AAA", "Low-A", "AA", "AA", "Low-A", "AA", "High-A", "Low-A", "High-A", "Low-A", "High-A", "High-A"],
-            careerLengths: [5, 5, 6, 5, 5, 4, 4, 4, 6, 3, 5, 5, 5, 5, 5, 5, 3, 4, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 6, 3, 4, 4, 2, 5, 5, 4, 5, 5, 6, 5, 4, 5, 5, 4, 5, 4, 5, 5, 4, 6, 7, 3, 3, 5, 3, 5, 6, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 5, 6, 4, 4, 5, 5, 3, 5, 4, 4, 6, 4, 4, 5, 4, 5, 4],
-            firstSeasons: [2021, 2021, 2019, 2018, 2019, 2022, 2021, 2022, 2016, 2021, 2021, 2021, 2018, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2022, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2019, 2022, 2019, 2021, 2021, 2018, 2018, 2021, 2019, 2021, 2018, 2021, 2022, 2021, 2021, 2022, 2021, 2021, 2021, 2021, 2022, 2019, 2018, 2022, 2021, 2021, 2021, 2021, 2019, 2022, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2022, 2022, 2019, 2022, 2022, 2022, 2021, 2017, 2022, 2021, 2021, 2021, 2021, 2021, 2022, 2022, 2019, 2022, 2022, 2021, 2022, 2021, 2022],
-            releaseDates: ["N/A", "N/A", "N/A", "2024-03-29", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-03-17", "N/A", "N/A", "2023-08-07", "N/A", "N/A", "N/A", "2024-03-12", "N/A", "N/A", "N/A", "N/A", "2025-07-31", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-07-25", "2023-08-08", "2024-08-03", "2024-03-27", "N/A", "2024-03-24", "N/A", "2025-01-16", "N/A", "2024-04-25", "2025-08-01", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-07-28", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-08-02", "2023-11-03", "N/A", "2024-03-29", "2025-06-23", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2025-03-28", "N/A", "2025-07-30", "N/A", "N/A", "N/A", "N/A", "2024-03-28", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2023-10-13", "N/A", "N/A", "2025-08-04", "N/A", "N/A", "N/A", "N/A", "2025-08-06", "N/A", "N/A"]
+            x: [4, 4, 4, 5, 3, 3, 4, 3, 3, 3, 5, 5, 3, 4, 5, 4, 3, 5, 4, 5, 2, 2, 4, 3, 3, 4, 5, 5, 4, 1, 2, 3, 1, 5, 3, 3, 3, 5, 3, 3, 3, 4, 5, 4, 4, 2, 4, 4, 2, 4, 5, 2, 3, 4, 5, 4, 4, 1, 3, 4, 5, 5, 4, 5, 5, 3, 5, 3, 2, 2, 3, 3, 3, 3, 4, 2, 4, 4, 2, 5, 2, 4, 4, 2, 4, 3, 2, 3, 2, 3, 3],
+            y: [99.6, 66.8, 108.83, 54.6, 64.0, 48.75, 106.5, 84.75, 56.0, 33.33, 92.6, 135.4, 54.4, 57.8, 109.0, 81.8, 37.67, 113.75, 62.75, 104.8, 79.25, 28.4, 82.4, 70.6, 57.8, 92.0, 65.2, 96.6, 91.5, 27.33, 35.75, 56.5, 13.0, 73.0, 80.0, 70.5, 77.6, 81.0, 40.33, 45.2, 68.25, 80.4, 94.4, 19.5, 81.6, 54.5, 80.4, 87.6, 52.25, 91.17, 96.29, 39.67, 20.67, 63.4, 39.33, 67.6, 31.5, 21.25, 58.6, 69.0, 84.8, 95.6, 12.0, 64.4, 80.0, 68.4, 45.2, 53.75, 71.25, 49.75, 97.0, 41.25, 76.25, 88.6, 71.83, 60.25, 19.25, 20.4, 39.33, 101.6, 32.67, 105.6, 95.5, 46.5, 69.83, 83.0, 56.5, 66.0, 54.25, 71.6, 78.5],
+            names: ["Adrian Placencia", "Adrian Sugastey", "Alex De Jesus", "Alexander Ovalles", "Alexander Suarez", "Alexis Hernandez", "Andy Thomas", "Anthony Gutierrez", "Antonio Pinero", "Austin Schultz", "BJ Murray Jr.", "Benjamin Cowles", "Brandol Mezquita", "CJ Rodriguez", "Cal Conley", "Cameron Cauley", "Charlie Welch", "Christian Franklin", "Collin Burns", "Cooper Bowman", "Cristhian Vaquero", "Daniel McElveny", "Daniel Vazquez", "Danny De Andrade", "Danyer Cueva", "Diego Velasquez", "Donta Williams", "Dru Baker", "Eddinson Paulino", "Erick Hernandez", "Estanli Castillo", "Estiven Machado", "Gavin Tonkel", "Greg Cullen", "Herard Gonzalez", "Ian Lewis", "Isaac De Leon", "JT Schwartz", "Jack Herman", "Jaden Rudd", "Jaison Chourio", "Jake Fox", "Jake Rucker", "Jarlin Susana", "Jheremy Vargas", "JoJo Blackmon", "John Fox", "John Rhodes", "Jonathan Mejia", "Juan Guerrero", "Junior Perez", "Junior Sanchez", "Kevin Kendall", "Leonardo Balcazar", "Liam Spence", "Logan Cerny", "Luis Chevalier", "Luis Meza", "Maikol Hernandez", "Mason Auer", "Nathan Hickey", "Noah Miller", "Norge Vera", "Parker Chavers", "Quincy Hamilton", "Rayne Doncon", "Reed Trimble", "Ricardo Cabrera", "Roderick Arias", "Roilan Machandy", "Rosman Verdugo", "Ryan Reckley", "Samuel Munoz", "Samuel Zavala", "Sebastian Espino", "Simon Juan", "Tanner McDougal", "Thomas Farr", "Tyler Collins", "Victor Labrada", "Victor Mesia", "Wilfred Veras", "William Bergolla", "Willy Fanas", "Willy Vasquez", "Won-Bin Cho", "Yasser Mercedes", "Yeison Morrobel", "Yendry Rojas", "Yerlin Confidan", "Yordany De Los Santos"],
+            levelsLabel: ["AA", "AA", "AA", "AAA", "High-A", "High-A", "AA", "High-A", "High-A", "High-A", "AAA", "AAA", "High-A", "AA", "AAA", "AA", "High-A", "AAA", "AA", "AAA", "Low-A", "Low-A", "AA", "High-A", "High-A", "AA", "AAA", "AAA", "AA", "Rookie", "Low-A", "High-A", "Rookie", "AAA", "High-A", "High-A", "High-A", "AAA", "High-A", "High-A", "High-A", "AA", "AAA", "AA", "AA", "Low-A", "AA", "AA", "Low-A", "AA", "AAA", "Low-A", "High-A", "AA", "AAA", "AA", "AA", "Rookie", "High-A", "AA", "AAA", "AAA", "AA", "AAA", "AAA", "High-A", "AAA", "High-A", "Low-A", "Low-A", "High-A", "High-A", "High-A", "High-A", "AA", "Low-A", "AA", "AA", "Low-A", "AAA", "Low-A", "AA", "AA", "Low-A", "AA", "High-A", "Low-A", "High-A", "Low-A", "High-A", "High-A"],
+            careerLengths: [5, 5, 6, 5, 5, 4, 4, 4, 6, 3, 5, 5, 5, 5, 5, 5, 3, 4, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 6, 3, 4, 4, 2, 5, 5, 4, 5, 5, 6, 5, 4, 5, 5, 4, 5, 4, 5, 5, 4, 6, 7, 3, 3, 5, 3, 5, 6, 4, 5, 5, 5, 5, 4, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 5, 6, 4, 4, 5, 3, 5, 3, 5, 4, 4, 6, 4, 4, 5, 4, 5, 4],
+            firstSeasons: [2021, 2021, 2019, 2018, 2019, 2022, 2021, 2022, 2016, 2021, 2021, 2021, 2018, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2022, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2019, 2022, 2019, 2021, 2021, 2018, 2018, 2021, 2019, 2021, 2018, 2021, 2022, 2021, 2021, 2022, 2021, 2021, 2021, 2021, 2022, 2019, 2018, 2022, 2021, 2021, 2021, 2021, 2019, 2022, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2022, 2022, 2019, 2022, 2022, 2022, 2021, 2017, 2022, 2021, 2021, 2021, 2021, 2021, 2021, 2022, 2022, 2019, 2022, 2022, 2021, 2022, 2021, 2022],
+            releaseDates: ["N/A", "N/A", "N/A", "2024-03-29", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-03-17", "N/A", "N/A", "2023-08-07", "N/A", "N/A", "N/A", "2024-03-12", "N/A", "N/A", "N/A", "N/A", "2025-07-31", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-07-25", "2023-08-08", "2024-08-03", "2024-03-27", "N/A", "2024-03-24", "N/A", "2025-01-16", "N/A", "2024-04-25", "2025-08-01", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-07-28", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-08-02", "2023-11-03", "N/A", "2024-03-29", "2025-06-23", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2025-03-28", "N/A", "2025-07-30", "N/A", "N/A", "N/A", "N/A", "2024-03-28", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2024-03-25", "N/A", "2023-10-13", "N/A", "N/A", "2025-08-04", "N/A", "N/A", "N/A", "N/A", "2025-08-06", "N/A", "N/A"]
         };
 
         function hashFloat(i, seed) {
@@ -276,14 +267,12 @@
                 family: 'Inter, sans-serif',
                 size: 12,
                 color: '#495057'
-            },
-            showlegend: false
+            }
         };
 
         var config = {
             responsive: true,
-            displayModeBar: true,
-            displaylogo: false
+            displayModeBar: true
         };
         
         function getActiveLevels() {

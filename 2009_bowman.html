@@ -19,9 +19,8 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 40px 30px;
         }
         .header-section {
@@ -75,22 +74,9 @@
             display: block;
         }
         #plotDebuted, #plotNonDebuted {
-            width: 100% !important;
-            height: calc(100vh - 350px);
-            min-height: 450px;
-            max-height: 800px;
+            width: 100%;
+            height: 650px;
             margin: 30px 0;
-            box-sizing: border-box;
-        }
-        #tab-non-debuted #nonDebutedFilters {
-            margin-bottom: 15px;
-        }
-        #tab-non-debuted #plotNonDebuted {
-            margin-top: 0;
-            width: 100% !important;
-        }
-        #tab-debuted #plotDebuted {
-            width: 100% !important;
         }
         .both-charts {
             display: grid;
@@ -142,9 +128,7 @@
                 grid-template-columns: 1fr;
             }
             #plotDebuted, #plotNonDebuted {
-                height: calc(100vh - 300px);
-                min-height: 350px;
-                max-height: 600px;
+                height: 500px;
             }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
                 height: 500px;
@@ -153,10 +137,6 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-        }
-        .js-plotly-plot, .plotly {
-            width: 100% !important;
-            max-width: 100% !important;
         }
     </style>
 </head>
@@ -257,26 +237,35 @@
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    11 reached MLB, 3 reached AAA, 1 reached AA, 1 reached High-A, 1 reached Low-A.
+                    1 reached Low-A, 1 reached High-A, 1 reached AA, 3 reached AAA, 11 reached MLB.
                 </p>
-                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;">
-                    <li>Average MLB career length: <strong>9.5</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MLB Players: <strong>2</strong> / Inactive: <strong>9</strong> (Total Debuted: 11)</li>
-                        </ul>
+                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
+                    <li>
+                        Average MLB career length: <strong>9.5</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MLB (last season = 2025): <strong>0</strong> players.
+                        </div>
                     </li>
-                    <li>Average MiLB career length: <strong>5.3</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MiLB Players: <strong>0</strong> / Inactive: <strong>6</strong> (Total Non-Debuted: 6)</li>
-                        </ul>
+                    <li>
+                        Average MiLB career length: <strong>5.3</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>0</strong> players.
+                        </div>
                     </li>
+                    <li>Debuted players in this release: <strong>11</strong>; non-debuted with MiLB data: <strong>6</strong>.</li>
                 </ul>
             </div>
             <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Award Winners</h3>
-                <ul style="padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;max-height:400px;overflow-y:auto;">
-                    <li><strong>MVP:</strong> None</li><li><strong>Cy Young:</strong> None</li><li><strong>Rookie of the Year:</strong> None</li><li><strong>All-Star:</strong> Charlie Blackmon (2014, 2017, 2018, 2019), Lance Lynn (2012, 2021)</li><li><strong>Gold Glove:</strong> None</li><li><strong>Silver Slugger:</strong> Charlie Blackmon (2016, 2017)</li><li><strong>CS MVP:</strong> None</li><li><strong>WS MVP:</strong> None</li><li><strong>WS Champion:</strong> Lance Lynn (2011)</li>
-                </ul>
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Player Accolades</h3>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>All-Star Selections:</strong> Charlie Blackmon (2014, 2017, 2018, 2019), Lance Lynn (2012, 2021)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>MVP Awards:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Cy Young Awards:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Gold Gloves:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Silver Sluggers:</strong> Charlie Blackmon (2016, 2017)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Rookie of the Year:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>CS MVP (AL/NL):</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series MVP:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series Champions:</strong> Lance Lynn (2011)</p>
             </div>
         </div>
     </div>
@@ -319,7 +308,8 @@
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>'
+                          'Career Games Played: %{customdata}<extra></extra>',
+            name: 'Debuted Players'
         }];
         
         var debutedLayout = {
@@ -350,11 +340,10 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true, displaylogo: false });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
         
         // Base arrays for non-debuted players
@@ -428,7 +417,8 @@
                                   'MiLB Highest Level: %{customdata[0]}<br>' +
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
-                                  'Release Date: %{customdata[3]}<extra></extra>'
+                                  'Release Date: %{customdata[3]}<extra></extra>',
+                    name: 'Non-Debuted Players'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
@@ -480,15 +470,13 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
         // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: true,
-            displaylogo: false
+            displayModeBar: true
         };
 
         function getActiveLevelsNonDebuted() {

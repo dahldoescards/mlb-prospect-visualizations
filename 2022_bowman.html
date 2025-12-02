@@ -19,9 +19,8 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 40px 30px;
         }
         .header-section {
@@ -75,22 +74,9 @@
             display: block;
         }
         #plotDebuted, #plotNonDebuted {
-            width: 100% !important;
-            height: calc(100vh - 350px);
-            min-height: 450px;
-            max-height: 800px;
+            width: 100%;
+            height: 650px;
             margin: 30px 0;
-            box-sizing: border-box;
-        }
-        #tab-non-debuted #nonDebutedFilters {
-            margin-bottom: 15px;
-        }
-        #tab-non-debuted #plotNonDebuted {
-            margin-top: 0;
-            width: 100% !important;
-        }
-        #tab-debuted #plotDebuted {
-            width: 100% !important;
         }
         .both-charts {
             display: grid;
@@ -142,9 +128,7 @@
                 grid-template-columns: 1fr;
             }
             #plotDebuted, #plotNonDebuted {
-                height: calc(100vh - 300px);
-                min-height: 350px;
-                max-height: 600px;
+                height: 500px;
             }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
                 height: 500px;
@@ -153,10 +137,6 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
-        }
-        .js-plotly-plot, .plotly {
-            width: 100% !important;
-            max-width: 100% !important;
         }
     </style>
 </head>
@@ -169,10 +149,10 @@
         
         <div class="tabs">
             <button class="tab active" data-tab="debuted" >
-                Debuted (31)
+                Debuted (30)
             </button>
             <button class="tab " data-tab="non-debuted" >
-                Non-Debuted (54)
+                Non-Debuted (55)
             </button>
             <button class="tab" data-tab="accolades">
                 Accolades & Trajectories
@@ -184,15 +164,15 @@
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">31</span>
+                    <span class="stat-value">30</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Average WAR</span>
-                    <span class="stat-value">1.30</span>
+                    <span class="stat-value">1.32</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">48.6</span>
+                    <span class="stat-value">49.1</span>
                 </div>
             </div>
         </div>
@@ -210,7 +190,7 @@
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value" id="nonDebutedPlayersCount">54</span>
+                    <span class="stat-value" id="nonDebutedPlayersCount">55</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Level</span>
@@ -218,7 +198,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg MiLB Games per Season</span>
-                    <span class="stat-value" id="nonDebutedAvgGps">62.3</span>
+                    <span class="stat-value" id="nonDebutedAvgGps">61.6</span>
                 </div>
             </div>
         </div>
@@ -257,26 +237,35 @@
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    31 reached MLB, 16 reached AAA, 14 reached AA, 9 reached High-A, 12 reached Low-A, 3 reached Rookie.
+                    3 reached Rookie, 12 reached Low-A, 9 reached High-A, 14 reached AA, 17 reached AAA, 30 reached MLB.
                 </p>
-                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;">
-                    <li>Average MLB career length: <strong>2.3</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MLB Players: <strong>30</strong> / Inactive: <strong>1</strong> (Total Debuted: 31)</li>
-                        </ul>
+                <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
+                    <li>
+                        Average MLB career length: <strong>2.3</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MLB (last season = 2025): <strong>28</strong> players.
+                        </div>
                     </li>
-                    <li>Average MiLB career length: <strong>4.6</strong> seasons.
-                        <ul style="padding-left:20px;margin-top:4px;color:#6c757d;font-size:0.9rem;">
-                            <li>Active MiLB Players: <strong>37</strong> / Inactive: <strong>17</strong> (Total Non-Debuted: 54)</li>
-                        </ul>
+                    <li>
+                        Average MiLB career length: <strong>4.8</strong> seasons.
+                        <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
+                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>26</strong> players.
+                        </div>
                     </li>
+                    <li>Debuted players in this release: <strong>30</strong>; non-debuted with MiLB data: <strong>55</strong>.</li>
                 </ul>
             </div>
             <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Award Winners</h3>
-                <ul style="padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.8;max-height:400px;overflow-y:auto;">
-                    <li><strong>MVP:</strong> None</li><li><strong>Cy Young:</strong> None</li><li><strong>Rookie of the Year:</strong> None</li><li><strong>All-Star:</strong> Elly De LA Cruz (2024, 2025), James Wood (2025)</li><li><strong>Gold Glove:</strong> None</li><li><strong>Silver Slugger:</strong> None</li><li><strong>CS MVP:</strong> None</li><li><strong>WS MVP:</strong> None</li><li><strong>WS Champion:</strong> None</li>
-                </ul>
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Player Accolades</h3>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>All-Star Selections:</strong> Elly De LA Cruz (2024, 2025), James Wood (2025)</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>MVP Awards:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Cy Young Awards:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Gold Gloves:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Silver Sluggers:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>Rookie of the Year:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>CS MVP (AL/NL):</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series MVP:</strong> None</p>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;"><strong>World Series Champions:</strong> None</p>
             </div>
         </div>
     </div>
@@ -304,22 +293,23 @@
         // Generate plots
         
         var debutedData = [{
-            x: [0.0, 6.73911, 0.000366325, 2.67404, 0.109105, -0.600237, 0.166374, -0.453047, 0.102992, -0.168008, 12.771, 0.0659813, 2.13809, 4.56152, -0.442537, -0.191445, 0.29786, -0.0782498, 0.498498, 0.649895, 4.59456, -0.374467, 0.0162228, -1.03238, 1.53162, 1.63159, 1.44743, 0.458896, 4.13118, -0.489737, -0.381939],
-            y: [9.0, 25.0, 2.0, 71.0, 50.666666666666664, 49.5, 9.0, 13.0, 10.5, 111.0, 140.0, 16.0, 99.25, 118.0, 68.0, 30.0, 8.666666666666666, 32.0, 75.75, 35.666666666666664, 118.0, 63.0, 20.0, 44.0, 75.5, 19.666666666666668, 29.333333333333332, 22.0, 25.0, 77.0, 40.0],
+            x: [0.0, 6.73911, 0.000366325, 2.67404, 0.109105, -0.600237, 0.166374, -0.453047, 0.102992, -0.168008, 12.771, 0.0659813, 2.13809, 4.56152, -0.442537, -0.191445, 0.29786, -0.0782498, 0.498498, 4.59456, -0.374467, 0.0162228, -1.03238, 1.53162, 1.63159, 1.44743, 0.458896, 4.13118, -0.489737, -0.381939],
+            y: [9.0, 25.0, 2.0, 71.0, 50.666666666666664, 49.5, 9.0, 13.0, 10.5, 111.0, 140.0, 16.0, 99.25, 118.0, 68.0, 30.0, 8.666666666666666, 32.0, 75.75, 118.0, 63.0, 20.0, 44.0, 75.5, 19.666666666666668, 29.333333333333332, 22.0, 25.0, 77.0, 40.0],
             mode: 'markers',
             type: 'scatter',
-            text: ["Andry Lara", "Brayan Bello", "Christian Roa", "Colson Montgomery", "Curtis Mead", "Darell Hernaiz", "Darren Baker", "Denzer Guzman", "Dustin Harris", "Edgar Quero", "Elly De LA Cruz", "George Valera", "Jack Suwinski", "James Wood", "Jhonkensy Noel", "Jonatan Clase", "Jordan Wicks", "Jose Fermin", "Lenyn Sosa", "Luis Gonzalez", "Matt McLain", "Max Muncy", "Niko Kavadas", "Oscar Colas", "Oswaldo Cabrera", "Randy Vasquez", "Ronny Henriquez", "Ryan Bliss", "Taj Bradley", "Trey Sweeney", "Warming Bernabel"],
+            text: ["Andry Lara", "Brayan Bello", "Christian Roa", "Colson Montgomery", "Curtis Mead", "Darell Hernaiz", "Darren Baker", "Denzer Guzman", "Dustin Harris", "Edgar Quero", "Elly De LA Cruz", "George Valera", "Jack Suwinski", "James Wood", "Jhonkensy Noel", "Jonatan Clase", "Jordan Wicks", "Jose Fermin", "Lenyn Sosa", "Matt McLain", "Max Muncy", "Niko Kavadas", "Oscar Colas", "Oswaldo Cabrera", "Randy Vasquez", "Ronny Henriquez", "Ryan Bliss", "Taj Bradley", "Trey Sweeney", "Warming Bernabel"],
             marker: {
                 size: 9,
                 color: '#2a5298',
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [9.0, 100.0, 2.0, 71.0, 152.0, 99.0, 9.0, 13.0, 21.0, 111.0, 420.0, 16.0, 397.0, 236.0, 136.0, 60.0, 26.0, 96.0, 303.0, 107.0, 236.0, 63.0, 40.0, 88.0, 302.0, 59.0, 88.0, 44.0, 75.0, 154.0, 40.0],
+            customdata: [9.0, 100.0, 2.0, 71.0, 152.0, 99.0, 9.0, 13.0, 21.0, 111.0, 420.0, 16.0, 397.0, 236.0, 136.0, 60.0, 26.0, 96.0, 303.0, 236.0, 63.0, 40.0, 88.0, 302.0, 59.0, 88.0, 44.0, 75.0, 154.0, 40.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>'
+                          'Career Games Played: %{customdata}<extra></extra>',
+            name: 'Debuted Players'
         }];
         
         var debutedLayout = {
@@ -350,22 +340,21 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true, displaylogo: false });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
         
         // Base arrays for non-debuted players
         var nonDebutedBase = {
-            x: [5, 4, 4, 4, 4, 2, 2, 4, 5, 2, 2, 2, 2, 4, 3, 5, 2, 2, 5, 2, 3, 5, 3, 4, 4, 4, 5, 5, 4, 2, 4, 5, 1, 5, 5, 5, 1, 5, 5, 3, 4, 5, 2, 4, 3, 1, 4, 3, 5, 2, 3, 3, 3, 5],
-            y: [14.67, 92.6, 15.5, 46.33, 67.0, 53.67, 67.33, 124.25, 83.14, 42.0, 49.5, 49.5, 34.83, 79.2, 47.17, 91.2, 63.67, 46.0, 95.14, 44.33, 37.0, 101.5, 76.5, 91.0, 89.0, 115.4, 89.2, 96.67, 69.8, 31.0, 75.0, 91.8, 44.25, 76.2, 76.14, 82.2, 34.67, 21.6, 102.4, 67.67, 73.71, 61.25, 5.5, 91.6, 58.2, 19.5, 86.4, 74.4, 20.0, 42.25, 23.5, 42.6, 56.0, 35.0],
-            names: ["Adam Macko", "Aeverson Arteaga", "Alejandro Hidalgo", "Alejandro Pie", "Allan Cerda", "Anthony Rodriguez", "Benyamin Bailey", "Brady Allen", "Brandon Valenzuela", "Branlyn Jaraba", "Bryan Acuna", "Bryan Acu\u00f1a", "Carlos Aguiar", "Creed Willems", "Cristian Gonzalez", "Damiano Palmegiani", "Dauri Lorenzo", "Dayton Dooney", "Eddys Leonard", "Eduardo Vaughan", "Elijah Cabell", "Euribiel Angeles", "Federico Polanco", "Felix Valerio", "Gavin Conticello", "Hendry Mendez", "James Triantos", "Jose Ramos", "Joshua Baez", "Juan Querecuto", "Justice Thompson", "Kahlil Watson", "Larry Ernesto", "Luca Tresh", "Luis Verdugo", "Luke Waddell", "Martin Gimenez", "Mason Albright", "Matt Fraizer", "Michel Triana", "Pablo Aliendo", "Ricardo Genoves", "Robert Dominguez", "Roberto Campos", "Roismar Quintana", "Ronnier Quintero", "Tyler Hardman", "Tyler Whitaker", "Victor Lizarraga", "Wilmin Candelario", "Yan Contreras", "Yeison Santana", "Yhoswar Garcia", "Zion Bannister"],
-            levelsLabel: ["AAA", "AA", "AA", "AA", "AA", "Low-A", "Low-A", "AA", "AAA", "Low-A", "Low-A", "Low-A", "Low-A", "AA", "High-A", "AAA", "Low-A", "Low-A", "AAA", "Low-A", "High-A", "AAA", "High-A", "AA", "AA", "AA", "AAA", "AAA", "AA", "Low-A", "AA", "AAA", "Rookie", "AAA", "AAA", "AAA", "Rookie", "AAA", "AAA", "High-A", "AA", "AAA", "Low-A", "AA", "High-A", "Rookie", "AA", "High-A", "AAA", "Low-A", "High-A", "High-A", "High-A", "AAA"],
-            careerLengths: [6, 5, 4, 3, 6, 3, 3, 4, 7, 3, 4, 4, 6, 5, 6, 5, 3, 3, 7, 3, 3, 6, 4, 6, 5, 5, 5, 6, 5, 4, 4, 5, 4, 5, 7, 5, 3, 5, 5, 3, 7, 8, 2, 5, 5, 2, 5, 5, 5, 4, 4, 5, 5, 4],
-            firstSeasons: [2019, 2021, 2021, 2019, 2018, 2021, 2019, 2022, 2018, 2019, 2022, 2022, 2018, 2021, 2019, 2021, 2021, 2021, 2018, 2019, 2021, 2019, 2018, 2018, 2021, 2021, 2021, 2019, 2021, 2018, 2021, 2021, 2018, 2021, 2018, 2021, 2021, 2021, 2021, 2021, 2018, 2016, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2019, 2019, 2018, 2021, 2019],
-            releaseDates: ["N/A", "N/A", "N/A", "2024-03-09", "2025-07-09", "2024-04-08", "2023-03-28", "2025-08-08", "N/A", "2023-03-28", "N/A", "N/A", "N/A", "N/A", "2025-08-05", "N/A", "2024-03-17", "2023-07-27", "N/A", "2023-03-28", "N/A", "N/A", "2023-03-15", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2023-03-25", "2025-03-26", "N/A", "2022-06-24", "N/A", "N/A", "N/A", "2024-03-25", "N/A", "N/A", "2023-08-03", "N/A", "2025-09-29", "2025-04-14", "N/A", "2025-07-31", "2023-05-04", "N/A", "N/A", "N/A", "2023-09-28", "2024-08-02", "2023-06-15", "2025-08-11", "2024-02-05"]
+            x: [5, 4, 4, 4, 4, 2, 2, 4, 5, 2, 2, 2, 2, 4, 3, 5, 2, 2, 5, 2, 3, 5, 3, 4, 4, 4, 5, 5, 4, 2, 4, 5, 1, 5, 5, 5, 5, 1, 5, 5, 3, 4, 5, 2, 4, 3, 1, 4, 3, 5, 2, 3, 3, 3, 5],
+            y: [14.67, 92.6, 15.5, 46.33, 67.0, 53.67, 67.33, 124.25, 83.14, 42.0, 49.5, 49.5, 34.83, 79.2, 47.17, 91.2, 63.67, 46.0, 95.14, 44.33, 37.0, 101.5, 76.5, 91.0, 89.0, 115.4, 89.2, 96.67, 69.8, 31.0, 75.0, 91.8, 44.25, 76.2, 24.25, 76.14, 82.2, 34.67, 21.6, 102.4, 67.67, 73.71, 61.25, 5.5, 91.6, 58.2, 19.5, 86.4, 74.4, 20.0, 42.25, 23.5, 42.6, 56.0, 35.0],
+            names: ["Adam Macko", "Aeverson Arteaga", "Alejandro Hidalgo", "Alejandro Pie", "Allan Cerda", "Anthony Rodriguez", "Benyamin Bailey", "Brady Allen", "Brandon Valenzuela", "Branlyn Jaraba", "Bryan Acuna", "Bryan Acu\u00f1a", "Carlos Aguiar", "Creed Willems", "Cristian Gonzalez", "Damiano Palmegiani", "Dauri Lorenzo", "Dayton Dooney", "Eddys Leonard", "Eduardo Vaughan", "Elijah Cabell", "Euribiel Angeles", "Federico Polanco", "Felix Valerio", "Gavin Conticello", "Hendry Mendez", "James Triantos", "Jose Ramos", "Joshua Baez", "Juan Querecuto", "Justice Thompson", "Kahlil Watson", "Larry Ernesto", "Luca Tresh", "Luis Gonzalez", "Luis Verdugo", "Luke Waddell", "Martin Gimenez", "Mason Albright", "Matt Fraizer", "Michel Triana", "Pablo Aliendo", "Ricardo Genoves", "Robert Dominguez", "Roberto Campos", "Roismar Quintana", "Ronnier Quintero", "Tyler Hardman", "Tyler Whitaker", "Victor Lizarraga", "Wilmin Candelario", "Yan Contreras", "Yeison Santana", "Yhoswar Garcia", "Zion Bannister"],
+            levelsLabel: ["AAA", "AA", "AA", "AA", "AA", "Low-A", "Low-A", "AA", "AAA", "Low-A", "Low-A", "Low-A", "Low-A", "AA", "High-A", "AAA", "Low-A", "Low-A", "AAA", "Low-A", "High-A", "AAA", "High-A", "AA", "AA", "AA", "AAA", "AAA", "AA", "Low-A", "AA", "AAA", "Rookie", "AAA", "AAA", "AAA", "AAA", "Rookie", "AAA", "AAA", "High-A", "AA", "AAA", "Low-A", "AA", "High-A", "Rookie", "AA", "High-A", "AAA", "Low-A", "High-A", "High-A", "High-A", "AAA"],
+            careerLengths: [6, 5, 4, 3, 6, 3, 3, 4, 7, 3, 4, 4, 6, 5, 6, 5, 3, 3, 7, 3, 3, 6, 4, 6, 5, 5, 5, 6, 5, 4, 4, 5, 4, 5, 12, 7, 5, 3, 5, 5, 3, 7, 8, 2, 5, 5, 2, 5, 5, 5, 4, 4, 5, 5, 4],
+            firstSeasons: [2019, 2021, 2021, 2019, 2018, 2021, 2019, 2022, 2018, 2019, 2022, 2022, 2018, 2021, 2019, 2021, 2021, 2021, 2018, 2019, 2021, 2019, 2018, 2018, 2021, 2021, 2021, 2019, 2021, 2018, 2021, 2021, 2018, 2021, 2010, 2018, 2021, 2021, 2021, 2021, 2021, 2018, 2016, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2019, 2019, 2018, 2021, 2019],
+            releaseDates: ["N/A", "N/A", "N/A", "2024-03-09", "2025-07-09", "2024-04-08", "2023-03-28", "2025-08-08", "N/A", "2023-03-28", "N/A", "N/A", "N/A", "N/A", "2025-08-05", "N/A", "2024-03-17", "2023-07-27", "N/A", "2023-03-28", "N/A", "N/A", "2023-03-15", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "2023-03-25", "2025-03-26", "N/A", "2022-06-24", "N/A", "2025-04-15", "N/A", "N/A", "2024-03-25", "N/A", "N/A", "2023-08-03", "N/A", "2025-09-29", "2025-04-14", "N/A", "2025-07-31", "2023-05-04", "N/A", "N/A", "N/A", "2023-09-28", "2024-08-02", "2023-06-15", "2025-08-11", "2024-02-05"]
         };
 
         // Deterministic jitter for readability (stable across renders)
@@ -428,7 +417,8 @@
                                   'MiLB Highest Level: %{customdata[0]}<br>' +
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
-                                  'Release Date: %{customdata[3]}<extra></extra>'
+                                  'Release Date: %{customdata[3]}<extra></extra>',
+                    name: 'Non-Debuted Players'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
@@ -480,15 +470,13 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            showlegend: false
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
         // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: true,
-            displaylogo: false
+            displayModeBar: true
         };
 
         function getActiveLevelsNonDebuted() {
