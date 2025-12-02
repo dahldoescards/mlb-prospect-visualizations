@@ -11,7 +11,7 @@
     <style>
         :root {
             /* Dynamic chart sizing using viewport units */
-            --chart-height: clamp(400px, 55vh, 750px);
+            --chart-height: clamp(320px, 42vh, 520px);
             --chart-aspect-ratio: 16 / 9;
         }
         * {
@@ -159,12 +159,12 @@
         /* Responsive breakpoints */
         @media (max-width: 1200px) {
             :root {
-                --chart-height: clamp(350px, 50vh, 600px);
+                --chart-height: clamp(300px, 40vh, 480px);
             }
         }
         @media (max-width: 768px) {
             :root {
-                --chart-height: clamp(300px, 45vh, 500px);
+                --chart-height: clamp(280px, 38vh, 420px);
             }
             .both-charts {
                 grid-template-columns: 1fr;
@@ -338,39 +338,13 @@
         });
         
         // ========================================================================
-        // PROFESSIONAL CHART INITIALIZATION WITH RESIZEOBSERVER
+        // DEFERRED CHART RENDERING - Charts render only when their tab is visible
+        // This prevents the visible resize issue with hidden containers
         // ========================================================================
         
-        // Debounce utility for performance
-        function debounce(func, wait) {
-            var timeout;
-            return function() {
-                var context = this, args = arguments;
-                clearTimeout(timeout);
-                timeout = setTimeout(function() { func.apply(context, args); }, wait);
-            };
-        }
+        var nonDebutedChartRendered = false;
         
-        // ResizeObserver for real-time responsive charts
-        var chartResizeObserver = new ResizeObserver(debounce(function(entries) {
-            entries.forEach(function(entry) {
-                var plotEl = entry.target.querySelector('.js-plotly-plot');
-                if (plotEl && plotEl.data) {
-                    Plotly.Plots.resize(plotEl);
-                }
-            });
-        }, 100));
-        
-        // Mark chart as loaded (reveals it with smooth transition)
-        function markChartLoaded(wrapperId) {
-            var wrapper = document.getElementById(wrapperId);
-            if (wrapper) {
-                wrapper.classList.add('loaded');
-                chartResizeObserver.observe(wrapper);
-            }
-        }
-        
-        // Generate plots immediately (no delay)
+        // Render debuted chart immediately (it's visible on load)
         
         var debutedData = [{
             x: [-0.188107, 10.9929, 0.369313, 20.2292, 0.0, 2.4847, -0.0351793, -0.691992, -1.01195, -0.0795671, 0.978032, 28.4459, 1.34071, 20.6299, -0.176486, 0.102894, 1.70123, 10.0599, 11.5747, 2.41923, 1.15647, 25.3842, 5.94011, -0.0814137, -0.123144, 0.401938, 0.78556, -1.05383, 5.96485, -0.0953357, -0.0125827, 11.0463, -0.0345967, 12.7182, 0.00518267, -1.46322, 7.21972, 14.7903],
@@ -427,6 +401,18 @@
         Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false });
         
         
+        // Mark debuted chart wrapper as loaded
+        (function() {
+            var wrapper = document.getElementById('debutedWrapper');
+            if (wrapper) wrapper.classList.add('loaded');
+        })();
+        
+        // Function to render non-debuted chart (called on first tab click)
+        function renderNonDebutedChart() {
+            if (nonDebutedChartRendered) return;
+            nonDebutedChartRendered = true;
+            
+            
         // Base arrays for non-debuted players
         var nonDebutedBase = {
             x: [1, 3, 2, 4, 4, 4, 5, 2, 3, 5, 1, 5, 5, 5, 3, 2, 3, 2, 5, 5, 5],
@@ -595,37 +581,48 @@
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
         
-        
-        // Mark debuted chart as loaded after render
-        if (document.getElementById('plotDebuted')) {
-            markChartLoaded('debutedWrapper');
+            
+            // Mark as loaded after render
+            var wrapper = document.getElementById('nonDebutedWrapper');
+            if (wrapper) wrapper.classList.add('loaded');
         }
         
-        // Mark non-debuted chart as loaded after render  
-        if (document.getElementById('plotNonDebuted')) {
-            markChartLoaded('nonDebutedWrapper');
-        }
-        
-        // Tab switching with immediate resize
+        // Tab switching - render non-debuted chart on first click
         document.querySelectorAll('.tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
-                // Small delay to allow CSS display change to complete
+                var tabName = this.getAttribute('data-tab');
+                
+                // Render non-debuted chart when its tab is first clicked
+                if (tabName === 'non-debuted' && !nonDebutedChartRendered) {
+                    // Small timeout to ensure tab content is visible first
+                    setTimeout(function() {
+                        renderNonDebutedChart();
+                    }, 0);
+                }
+                
+                // Resize charts if already rendered
                 setTimeout(function() {
                     var plotDebuted = document.getElementById('plotDebuted');
                     var plotNonDebuted = document.getElementById('plotNonDebuted');
                     if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
                     if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
-                }, 10);
+                }, 20);
             });
         });
         
-        // Handle window resize for charts not in ResizeObserver
-        window.addEventListener('resize', debounce(function() {
-            var plotDebuted = document.getElementById('plotDebuted');
-            var plotNonDebuted = document.getElementById('plotNonDebuted');
-            if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
-            if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
-        }, 150));
+        // Handle window resize
+        window.addEventListener('resize', (function() {
+            var timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    var plotDebuted = document.getElementById('plotDebuted');
+                    var plotNonDebuted = document.getElementById('plotNonDebuted');
+                    if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
+                    if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
+                }, 150);
+            };
+        })());
     </script>
 </body>
 </html>
