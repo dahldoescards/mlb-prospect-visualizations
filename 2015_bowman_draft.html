@@ -157,12 +157,10 @@
             font-weight: 700;
         }
         /* ================================================================
-           PREMIUM TRAJECTORY DONUT CHART
-           Squircle container + Animated shine border + 3D rotation
+           REFINED DONUT CHART - Clean & Professional
+           Shine border around donut, hover expansion on slices
            ================================================================ */
         .trajectory-chart-container {
-            --shine-color: rgba(255, 255, 255, 0.5);
-            --glow-color: rgba(0, 212, 255, 0.3);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -170,73 +168,24 @@
             margin: 30px 0;
             padding: 32px;
             background: linear-gradient(145deg, 
-                rgba(15, 23, 42, 0.95) 0%, 
-                rgba(30, 41, 59, 0.9) 50%,
-                rgba(15, 23, 42, 0.95) 100%);
-            border-radius: 24px;
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
-            overflow: hidden;
+                rgba(15, 23, 42, 0.97) 0%, 
+                rgba(30, 41, 59, 0.95) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        /* Animated shine border using pseudo-element */
-        .trajectory-chart-container::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            padding: 2px;
-            background: linear-gradient(
-                var(--shine-angle, 135deg),
-                transparent 0%,
-                var(--shine-color) 25%,
-                rgba(0, 212, 255, 0.8) 50%,
-                var(--shine-color) 75%,
-                transparent 100%
-            );
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: shineRotate 4s linear infinite;
-            opacity: 0.8;
+        .trajectory-chart-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 24px;
+            font-weight: 600;
         }
-        /* Glow effect layer */
-        .trajectory-chart-container::after {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            border-radius: 44px;
-            background: radial-gradient(
-                ellipse at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                var(--glow-color) 0%,
-                transparent 50%
-            );
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: -1;
-        }
-        .trajectory-chart-container:hover::after {
-            opacity: 1;
-        }
-        @keyframes shineRotate {
-            0% { --shine-angle: 0deg; }
-            100% { --shine-angle: 360deg; }
-        }
-        /* Fallback for browsers without @property support */
-        @supports not (background: paint(something)) {
-            .trajectory-chart-container::before {
-                animation: shimeBorder 3s ease-in-out infinite;
-            }
-            @keyframes shimeBorder {
-                0%, 100% { opacity: 0.4; }
-                50% { opacity: 1; }
-            }
-        }
+        /* Donut wrapper with circular shine border */
         .trajectory-chart-wrapper {
             position: relative;
             width: 100%;
-            max-width: 380px;
+            max-width: 340px;
             aspect-ratio: 1;
             opacity: 0;
             transition: opacity 0.5s ease-out;
@@ -244,63 +193,102 @@
         .trajectory-chart-wrapper.loaded {
             opacity: 1;
         }
+        /* Circular shine ring around the donut */
+        .trajectory-chart-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            padding: 3px;
+            background: conic-gradient(
+                from var(--shine-angle, 0deg),
+                transparent 0deg,
+                rgba(0, 212, 255, 0.6) 60deg,
+                rgba(139, 92, 246, 0.6) 120deg,
+                rgba(236, 72, 153, 0.6) 180deg,
+                rgba(249, 115, 22, 0.5) 240deg,
+                rgba(34, 197, 94, 0.5) 300deg,
+                transparent 360deg
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateShine 6s linear infinite;
+            filter: blur(1px);
+        }
+        /* Soft glow behind the donut */
+        .trajectory-chart-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 10%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+        @keyframes rotateShine {
+            from { --shine-angle: 0deg; }
+            to { --shine-angle: 360deg; }
+        }
+        @property --shine-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
         #trajectoryDonut {
             width: 100% !important;
             height: 100% !important;
-            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.2))
-                    drop-shadow(0 0 60px rgba(139, 92, 246, 0.15));
+            position: relative;
+            z-index: 1;
         }
-        .trajectory-chart-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 20px;
-            font-weight: 600;
+        /* Plotly pie slice hover effect via CSS */
+        #trajectoryDonut .slice path {
+            transition: transform 0.2s ease-out, filter 0.2s ease-out;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+        #trajectoryDonut .slice:hover path {
+            filter: brightness(1.15) drop-shadow(0 0 8px currentColor);
         }
         .trajectory-legend {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px 16px;
-            margin-top: 24px;
+            gap: 8px 12px;
+            margin-top: 28px;
             max-width: 100%;
         }
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
-            padding: 6px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 6px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.2s ease;
+            cursor: default;
         }
         .legend-item:hover {
             background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
         }
         .legend-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            box-shadow: 0 0 6px currentColor;
         }
         .legend-value {
-            font-weight: 700;
+            font-weight: 600;
             color: #ffffff;
         }
         .legend-pct {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.7rem;
         }
         
         /* Responsive breakpoints */
@@ -814,10 +802,11 @@
         })());
         
         // ========================================================================
-        // PREMIUM TRAJECTORY DONUT CHART
-        // Deferred rendering + 3D rotation on pointer move
+        // REFINED TRAJECTORY DONUT CHART
+        // Clean design with slice hover expansion
         // ========================================================================
         var trajectoryDonutRendered = false;
+        var donutSliceCount = 0;
         
         function renderTrajectoryDonut() {
             if (trajectoryDonutRendered) return;
@@ -826,6 +815,7 @@
             var donutData = [{"level": "Rookie", "count": 2, "pct": 3.3, "color": "#22c55e"}, {"level": "Low-A", "count": 4, "pct": 6.7, "color": "#f97316"}, {"level": "High-A", "count": 4, "pct": 6.7, "color": "#ec4899"}, {"level": "AA", "count": 3, "pct": 5.0, "color": "#8b5cf6"}, {"level": "AAA", "count": 8, "pct": 13.3, "color": "#3b82f6"}, {"level": "MLB", "count": 38, "pct": 63.3, "color": "#00d4ff"}, {"level": "Unknown", "count": 1, "pct": 1.7, "color": "#6b7280"}];
             if (donutData.length === 0) return;
             
+            donutSliceCount = donutData.length;
             var labels = donutData.map(function(d) { return d.level; });
             var values = donutData.map(function(d) { return d.count; });
             var colors = donutData.map(function(d) { return d.color; });
@@ -834,15 +824,18 @@
                 return '<b>' + d.level + '</b><br>' + d.count + ' players (' + d.pct + '%)';
             });
             
+            // Initial pull array (no expansion)
+            var basePull = new Array(donutSliceCount).fill(0);
+            
             var data = [{
                 type: 'pie',
                 values: values,
                 labels: labels,
-                hole: 0.6,
+                hole: 0.58,
                 marker: {
                     colors: colors,
                     line: {
-                        color: 'rgba(255,255,255,0.2)',
+                        color: 'rgba(15, 23, 42, 0.8)',
                         width: 2
                     }
                 },
@@ -850,26 +843,25 @@
                 textposition: 'inside',
                 textfont: {
                     family: 'Inter, sans-serif',
-                    size: 11,
+                    size: 10,
                     color: '#ffffff'
                 },
-                hovertemplate: '%{customdata}<extra></extra>',
-                customdata: hoverText,
+                hoverinfo: 'none',
+                pull: basePull,
                 sort: false,
-                direction: 'clockwise',
-                pull: 0.02
+                direction: 'clockwise'
             }];
             
             var layout = {
                 showlegend: false,
-                margin: { t: 10, b: 10, l: 10, r: 10 },
+                margin: { t: 5, b: 5, l: 5, r: 5 },
                 paper_bgcolor: 'transparent',
                 plot_bgcolor: 'transparent',
                 annotations: [{
-                    text: '<b style="font-size:24px;color:#00d4ff;">' + 60 + '</b><br><span style="color:rgba(255,255,255,0.6);font-size:11px;">PLAYERS</span>',
+                    text: '<b style="font-size:28px;color:#00d4ff;">' + 60 + '</b><br><span style="color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:0.1em;">PLAYERS</span>',
                     x: 0.5,
                     y: 0.5,
-                    font: { family: 'Inter, sans-serif', size: 14, color: '#ffffff' },
+                    font: { family: 'Inter, sans-serif', size: 12, color: '#ffffff' },
                     showarrow: false
                 }]
             };
@@ -877,17 +869,35 @@
             var config = { responsive: true, displayModeBar: false };
             
             Plotly.newPlot('trajectoryDonut', data, layout, config).then(function() {
-                // Mark wrapper as loaded for fade-in
                 var wrapper = document.querySelector('.trajectory-chart-wrapper');
                 if (wrapper) wrapper.classList.add('loaded');
+                
+                // Add hover expansion effect
+                var plotDiv = document.getElementById('trajectoryDonut');
+                
+                plotDiv.on('plotly_hover', function(eventData) {
+                    var pointIndex = eventData.points[0].pointNumber;
+                    var newPull = new Array(donutSliceCount).fill(0);
+                    newPull[pointIndex] = 0.08; // Expand hovered slice
+                    Plotly.restyle('trajectoryDonut', {'pull': [newPull]});
+                    
+                    // Show tooltip
+                    var d = donutData[pointIndex];
+                    showDonutTooltip(eventData.event, d);
+                });
+                
+                plotDiv.on('plotly_unhover', function() {
+                    Plotly.restyle('trajectoryDonut', {'pull': [new Array(donutSliceCount).fill(0)]});
+                    hideDonutTooltip();
+                });
             });
             
             // Build legend
             var legendContainer = document.getElementById('trajectoryLegend');
             if (legendContainer) {
                 var legendHTML = '';
-                donutData.forEach(function(d, i) {
-                    legendHTML += '<div class="legend-item" style="animation-delay:' + (i * 0.1) + 's;">' +
+                donutData.forEach(function(d) {
+                    legendHTML += '<div class="legend-item">' +
                         '<span class="legend-dot" style="background-color:' + d.color + ';color:' + d.color + ';"></span>' +
                         '<span>' + d.level + '</span>' +
                         '<span class="legend-value">' + d.count + '</span>' +
@@ -898,31 +908,22 @@
             }
         }
         
-        // 3D rotation on pointer move
-        (function() {
-            var container = document.querySelector('.trajectory-chart-container');
-            if (!container) return;
-            
-            container.addEventListener('mousemove', function(e) {
-                var rect = container.getBoundingClientRect();
-                var x = (e.clientX - rect.left) / rect.width;
-                var y = (e.clientY - rect.top) / rect.height;
-                
-                // Calculate rotation (max ±8 degrees)
-                var rotateY = (x - 0.5) * 16;
-                var rotateX = (0.5 - y) * 16;
-                
-                container.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
-                
-                // Update glow position
-                container.style.setProperty('--mouse-x', (x * 100) + '%');
-                container.style.setProperty('--mouse-y', (y * 100) + '%');
-            });
-            
-            container.addEventListener('mouseleave', function() {
-                container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-            });
-        })();
+        // Custom tooltip for donut
+        var donutTooltip = null;
+        function showDonutTooltip(event, data) {
+            if (!donutTooltip) {
+                donutTooltip = document.createElement('div');
+                donutTooltip.style.cssText = 'position:fixed;padding:8px 12px;background:rgba(0,0,0,0.85);color:#fff;border-radius:6px;font-size:12px;pointer-events:none;z-index:1000;border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(4px);';
+                document.body.appendChild(donutTooltip);
+            }
+            donutTooltip.innerHTML = '<b style="color:' + data.color + '">' + data.level + '</b><br>' + data.count + ' players (' + data.pct + '%)';
+            donutTooltip.style.left = (event.clientX + 15) + 'px';
+            donutTooltip.style.top = (event.clientY - 10) + 'px';
+            donutTooltip.style.display = 'block';
+        }
+        function hideDonutTooltip() {
+            if (donutTooltip) donutTooltip.style.display = 'none';
+        }
         
         // Render donut when Accolades tab is first clicked
         document.querySelectorAll('.tab').forEach(function(tab) {
