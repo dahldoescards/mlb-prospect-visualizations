@@ -512,6 +512,29 @@
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
         
+        
+        // Fix: Force Plotly to recalculate dimensions after DOM is fully laid out
+        // This fixes the issue where charts render at half-width in iframes
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var plotDebuted = document.getElementById('plotDebuted');
+                var plotNonDebuted = document.getElementById('plotNonDebuted');
+                if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
+                if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
+            }, 100);
+        });
+        
+        // Also resize when switching tabs (content may have been hidden during initial render)
+        document.querySelectorAll('.tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                setTimeout(function() {
+                    var plotDebuted = document.getElementById('plotDebuted');
+                    var plotNonDebuted = document.getElementById('plotNonDebuted');
+                    if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
+                    if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
+                }, 50);
+            });
+        });
     </script>
 </body>
 </html>
