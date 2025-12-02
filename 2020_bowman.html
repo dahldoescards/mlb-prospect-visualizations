@@ -156,60 +156,151 @@
             color: #1e3c72;
             font-weight: 700;
         }
-        /* Trajectory Donut Chart - Ultra Modern */
+        /* ================================================================
+           PREMIUM TRAJECTORY DONUT CHART
+           Squircle container + Animated shine border + 3D rotation
+           ================================================================ */
         .trajectory-chart-container {
+            --shine-color: rgba(255, 255, 255, 0.5);
+            --glow-color: rgba(0, 212, 255, 0.3);
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 30px 0;
-            padding: 24px;
-            background: linear-gradient(135deg, rgba(30, 60, 114, 0.03) 0%, rgba(42, 82, 152, 0.06) 100%);
-            border-radius: 16px;
-            border: 1px solid rgba(42, 82, 152, 0.1);
+            padding: 32px;
+            background: linear-gradient(145deg, 
+                rgba(15, 23, 42, 0.95) 0%, 
+                rgba(30, 41, 59, 0.9) 50%,
+                rgba(15, 23, 42, 0.95) 100%);
+            border-radius: 24px;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            overflow: hidden;
+        }
+        /* Animated shine border using pseudo-element */
+        .trajectory-chart-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(
+                var(--shine-angle, 135deg),
+                transparent 0%,
+                var(--shine-color) 25%,
+                rgba(0, 212, 255, 0.8) 50%,
+                var(--shine-color) 75%,
+                transparent 100%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: shineRotate 4s linear infinite;
+            opacity: 0.8;
+        }
+        /* Glow effect layer */
+        .trajectory-chart-container::after {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 44px;
+            background: radial-gradient(
+                ellipse at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                var(--glow-color) 0%,
+                transparent 50%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .trajectory-chart-container:hover::after {
+            opacity: 1;
+        }
+        @keyframes shineRotate {
+            0% { --shine-angle: 0deg; }
+            100% { --shine-angle: 360deg; }
+        }
+        /* Fallback for browsers without @property support */
+        @supports not (background: paint(something)) {
+            .trajectory-chart-container::before {
+                animation: shimeBorder 3s ease-in-out infinite;
+            }
+            @keyframes shimeBorder {
+                0%, 100% { opacity: 0.4; }
+                50% { opacity: 1; }
+            }
         }
         .trajectory-chart-wrapper {
             position: relative;
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             aspect-ratio: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+        .trajectory-chart-wrapper.loaded {
+            opacity: 1;
         }
         #trajectoryDonut {
             width: 100% !important;
             height: 100% !important;
-            filter: drop-shadow(0 0 20px rgba(42, 82, 152, 0.15));
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.2))
+                    drop-shadow(0 0 60px rgba(139, 92, 246, 0.15));
         }
         .trajectory-chart-title {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #6c757d;
-            margin-bottom: 16px;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
             font-weight: 600;
         }
         .trajectory-legend {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px 20px;
-            margin-top: 20px;
-            max-width: 500px;
+            gap: 10px 16px;
+            margin-top: 24px;
+            max-width: 100%;
         }
         .legend-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.85rem;
-            color: #495057;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .legend-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            box-shadow: 0 0 8px currentColor;
+            box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
         .legend-value {
-            font-weight: 600;
-            color: #1e3c72;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .legend-pct {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
         }
         
         /* Responsive breakpoints */
@@ -723,19 +814,22 @@
         })());
         
         // ========================================================================
-        // TRAJECTORY DONUT CHART - Ultra Modern Design
+        // PREMIUM TRAJECTORY DONUT CHART
+        // Deferred rendering + 3D rotation on pointer move
         // ========================================================================
-        (function() {
-            var donutData = [{"level": "Low-A", "count": 3, "pct": 5.1, "color": "#a855f7"}, {"level": "High-A", "count": 6, "pct": 10.2, "color": "#7c3aed"}, {"level": "AA", "count": 10, "pct": 16.9, "color": "#4f46e5"}, {"level": "AAA", "count": 10, "pct": 16.9, "color": "#2563eb"}, {"level": "MLB", "count": 30, "pct": 50.8, "color": "#1e3c72"}];
+        var trajectoryDonutRendered = false;
+        
+        function renderTrajectoryDonut() {
+            if (trajectoryDonutRendered) return;
+            trajectoryDonutRendered = true;
             
+            var donutData = [{"level": "Low-A", "count": 3, "pct": 5.1, "color": "#f97316"}, {"level": "High-A", "count": 6, "pct": 10.2, "color": "#ec4899"}, {"level": "AA", "count": 10, "pct": 16.9, "color": "#8b5cf6"}, {"level": "AAA", "count": 10, "pct": 16.9, "color": "#3b82f6"}, {"level": "MLB", "count": 30, "pct": 50.8, "color": "#00d4ff"}];
             if (donutData.length === 0) return;
             
             var labels = donutData.map(function(d) { return d.level; });
             var values = donutData.map(function(d) { return d.count; });
             var colors = donutData.map(function(d) { return d.color; });
-            var percentages = donutData.map(function(d) { return d.pct; });
             
-            // Create custom hover text
             var hoverText = donutData.map(function(d) {
                 return '<b>' + d.level + '</b><br>' + d.count + ' players (' + d.pct + '%)';
             });
@@ -744,11 +838,11 @@
                 type: 'pie',
                 values: values,
                 labels: labels,
-                hole: 0.55,
+                hole: 0.6,
                 marker: {
                     colors: colors,
                     line: {
-                        color: '#ffffff',
+                        color: 'rgba(255,255,255,0.2)',
                         width: 2
                     }
                 },
@@ -756,54 +850,89 @@
                 textposition: 'inside',
                 textfont: {
                     family: 'Inter, sans-serif',
-                    size: 12,
+                    size: 11,
                     color: '#ffffff'
                 },
                 hovertemplate: '%{customdata}<extra></extra>',
                 customdata: hoverText,
                 sort: false,
-                direction: 'clockwise'
+                direction: 'clockwise',
+                pull: 0.02
             }];
             
             var layout = {
                 showlegend: false,
-                margin: { t: 20, b: 20, l: 20, r: 20 },
+                margin: { t: 10, b: 10, l: 10, r: 10 },
                 paper_bgcolor: 'transparent',
                 plot_bgcolor: 'transparent',
                 annotations: [{
-                    text: '<b>' + 59 + '</b><br>Players',
+                    text: '<b style="font-size:24px;color:#00d4ff;">' + 59 + '</b><br><span style="color:rgba(255,255,255,0.6);font-size:11px;">PLAYERS</span>',
                     x: 0.5,
                     y: 0.5,
-                    font: {
-                        family: 'Inter, sans-serif',
-                        size: 18,
-                        color: '#1e3c72'
-                    },
+                    font: { family: 'Inter, sans-serif', size: 14, color: '#ffffff' },
                     showarrow: false
                 }]
             };
             
-            var config = {
-                responsive: true,
-                displayModeBar: false
-            };
+            var config = { responsive: true, displayModeBar: false };
             
-            Plotly.newPlot('trajectoryDonut', data, layout, config);
+            Plotly.newPlot('trajectoryDonut', data, layout, config).then(function() {
+                // Mark wrapper as loaded for fade-in
+                var wrapper = document.querySelector('.trajectory-chart-wrapper');
+                if (wrapper) wrapper.classList.add('loaded');
+            });
             
-            // Build custom legend with glow effect
+            // Build legend
             var legendContainer = document.getElementById('trajectoryLegend');
             if (legendContainer) {
                 var legendHTML = '';
-                donutData.forEach(function(d) {
-                    legendHTML += '<div class="legend-item">' +
+                donutData.forEach(function(d, i) {
+                    legendHTML += '<div class="legend-item" style="animation-delay:' + (i * 0.1) + 's;">' +
                         '<span class="legend-dot" style="background-color:' + d.color + ';color:' + d.color + ';"></span>' +
-                        '<span>' + d.level + ': </span>' +
-                        '<span class="legend-value">' + d.count + ' (' + d.pct + '%)</span>' +
+                        '<span>' + d.level + '</span>' +
+                        '<span class="legend-value">' + d.count + '</span>' +
+                        '<span class="legend-pct">(' + d.pct + '%)</span>' +
                         '</div>';
                 });
                 legendContainer.innerHTML = legendHTML;
             }
+        }
+        
+        // 3D rotation on pointer move
+        (function() {
+            var container = document.querySelector('.trajectory-chart-container');
+            if (!container) return;
+            
+            container.addEventListener('mousemove', function(e) {
+                var rect = container.getBoundingClientRect();
+                var x = (e.clientX - rect.left) / rect.width;
+                var y = (e.clientY - rect.top) / rect.height;
+                
+                // Calculate rotation (max ±8 degrees)
+                var rotateY = (x - 0.5) * 16;
+                var rotateX = (0.5 - y) * 16;
+                
+                container.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+                
+                // Update glow position
+                container.style.setProperty('--mouse-x', (x * 100) + '%');
+                container.style.setProperty('--mouse-y', (y * 100) + '%');
+            });
+            
+            container.addEventListener('mouseleave', function() {
+                container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            });
         })();
+        
+        // Render donut when Accolades tab is first clicked
+        document.querySelectorAll('.tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                var tabName = this.getAttribute('data-tab');
+                if (tabName === 'accolades' && !trajectoryDonutRendered) {
+                    setTimeout(renderTrajectoryDonut, 50);
+                }
+            });
+        });
     </script>
 </body>
 </html>
