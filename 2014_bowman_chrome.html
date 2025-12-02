@@ -80,6 +80,12 @@
             max-height: 800px;
             margin: 30px 0;
         }
+        #tab-non-debuted #nonDebutedFilters {
+            margin-bottom: 15px;
+        }
+        #tab-non-debuted #plotNonDebuted {
+            margin-top: 0;
+        }
         .both-charts {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -290,8 +296,7 @@
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>',
-            name: 'Debuted Players'
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
         
         var debutedLayout = {
@@ -400,8 +405,7 @@
                                   'MiLB Highest Level: %{customdata[0]}<br>' +
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
-                                  'Release Date: %{customdata[3]}<extra></extra>',
-                    name: 'Non-Debuted Players'
+                                  'Release Date: %{customdata[3]}<extra></extra>'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
