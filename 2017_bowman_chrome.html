@@ -243,13 +243,13 @@
                     <li>
                         Average MLB career length: <strong>4.8</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MLB (last season = 2025): <strong>14</strong> players.
+                            Still active in MLB (last season = 2025): <strong>14</strong> of <strong>39</strong> players.
                         </div>
                     </li>
                     <li>
                         Average MiLB career length: <strong>5.1</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>1</strong> players.
+                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>1</strong> of <strong>21</strong> players.
                         </div>
                     </li>
                     <li>Debuted players in this release: <strong>39</strong>; non-debuted with MiLB data: <strong>21</strong>.</li>
@@ -341,7 +341,10 @@
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
+        // Defer render to ensure container has final dimensions (prevents half-width issue in iframes)
+        requestAnimationFrame(function() {
+            Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false });
+        });
         
         
         // Base arrays for non-debuted players
@@ -471,7 +474,7 @@
         
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: true
+            displayModeBar: false
         };
 
         function getActiveLevelsNonDebuted() {
@@ -513,26 +516,15 @@
         });
         
         
-        // Fix: Force Plotly to recalculate dimensions after DOM is fully laid out
-        // This fixes the issue where charts render at half-width in iframes
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                var plotDebuted = document.getElementById('plotDebuted');
-                var plotNonDebuted = document.getElementById('plotNonDebuted');
-                if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
-                if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
-            }, 100);
-        });
-        
-        // Also resize when switching tabs (content may have been hidden during initial render)
+        // Resize charts when switching tabs (needed for tabs that were hidden during initial render)
         document.querySelectorAll('.tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
-                setTimeout(function() {
+                requestAnimationFrame(function() {
                     var plotDebuted = document.getElementById('plotDebuted');
                     var plotNonDebuted = document.getElementById('plotNonDebuted');
                     if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
                     if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
-                }, 50);
+                });
             });
         });
     </script>
