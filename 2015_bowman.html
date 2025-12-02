@@ -157,35 +157,34 @@
             font-weight: 700;
         }
         /* ================================================================
-           REFINED DONUT CHART - Clean & Professional
-           Shine border around donut, hover expansion on slices
+           LIGHT THEME DONUT CHART - Matches UI
+           Tight shine border, light background
            ================================================================ */
         .trajectory-chart-container {
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 30px 0;
-            padding: 32px;
-            background: linear-gradient(145deg, 
-                rgba(15, 23, 42, 0.97) 0%, 
-                rgba(30, 41, 59, 0.95) 100%);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 24px 0;
+            padding: 28px 24px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid rgba(30, 60, 114, 0.1);
+            box-shadow: 0 4px 16px rgba(30, 60, 114, 0.06);
         }
         .trajectory-chart-title {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 24px;
+            letter-spacing: 0.15em;
+            color: #6c757d;
+            margin-bottom: 20px;
             font-weight: 600;
         }
-        /* Donut wrapper with circular shine border */
+        /* Donut wrapper with tight circular shine border */
         .trajectory-chart-wrapper {
             position: relative;
             width: 100%;
-            max-width: 340px;
+            max-width: 300px;
             aspect-ratio: 1;
             opacity: 0;
             transition: opacity 0.5s ease-out;
@@ -193,38 +192,30 @@
         .trajectory-chart-wrapper.loaded {
             opacity: 1;
         }
-        /* Circular shine ring around the donut */
+        /* Tight shine ring hugging the donut */
         .trajectory-chart-wrapper::before {
             content: '';
             position: absolute;
-            inset: -8px;
+            inset: -3px;
             border-radius: 50%;
-            padding: 3px;
+            padding: 2px;
             background: conic-gradient(
                 from var(--shine-angle, 0deg),
                 transparent 0deg,
-                rgba(0, 212, 255, 0.6) 60deg,
-                rgba(139, 92, 246, 0.6) 120deg,
-                rgba(236, 72, 153, 0.6) 180deg,
-                rgba(249, 115, 22, 0.5) 240deg,
-                rgba(34, 197, 94, 0.5) 300deg,
+                rgba(0, 180, 220, 0.7) 45deg,
+                rgba(100, 80, 200, 0.7) 90deg,
+                rgba(220, 60, 140, 0.7) 135deg,
+                rgba(240, 100, 20, 0.6) 180deg,
+                rgba(30, 180, 80, 0.6) 225deg,
+                rgba(50, 120, 230, 0.6) 270deg,
+                rgba(0, 180, 220, 0.5) 315deg,
                 transparent 360deg
             );
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            animation: rotateShine 6s linear infinite;
-            filter: blur(1px);
-        }
-        /* Soft glow behind the donut */
-        .trajectory-chart-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 10%;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
-            z-index: -1;
+            animation: rotateShine 5s linear infinite;
         }
         @keyframes rotateShine {
             from { --shine-angle: 0deg; }
@@ -241,54 +232,46 @@
             position: relative;
             z-index: 1;
         }
-        /* Plotly pie slice hover effect via CSS */
-        #trajectoryDonut .slice path {
-            transition: transform 0.2s ease-out, filter 0.2s ease-out;
-            transform-origin: center;
-            transform-box: fill-box;
-        }
-        #trajectoryDonut .slice:hover path {
-            filter: brightness(1.15) drop-shadow(0 0 8px currentColor);
-        }
         .trajectory-legend {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px 12px;
-            margin-top: 28px;
+            gap: 6px 10px;
+            margin-top: 24px;
             max-width: 100%;
         }
         .legend-item {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.78rem;
-            color: rgba(255, 255, 255, 0.85);
-            padding: 5px 10px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.75rem;
+            color: #495057;
+            padding: 4px 10px;
+            background: rgba(30, 60, 114, 0.03);
+            border-radius: 14px;
+            border: 1px solid rgba(30, 60, 114, 0.08);
             transition: all 0.2s ease;
             cursor: default;
         }
         .legend-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(30, 60, 114, 0.08);
+            border-color: rgba(30, 60, 114, 0.15);
             transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.1);
         }
         .legend-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            box-shadow: 0 0 6px currentColor;
+            box-shadow: 0 0 4px currentColor;
         }
         .legend-value {
             font-weight: 600;
-            color: #ffffff;
+            color: #1e3c72;
         }
         .legend-pct {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.7rem;
+            color: #6c757d;
+            font-size: 0.68rem;
         }
         
         /* Responsive breakpoints */
@@ -430,9 +413,7 @@
                     <div class="trajectory-legend" id="trajectoryLegend"></div>
                 </div>
                 
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;margin-top:20px;">
-                    2 reached High-A, 3 reached AA, 6 reached AAA, 36 reached MLB.
-                </p>
+
                 <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
                     <li>
                         Average MLB career length: <strong>7.4</strong> seasons.
@@ -835,7 +816,7 @@
                 marker: {
                     colors: colors,
                     line: {
-                        color: 'rgba(15, 23, 42, 0.8)',
+                        color: '#ffffff',
                         width: 2
                     }
                 },
@@ -858,7 +839,7 @@
                 paper_bgcolor: 'transparent',
                 plot_bgcolor: 'transparent',
                 annotations: [{
-                    text: '<b style="font-size:28px;color:#00d4ff;">' + 47 + '</b><br><span style="color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:0.1em;">PLAYERS</span>',
+                    text: '<b style="font-size:26px;color:#1e3c72;">' + 47 + '</b><br><span style="color:#6c757d;font-size:9px;letter-spacing:0.1em;">PLAYERS</span>',
                     x: 0.5,
                     y: 0.5,
                     font: { family: 'Inter, sans-serif', size: 12, color: '#ffffff' },
@@ -913,7 +894,7 @@
         function showDonutTooltip(event, data) {
             if (!donutTooltip) {
                 donutTooltip = document.createElement('div');
-                donutTooltip.style.cssText = 'position:fixed;padding:8px 12px;background:rgba(0,0,0,0.85);color:#fff;border-radius:6px;font-size:12px;pointer-events:none;z-index:1000;border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(4px);';
+                donutTooltip.style.cssText = 'position:fixed;padding:8px 12px;background:#ffffff;color:#1e3c72;border-radius:6px;font-size:12px;pointer-events:none;z-index:1000;border:1px solid rgba(30,60,114,0.15);box-shadow:0 4px 12px rgba(30,60,114,0.15);';
                 document.body.appendChild(donutTooltip);
             }
             donutTooltip.innerHTML = '<b style="color:' + data.color + '">' + data.level + '</b><br>' + data.count + ' players (' + data.pct + '%)';
