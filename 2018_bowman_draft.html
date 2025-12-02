@@ -338,14 +338,14 @@
         });
         
         // ========================================================================
-        // DEFERRED CHART RENDERING - Charts render only when their tab is visible
-        // This prevents the visible resize issue with hidden containers
+        // DEFERRED CHART RENDERING - Wait for Plotly Promise before revealing
         // ========================================================================
         
         var nonDebutedChartRendered = false;
         
-        // Render debuted chart immediately (it's visible on load)
-        
+        // Render debuted chart immediately and wait for completion
+        (function() {
+            
         var debutedData = [{
             x: [9.25136, 1.36418, 0.00586009, 13.3255, 1.58055, 6.82847, 0.749218, 4.87143, 0.209667, 1.55571, 3.91782, 0.392994, 0.0, 5.36699, 0.0, 0.91876, 0.802091, 7.87164, -0.0635772, -0.888034, 0.781431, 1.23376, 6.2139, 14.8235, -0.463217, 2.9432, 2.65015, 19.9586, 4.8977, 2.47394, 0.0, 3.30063, 8.32221, 0.0, 0.943761, 8.01686, 2.93649, -0.163983, 2.6895, 2.21359, -0.178966],
             y: [119.83333333333333, 105.0, 34.0, 26.5, 26.0, 149.33333333333334, 42.0, 17.8, 23.0, 24.8, 21.5, 27.0, 13.5, 86.2, 1.0, 81.4, 48.0, 131.8, 17.0, 12.666666666666666, 18.5, 67.25, 19.5, 29.2, 24.333333333333332, 30.0, 57.0, 100.57142857142857, 79.5, 106.5, 2.6666666666666665, 59.0, 85.83333333333333, 31.0, 14.0, 24.666666666666668, 13.25, 5.0, 88.4, 62.75, 7.0],
@@ -400,11 +400,28 @@
         
         Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false });
         
+        })();
         
-        // Mark debuted chart wrapper as loaded
+        // CRITICAL: Wait for debuted chart to fully render before revealing
+        // Plotly.newPlot returns a Promise - we use plotDebuted.on('plotly_afterplot')
         (function() {
+            var plotEl = document.getElementById('plotDebuted');
             var wrapper = document.getElementById('debutedWrapper');
-            if (wrapper) wrapper.classList.add('loaded');
+            if (plotEl && wrapper) {
+                // Use MutationObserver to detect when Plotly adds content
+                var observer = new MutationObserver(function(mutations, obs) {
+                    if (plotEl.querySelector('.plot-container')) {
+                        wrapper.classList.add('loaded');
+                        obs.disconnect();
+                    }
+                });
+                observer.observe(plotEl, { childList: true, subtree: true });
+                // Fallback: reveal after 500ms max
+                setTimeout(function() { 
+                    wrapper.classList.add('loaded'); 
+                    observer.disconnect();
+                }, 500);
+            }
         })();
         
         // Function to render non-debuted chart (called on first tab click)
@@ -412,6 +429,10 @@
             if (nonDebutedChartRendered) return;
             nonDebutedChartRendered = true;
             
+            var wrapper = document.getElementById('nonDebutedWrapper');
+            var plotEl = document.getElementById('plotNonDebuted');
+            
+            // Render the chart
             
         // Base arrays for non-debuted players
         var nonDebutedBase = {
@@ -582,9 +603,21 @@
         });
         
             
-            // Mark as loaded after render
-            var wrapper = document.getElementById('nonDebutedWrapper');
-            if (wrapper) wrapper.classList.add('loaded');
+            // Wait for render to complete before revealing
+            if (plotEl && wrapper) {
+                var observer = new MutationObserver(function(mutations, obs) {
+                    if (plotEl.querySelector('.plot-container')) {
+                        wrapper.classList.add('loaded');
+                        obs.disconnect();
+                    }
+                });
+                observer.observe(plotEl, { childList: true, subtree: true });
+                // Fallback: reveal after 500ms max
+                setTimeout(function() { 
+                    wrapper.classList.add('loaded');
+                    observer.disconnect();
+                }, 500);
+            }
         }
         
         // Tab switching - render non-debuted chart on first click
@@ -594,19 +627,16 @@
                 
                 // Render non-debuted chart when its tab is first clicked
                 if (tabName === 'non-debuted' && !nonDebutedChartRendered) {
-                    // Small timeout to ensure tab content is visible first
-                    setTimeout(function() {
-                        renderNonDebutedChart();
-                    }, 0);
+                    renderNonDebutedChart();
                 }
                 
-                // Resize charts if already rendered
+                // Resize charts if already rendered (small delay for DOM update)
                 setTimeout(function() {
                     var plotDebuted = document.getElementById('plotDebuted');
                     var plotNonDebuted = document.getElementById('plotNonDebuted');
                     if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
                     if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
-                }, 20);
+                }, 50);
             });
         });
         
