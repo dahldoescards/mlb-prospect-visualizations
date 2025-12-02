@@ -122,7 +122,6 @@
     </div>
 
     <script>
-        // Base arrays for non-debuted players
         var nonDebutedBase = {
             x: [5, 5, 5, 4, 4, 4, 4, 3, 5, 4, 4, 5, 2, 4, 4, 4, 4, 5, 5, 4, 4, 5, 5, 5, 5, 5, 5, 1, 5, 3, 4, 2, 3, 4, 4, 4, 3, 4, 4, 3, 3, 5, 5, 5, 2, 5, 5, 5, 4, 3, 5, 5, 5, 5, 4, 5, 4, 5, 5, 4, 4, 4, 5, 4],
             y: [112.0, 21.8, 41.5, 79.0, 15.2, 14.5, 102.2, 22.2, 51.0, 13.0, 17.67, 22.0, 24.33, 12.25, 28.0, 128.75, 15.0, 30.75, 17.4, 78.25, 84.8, 18.5, 56.2, 84.4, 87.2, 25.6, 76.6, 2.0, 14.6, 60.0, 32.8, 7.0, 18.33, 70.0, 96.5, 94.8, 12.75, 83.75, 95.4, 27.0, 19.33, 24.0, 62.75, 98.4, 8.0, 30.0, 26.0, 22.8, 17.4, 68.25, 42.5, 22.2, 28.6, 16.4, 15.0, 106.6, 12.0, 104.4, 29.0, 61.6, 56.75, 71.0, 26.8, 108.0],
@@ -195,7 +194,8 @@
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
                                   'MiLB Games per Season: %{customdata[3]:.1f}<br>' +
-                                  'Release Date: %{customdata[4]}<extra></extra>'
+                                  'Release Date: %{customdata[4]}<extra></extra>',
+                    name: 'Non-Debuted Players'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
@@ -282,7 +282,6 @@
                 if (cb.checked) active.push(cb.value);
             });
             if (!active.length) {
-                // If user unchecks everything, fall back to all levels
                 active = ['1','2','3','4','5'];
                 checks.forEach(function(cb) { cb.checked = true; });
             }
@@ -306,7 +305,6 @@
             }
         }
 
-        // Initial render
         updateNonDebutedPlot();
 
         document.querySelectorAll('.level-filter').forEach(function(cb) {

@@ -277,11 +277,9 @@
                 tab.addEventListener('click', function() {
                     const tabName = this.getAttribute('data-tab');
                     
-                    // Update active tab
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Update active tab content
                     document.querySelectorAll('.tab-content').forEach(content => {
                         content.classList.remove('active');
                     });
@@ -382,9 +380,7 @@
                 var baseX = lvl;
                 var baseY = nonDebutedBase.y[i];
 
-                // Horizontal jitter within level band
                 var jx = (hashFloat(i, 1) - 0.5) * 0.35;
-                // Vertical jitter scaled to axis range (small but visible)
                 var jy = (hashFloat(i, 2) - 0.5) * (122.7270 - 3.8430) * 0.03;
 
                 x.push(baseX + jx);
@@ -473,7 +469,6 @@
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
             displayModeBar: true
@@ -509,12 +504,10 @@
             }
         }
 
-        // Initial render for non-debuted main plot and "Both" tab (unfiltered)
         var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
         var nonDebutedData = [nonDebutedFull.trace];
         Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
 
-        // Wire up filters
         document.querySelectorAll('.level-filter').forEach(function(cb) {
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });

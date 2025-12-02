@@ -172,7 +172,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">40.2</span>
+                    <span class="stat-value">41.9</span>
                 </div>
             </div>
         </div>
@@ -249,7 +249,7 @@
                     <li>
                         Average MiLB career length: <strong>5.9</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>0</strong> players.
+                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>1</strong> players.
                         </div>
                     </li>
                     <li>Debuted players in this release: <strong>46</strong>; non-debuted with MiLB data: <strong>26</strong>.</li>
@@ -277,11 +277,9 @@
                 tab.addEventListener('click', function() {
                     const tabName = this.getAttribute('data-tab');
                     
-                    // Update active tab
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Update active tab content
                     document.querySelectorAll('.tab-content').forEach(content => {
                         content.classList.remove('active');
                     });
@@ -294,7 +292,7 @@
         
         var debutedData = [{
             x: [1.29176, 0.0, 0.341976, 8.78141, -0.858014, 1.44386, -0.280692, 0.0, 0.0, -0.0214925, 3.89251, 2.50216, 28.6739, -0.377623, 0.194905, -0.672636, 7.91849, 18.5026, -0.869588, -0.338253, 6.83616, 0.0, 2.09823, 0.0304968, 0.0374535, 9.05211, 0.015114, 10.2628, 1.02301, 5.00888, 0.0, 0.157956, 13.7691, 15.534, -0.823758, 12.4187, 0.676625, 0.122733, 6.63548, 2.05029, 1.41427, 6.68479, 25.4703, 1.55137, 0.0, 0.0],
-            y: [14.4, 6.0, 41.0, 19.77777777777778, 25.2, 29.571428571428573, 32.333333333333336, 5.666666666666667, 21.0, 21.0, 56.42857142857143, 21.6, 128.55555555555554, 19.5, 39.0, 35.4, 85.1, 129.125, 27.8, 15.0, 71.77777777777777, 6.0, 0.0, 47.5, 12.666666666666666, 74.11111111111111, 4.0, 20.4, 7.0, 88.4, 14.0, 38.63636363636363, 120.14285714285714, 28.22222222222222, 46.25, 26.8, 48.25, 26.5, 11.571428571428571, 42.5, 29.0, 80.11111111111111, 130.0, 61.5, 24.2, 17.666666666666668],
+            y: [14.4, 6.0, 41.0, 19.77777777777778, 25.2, 29.571428571428573, 32.333333333333336, 5.666666666666667, 21.0, 21.0, 56.42857142857143, 21.6, 128.55555555555554, 19.5, 39.0, 35.4, 85.1, 129.125, 27.8, 15.0, 71.77777777777777, 6.0, 74.71428571428571, 47.5, 12.666666666666666, 74.11111111111111, 4.0, 20.4, 7.0, 88.4, 14.0, 38.63636363636363, 120.14285714285714, 28.22222222222222, 46.25, 26.8, 48.25, 26.5, 11.571428571428571, 42.5, 29.0, 80.11111111111111, 130.0, 61.5, 24.2, 17.666666666666668],
             mode: 'markers',
             type: 'scatter',
             text: ["Adrian Sampson", "Akeel Morris", "Amir Garrett", "Antonio Senzatela", "Austin Dean", "Austin Voth", "Bobby Bradley", "Bobby Wahl", "Brent Honeywell", "Brett Graves", "Brett Phillips", "Carson Smith", "Cody Bellinger", "Darnell Sweeney", "Dermis Garcia", "Dixon Machado", "Giovanny Urshela", "Gleyber Torres", "Grayson Greiner", "Hector Olivera", "J.D. Davis", "Jairo Labourt", "Jake Cave", "Jarlin Garcia", "Jefry Rodriguez", "Joe Wendle", "Jon Moscot", "Justin Steele", "Luiz Gohara", "Mallex Smith", "Marcos Diplan", "Miguel Castro", "Mike Yastrzemski", "Nick Pivetta", "Pedro Severino", "Reynaldo Lopez", "Sergio Alcantara", "Spencer Kieboom", "Spencer Turnbull", "Steven Okert", "Victor Arano", "Victor Caratini", "Willy Adames", "Wilmer Difo", "Yoan Lopez", "Zac Reininger"],
@@ -304,7 +302,7 @@
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [72.0, 18.0, 328.0, 178.0, 126.0, 207.0, 97.0, 17.0, 63.0, 21.0, 395.0, 108.0, 1157.0, 39.0, 39.0, 177.0, 851.0, 1033.0, 139.0, 30.0, 646.0, 6.0, 0, 285.0, 38.0, 667.0, 8.0, 102.0, 14.0, 442.0, 28.0, 425.0, 841.0, 254.0, 370.0, 268.0, 193.0, 53.0, 81.0, 340.0, 116.0, 721.0, 1040.0, 492.0, 121.0, 53.0],
+            customdata: [72.0, 18.0, 328.0, 178.0, 126.0, 207.0, 97.0, 17.0, 63.0, 21.0, 395.0, 108.0, 1157.0, 39.0, 39.0, 177.0, 851.0, 1033.0, 139.0, 30.0, 646.0, 6.0, 523.0, 285.0, 38.0, 667.0, 8.0, 102.0, 14.0, 442.0, 28.0, 425.0, 841.0, 254.0, 370.0, 268.0, 193.0, 53.0, 81.0, 340.0, 116.0, 721.0, 1040.0, 492.0, 121.0, 53.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
@@ -382,9 +380,7 @@
                 var baseX = lvl;
                 var baseY = nonDebutedBase.y[i];
 
-                // Horizontal jitter within level band
                 var jx = (hashFloat(i, 1) - 0.5) * 0.35;
-                // Vertical jitter scaled to axis range (small but visible)
                 var jy = (hashFloat(i, 2) - 0.5) * (146.3000 - 4.0300) * 0.03;
 
                 x.push(baseX + jx);
@@ -473,7 +469,6 @@
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
             displayModeBar: true
@@ -509,12 +504,10 @@
             }
         }
 
-        // Initial render for non-debuted main plot and "Both" tab (unfiltered)
         var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
         var nonDebutedData = [nonDebutedFull.trace];
         Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
 
-        // Wire up filters
         document.querySelectorAll('.level-filter').forEach(function(cb) {
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });

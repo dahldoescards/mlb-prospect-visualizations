@@ -122,7 +122,6 @@
     </div>
 
     <script>
-        // Base arrays for non-debuted players
         var nonDebutedBase = {
             x: [3, 3, 4, 3, 4, 3, 3, 4, 2, 2, 2, 3, 2, 2, 3, 2, 5, 4, 2, 2, 2, 3, 3, 2, 3, 2, 4, 2, 2, 4, 4, 3, 3, 2, 3, 4, 1, 4, 4, 4, 4, 2, 4, 3, 2, 2, 4, 3, 4, 4, 4, 3, 2, 4, 3, 5, 4, 2, 2, 2, 4, 3, 4, 2, 2, 3, 3, 3, 2, 3, 2, 2, 3, 2, 3, 3, 3, 4, 4, 4, 2, 5, 2, 2, 2, 1],
             y: [43.5, 52.5, 22.0, 38.5, 68.5, 70.5, 37.0, 121.0, 22.0, 40.5, 20.0, 12.0, 19.0, 35.0, 107.0, 9.0, 65.5, 71.5, 1.0, 67.0, 42.5, 69.5, 14.5, 68.0, 26.0, 29.0, 63.5, 5.0, 45.0, 23.0, 69.5, 26.0, 67.0, 54.0, 52.5, 54.5, 3.0, 56.5, 64.5, 70.5, 70.5, 17.5, 11.5, 12.0, 47.0, 89.0, 53.0, 62.5, 107.5, 63.0, 22.0, 39.5, 18.0, 25.0, 46.0, 74.5, 69.5, 19.0, 107.0, 32.0, 27.0, 50.0, 122.0, 12.0, 2.0, 59.0, 39.0, 107.0, 13.0, 53.5, 87.0, 18.0, 14.0, 112.0, 71.5, 60.5, 21.0, 74.0, 69.5, 72.5, 40.5, 55.5, 60.5, 91.0, 81.0, 53.0],
@@ -195,7 +194,8 @@
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
                                   'MiLB Games per Season: %{customdata[3]:.1f}<br>' +
-                                  'Release Date: %{customdata[4]}<extra></extra>'
+                                  'Release Date: %{customdata[4]}<extra></extra>',
+                    name: 'Non-Debuted Players'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
@@ -282,7 +282,6 @@
                 if (cb.checked) active.push(cb.value);
             });
             if (!active.length) {
-                // If user unchecks everything, fall back to all levels
                 active = ['1','2','3','4','5'];
                 checks.forEach(function(cb) { cb.checked = true; });
             }
@@ -306,7 +305,6 @@
             }
         }
 
-        // Initial render
         updateNonDebutedPlot();
 
         document.querySelectorAll('.level-filter').forEach(function(cb) {

@@ -149,7 +149,7 @@
         
         <div class="tabs">
             <button class="tab active" data-tab="debuted" >
-                Debuted (8)
+                Debuted (9)
             </button>
             <button class="tab " data-tab="non-debuted" >
                 Non-Debuted (86)
@@ -164,15 +164,15 @@
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">8</span>
+                    <span class="stat-value">9</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Average WAR</span>
-                    <span class="stat-value">0.76</span>
+                    <span class="stat-value">0.88</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">50.4</span>
+                    <span class="stat-value">54.7</span>
                 </div>
             </div>
         </div>
@@ -211,7 +211,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">All-Stars</span>
-                    <span class="stat-value">18</span>
+                    <span class="stat-value">19</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">MVP Awards</span>
@@ -223,7 +223,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Gold Gloves</span>
-                    <span class="stat-value">1</span>
+                    <span class="stat-value">2</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Silver Sluggers</span>
@@ -237,13 +237,13 @@
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    2 reached Rookie, 31 reached Low-A, 26 reached High-A, 24 reached AA, 3 reached AAA, 8 reached MLB, 7 reached Unknown.
+                    2 reached Rookie, 31 reached Low-A, 26 reached High-A, 24 reached AA, 3 reached AAA, 9 reached MLB, 6 reached Unknown.
                 </p>
                 <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
                     <li>
-                        Average MLB career length: <strong>1.0</strong> seasons.
+                        Average MLB career length: <strong>1.3</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MLB (last season = 2025): <strong>8</strong> players.
+                            Still active in MLB (last season = 2025): <strong>9</strong> players.
                         </div>
                     </li>
                     <li>
@@ -252,7 +252,7 @@
                             Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>85</strong> players.
                         </div>
                     </li>
-                    <li>Debuted players in this release: <strong>8</strong>; non-debuted with MiLB data: <strong>86</strong>.</li>
+                    <li>Debuted players in this release: <strong>9</strong>; non-debuted with MiLB data: <strong>86</strong>.</li>
                 </ul>
             </div>
             <div style="margin-top:32px;">
@@ -277,11 +277,9 @@
                 tab.addEventListener('click', function() {
                     const tabName = this.getAttribute('data-tab');
                     
-                    // Update active tab
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Update active tab content
                     document.querySelectorAll('.tab-content').forEach(content => {
                         content.classList.remove('active');
                     });
@@ -293,18 +291,18 @@
         // Generate plots
         
         var debutedData = [{
-            x: [1.03533, 1.37366, 0.194082, -1.56783, 4.5932, 0.0, 0.0, 0.447],
-            y: [134.0, 13.0, 53.0, 62.0, 117.0, 7.0, 14.0, 3.0],
+            x: [1.03533, 1.37366, 0.194082, -1.56783, 1.82415, 4.5932, 0.0, 0.0, 0.447],
+            y: [134.0, 13.0, 53.0, 62.0, 89.5, 117.0, 7.0, 14.0, 3.0],
             mode: 'markers',
             type: 'scatter',
-            text: ["Cam Smith", "Chase Burns", "Christian Moore", "Jac Caglianone", "Nick Kurtz", "Payton Tolle", "Ryan Johnson", "Trey Yesavage"],
+            text: ["Cam Smith", "Chase Burns", "Christian Moore", "Jac Caglianone", "Michael Massey", "Nick Kurtz", "Payton Tolle", "Ryan Johnson", "Trey Yesavage"],
             marker: {
                 size: 9,
                 color: '#2a5298',
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [134.0, 13.0, 53.0, 62.0, 117.0, 7.0, 14.0, 3.0],
+            customdata: [134.0, 13.0, 53.0, 62.0, 358.0, 117.0, 7.0, 14.0, 3.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
@@ -382,9 +380,7 @@
                 var baseX = lvl;
                 var baseY = nonDebutedBase.y[i];
 
-                // Horizontal jitter within level band
                 var jx = (hashFloat(i, 1) - 0.5) * 0.35;
-                // Vertical jitter scaled to axis range (small but visible)
                 var jy = (hashFloat(i, 2) - 0.5) * (134.2000 - 0.0000) * 0.03;
 
                 x.push(baseX + jx);
@@ -473,7 +469,6 @@
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
             displayModeBar: true
@@ -509,12 +504,10 @@
             }
         }
 
-        // Initial render for non-debuted main plot and "Both" tab (unfiltered)
         var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
         var nonDebutedData = [nonDebutedFull.trace];
         Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
 
-        // Wire up filters
         document.querySelectorAll('.level-filter').forEach(function(cb) {
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
