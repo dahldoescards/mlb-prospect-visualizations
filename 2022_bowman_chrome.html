@@ -156,6 +156,62 @@
             color: #1e3c72;
             font-weight: 700;
         }
+        /* Trajectory Donut Chart - Ultra Modern */
+        .trajectory-chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.03) 0%, rgba(42, 82, 152, 0.06) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(42, 82, 152, 0.1);
+        }
+        .trajectory-chart-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+        }
+        #trajectoryDonut {
+            width: 100% !important;
+            height: 100% !important;
+            filter: drop-shadow(0 0 20px rgba(42, 82, 152, 0.15));
+        }
+        .trajectory-chart-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #6c757d;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .trajectory-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px 20px;
+            margin-top: 20px;
+            max-width: 500px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
+        }
+        .legend-value {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
         /* Responsive breakpoints */
         @media (max-width: 1200px) {
             :root {
@@ -285,7 +341,17 @@
             </div>
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
-                <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
+                
+                <!-- Ultra Modern Donut Chart -->
+                <div class="trajectory-chart-container">
+                    <div class="trajectory-chart-title">Highest Level Reached Distribution</div>
+                    <div class="trajectory-chart-wrapper">
+                        <div id="trajectoryDonut"></div>
+                    </div>
+                    <div class="trajectory-legend" id="trajectoryLegend"></div>
+                </div>
+                
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;margin-top:20px;">
                     3 reached Rookie, 13 reached Low-A, 28 reached High-A, 27 reached AA, 19 reached AAA, 22 reached MLB.
                 </p>
                 <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
@@ -648,11 +714,96 @@
                 timeout = setTimeout(function() {
                     var plotDebuted = document.getElementById('plotDebuted');
                     var plotNonDebuted = document.getElementById('plotNonDebuted');
+                    var trajectoryDonut = document.getElementById('trajectoryDonut');
                     if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
                     if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
+                    if (trajectoryDonut && trajectoryDonut.data) Plotly.Plots.resize(trajectoryDonut);
                 }, 150);
             };
         })());
+        
+        // ========================================================================
+        // TRAJECTORY DONUT CHART - Ultra Modern Design
+        // ========================================================================
+        (function() {
+            var donutData = [{"level": "Rookie", "count": 3, "pct": 2.7, "color": "#d946ef"}, {"level": "Low-A", "count": 13, "pct": 11.6, "color": "#a855f7"}, {"level": "High-A", "count": 28, "pct": 25.0, "color": "#7c3aed"}, {"level": "AA", "count": 27, "pct": 24.1, "color": "#4f46e5"}, {"level": "AAA", "count": 19, "pct": 17.0, "color": "#2563eb"}, {"level": "MLB", "count": 22, "pct": 19.6, "color": "#1e3c72"}];
+            
+            if (donutData.length === 0) return;
+            
+            var labels = donutData.map(function(d) { return d.level; });
+            var values = donutData.map(function(d) { return d.count; });
+            var colors = donutData.map(function(d) { return d.color; });
+            var percentages = donutData.map(function(d) { return d.pct; });
+            
+            // Create custom hover text
+            var hoverText = donutData.map(function(d) {
+                return '<b>' + d.level + '</b><br>' + d.count + ' players (' + d.pct + '%)';
+            });
+            
+            var data = [{
+                type: 'pie',
+                values: values,
+                labels: labels,
+                hole: 0.55,
+                marker: {
+                    colors: colors,
+                    line: {
+                        color: '#ffffff',
+                        width: 2
+                    }
+                },
+                textinfo: 'percent',
+                textposition: 'inside',
+                textfont: {
+                    family: 'Inter, sans-serif',
+                    size: 12,
+                    color: '#ffffff'
+                },
+                hovertemplate: '%{customdata}<extra></extra>',
+                customdata: hoverText,
+                sort: false,
+                direction: 'clockwise'
+            }];
+            
+            var layout = {
+                showlegend: false,
+                margin: { t: 20, b: 20, l: 20, r: 20 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                annotations: [{
+                    text: '<b>' + 112 + '</b><br>Players',
+                    x: 0.5,
+                    y: 0.5,
+                    font: {
+                        family: 'Inter, sans-serif',
+                        size: 18,
+                        color: '#1e3c72'
+                    },
+                    showarrow: false
+                }]
+            };
+            
+            var config = {
+                responsive: true,
+                displayModeBar: false
+            };
+            
+            Plotly.newPlot('trajectoryDonut', data, layout, config);
+            
+            // Build custom legend with glow effect
+            var legendContainer = document.getElementById('trajectoryLegend');
+            if (legendContainer) {
+                var legendHTML = '';
+                donutData.forEach(function(d) {
+                    legendHTML += '<div class="legend-item">' +
+                        '<span class="legend-dot" style="background-color:' + d.color + ';color:' + d.color + ';"></span>' +
+                        '<span>' + d.level + ': </span>' +
+                        '<span class="legend-value">' + d.count + ' (' + d.pct + '%)</span>' +
+                        '</div>';
+                });
+                legendContainer.innerHTML = legendHTML;
+            }
+        })();
     </script>
 </body>
 </html>
