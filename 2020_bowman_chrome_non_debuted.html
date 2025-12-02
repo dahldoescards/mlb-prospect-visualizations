@@ -19,8 +19,9 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            max-width: 100%;
+            width: 100%;
+            margin: 0;
             padding: 40px 30px;
         }
         .header-section {
@@ -91,6 +92,10 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
+        }
+        .js-plotly-plot, .plotly {
+            width: 100% !important;
+            max-width: 100% !important;
         }
     </style>
 </head>
@@ -277,7 +282,8 @@
 
         var config = {
             responsive: true,
-            displayModeBar: true
+            displayModeBar: true,
+            displaylogo: false
         };
         
         function getActiveLevels() {

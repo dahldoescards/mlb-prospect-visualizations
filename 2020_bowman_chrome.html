@@ -19,8 +19,9 @@
             background-color: #ffffff;
         }
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            max-width: 100%;
+            width: 100%;
+            margin: 0;
             padding: 40px 30px;
         }
         .header-section {
@@ -74,17 +75,22 @@
             display: block;
         }
         #plotDebuted, #plotNonDebuted {
-            width: 100%;
+            width: 100% !important;
             height: calc(100vh - 350px);
             min-height: 450px;
             max-height: 800px;
             margin: 30px 0;
+            box-sizing: border-box;
         }
         #tab-non-debuted #nonDebutedFilters {
             margin-bottom: 15px;
         }
         #tab-non-debuted #plotNonDebuted {
             margin-top: 0;
+            width: 100% !important;
+        }
+        #tab-debuted #plotDebuted {
+            width: 100% !important;
         }
         .both-charts {
             display: grid;
@@ -147,6 +153,10 @@
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
+        }
+        .js-plotly-plot, .plotly {
+            width: 100% !important;
+            max-width: 100% !important;
         }
     </style>
 </head>
@@ -331,7 +341,7 @@
             showlegend: false
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true, displaylogo: false });
         
         
         // Base arrays for non-debuted players
@@ -464,7 +474,8 @@
         // Configuration object reused for updates
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: true
+            displayModeBar: true,
+            displaylogo: false
         };
 
         function getActiveLevelsNonDebuted() {
