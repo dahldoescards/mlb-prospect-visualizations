@@ -192,30 +192,29 @@
         .trajectory-chart-wrapper.loaded {
             opacity: 1;
         }
-        /* Tight shine ring hugging the donut */
+        /* Tight shine ring hugging the actual donut chart */
         .trajectory-chart-wrapper::before {
             content: '';
             position: absolute;
-            inset: -3px;
+            inset: 3%;
             border-radius: 50%;
             padding: 2px;
             background: conic-gradient(
                 from var(--shine-angle, 0deg),
                 transparent 0deg,
-                rgba(0, 180, 220, 0.7) 45deg,
-                rgba(100, 80, 200, 0.7) 90deg,
-                rgba(220, 60, 140, 0.7) 135deg,
-                rgba(240, 100, 20, 0.6) 180deg,
-                rgba(30, 180, 80, 0.6) 225deg,
-                rgba(50, 120, 230, 0.6) 270deg,
-                rgba(0, 180, 220, 0.5) 315deg,
+                rgba(30, 58, 138, 0.8) 50deg,
+                rgba(88, 28, 135, 0.8) 100deg,
+                rgba(157, 23, 77, 0.7) 150deg,
+                rgba(180, 83, 9, 0.7) 200deg,
+                rgba(21, 128, 61, 0.7) 250deg,
+                rgba(14, 116, 144, 0.7) 300deg,
                 transparent 360deg
             );
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            animation: rotateShine 5s linear infinite;
+            animation: rotateShine 6s linear infinite;
         }
         @keyframes rotateShine {
             from { --shine-angle: 0deg; }
@@ -793,7 +792,7 @@
             if (trajectoryDonutRendered) return;
             trajectoryDonutRendered = true;
             
-            var donutData = [{"level": "Rookie", "count": 1, "pct": 2.0, "color": "#22c55e"}, {"level": "Low-A", "count": 1, "pct": 2.0, "color": "#f97316"}, {"level": "AA", "count": 2, "pct": 4.1, "color": "#8b5cf6"}, {"level": "AAA", "count": 4, "pct": 8.2, "color": "#3b82f6"}, {"level": "MLB", "count": 41, "pct": 83.7, "color": "#00d4ff"}];
+            var donutData = [{"level": "Rookie", "count": 1, "pct": 2.0, "color": "#166534"}, {"level": "Low-A", "count": 1, "pct": 2.0, "color": "#b45309"}, {"level": "AA", "count": 2, "pct": 4.1, "color": "#581c87"}, {"level": "AAA", "count": 4, "pct": 8.2, "color": "#1e3a8a"}, {"level": "MLB", "count": 41, "pct": 83.7, "color": "#0e7490"}];
             if (donutData.length === 0) return;
             
             donutSliceCount = donutData.length;
@@ -839,7 +838,7 @@
                 paper_bgcolor: 'transparent',
                 plot_bgcolor: 'transparent',
                 annotations: [{
-                    text: '<b style="font-size:26px;color:#1e3c72;">' + 49 + '</b><br><span style="color:#6c757d;font-size:9px;letter-spacing:0.1em;">PLAYERS</span>',
+                    text: '<b style="font-size:26px;color:#0f172a;">' + 49 + '</b><br><span style="color:#64748b;font-size:9px;letter-spacing:0.1em;">PLAYERS</span>',
                     x: 0.5,
                     y: 0.5,
                     font: { family: 'Inter, sans-serif', size: 12, color: '#ffffff' },
