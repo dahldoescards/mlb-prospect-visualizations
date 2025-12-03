@@ -9,11 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* Dynamic chart sizing using viewport units */
-            --chart-height: clamp(320px, 42vh, 520px);
-            --chart-aspect-ratio: 16 / 9;
-        }
         * {
             box-sizing: border-box;
         }
@@ -26,7 +21,7 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: clamp(20px, 4vw, 40px) clamp(15px, 3vw, 30px);
+            padding: 40px 30px;
         }
         .header-section {
             margin-bottom: 30px;
@@ -36,7 +31,7 @@
         h1 {
             color: #1e3c72;
             margin: 0 0 8px 0;
-            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-size: 2rem;
             font-weight: 700;
             letter-spacing: -0.3px;
         }
@@ -50,7 +45,6 @@
             display: flex;
             border-bottom: 2px solid #e9ecef;
             margin-bottom: 30px;
-            flex-wrap: wrap;
         }
         .tab {
             padding: 15px 30px;
@@ -79,43 +73,10 @@
         .tab-content.active {
             display: block;
         }
-        /* Professional chart container with dynamic sizing */
-        .chart-wrapper {
-            position: relative;
-            width: 100%;
-            height: var(--chart-height);
-            margin: 30px 0;
-            background: #fafbfc;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .chart-wrapper .loading-skeleton {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            z-index: 1;
-            opacity: 1;
-            transition: opacity 0.3s ease-out;
-        }
-        .chart-wrapper.loaded .loading-skeleton {
-            opacity: 0;
-            pointer-events: none;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
         #plotDebuted, #plotNonDebuted {
-            width: 100% !important;
-            height: 100% !important;
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
-        }
-        .chart-wrapper.loaded #plotDebuted,
-        .chart-wrapper.loaded #plotNonDebuted {
-            opacity: 1;
+            width: 100%;
+            height: 650px;
+            margin: 30px 0;
         }
         .both-charts {
             display: grid;
@@ -156,196 +117,25 @@
             color: #1e3c72;
             font-weight: 700;
         }
-        /* ================================================================
-           LIGHT THEME DONUT CHART - Matches UI
-           Tight shine border, light background
-           ================================================================ */
-        .trajectory-chart-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 24px 0;
-            padding: 28px 24px;
-            background: #ffffff;
-            border-radius: 12px;
-            border: 1px solid rgba(30, 60, 114, 0.1);
-            box-shadow: 0 4px 16px rgba(30, 60, 114, 0.06);
-        }
-        .trajectory-chart-title {
-            font-size: 0.68rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #6c757d;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        /* Donut wrapper with tight circular shine border */
-        .trajectory-chart-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 280px;
-            aspect-ratio: 1;
-            opacity: 0;
-            transition: opacity 0.5s ease-out;
-        }
-        .trajectory-chart-wrapper.loaded {
-            opacity: 1;
-        }
-        /* Shine border: inset box-shadow with angled linear-gradient mask */
-        .trajectory-chart-wrapper::before {
-            content: '';
-            position: absolute;
-            inset: 5%;
-            border-radius: 50%;
-            box-shadow: 
-                inset 0 0 40px 8px rgba(255, 255, 255, 0.4),
-                inset 0 0 80px 20px rgba(255, 255, 255, 0.1);
-            -webkit-mask-image: linear-gradient(
-                var(--shine-angle, 135deg),
-                rgba(255,255,255,1) 0%,
-                rgba(255,255,255,0.6) 25%,
-                transparent 50%,
-                transparent 100%
-            );
-            mask-image: linear-gradient(
-                var(--shine-angle, 135deg),
-                rgba(255,255,255,1) 0%,
-                rgba(255,255,255,0.6) 25%,
-                transparent 50%,
-                transparent 100%
-            );
-            animation: rotateShine 8s linear infinite;
-            pointer-events: none;
-            z-index: 10;
-        }
-        /* Secondary shine layer for depth */
-        .trajectory-chart-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 5%;
-            border-radius: 50%;
-            box-shadow: inset 0 0 20px 5px rgba(255, 255, 255, 0.15);
-            -webkit-mask-image: linear-gradient(
-                calc(var(--shine-angle, 135deg) + 180deg),
-                rgba(255,255,255,0.5) 0%,
-                transparent 40%
-            );
-            mask-image: linear-gradient(
-                calc(var(--shine-angle, 135deg) + 180deg),
-                rgba(255,255,255,0.5) 0%,
-                transparent 40%
-            );
-            animation: rotateShine 8s linear infinite;
-            pointer-events: none;
-            z-index: 10;
-        }
-        @keyframes rotateShine {
-            from { --shine-angle: 135deg; }
-            to { --shine-angle: 495deg; }
-        }
-        @property --shine-angle {
-            syntax: '<angle>';
-            initial-value: 135deg;
-            inherits: false;
-        }
-        /* Slice animations */
-        @keyframes sliceShimmer {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.08); }
-        }
-        @keyframes slicePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.01); }
-        }
-        #trajectoryDonut {
-            width: 100% !important;
-            height: 100% !important;
-            position: relative;
-            z-index: 1;
-        }
-        /* Animated gradient shimmer on slices */
-        #trajectoryDonut .slice path {
-            animation: sliceShimmer 4s ease-in-out infinite;
-            transition: filter 0.3s ease, transform 0.2s ease;
-            transform-origin: center;
-            transform-box: fill-box;
-        }
-        #trajectoryDonut .slice:nth-child(1) path { animation-delay: 0s; }
-        #trajectoryDonut .slice:nth-child(2) path { animation-delay: 0.5s; }
-        #trajectoryDonut .slice:nth-child(3) path { animation-delay: 1s; }
-        #trajectoryDonut .slice:nth-child(4) path { animation-delay: 1.5s; }
-        #trajectoryDonut .slice:nth-child(5) path { animation-delay: 2s; }
-        #trajectoryDonut .slice:nth-child(6) path { animation-delay: 2.5s; }
-        #trajectoryDonut .slice:nth-child(7) path { animation-delay: 3s; }
-        #trajectoryDonut .slice:hover path {
-            filter: brightness(1.2) drop-shadow(0 0 8px rgba(255,255,255,0.3));
-        }
-        .trajectory-legend {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px 10px;
-            margin-top: 24px;
-            max-width: 100%;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            color: #495057;
-            padding: 4px 10px;
-            background: rgba(30, 60, 114, 0.03);
-            border-radius: 14px;
-            border: 1px solid rgba(30, 60, 114, 0.08);
-            transition: all 0.2s ease;
-            cursor: default;
-        }
-        .legend-item:hover {
-            background: rgba(30, 60, 114, 0.08);
-            border-color: rgba(30, 60, 114, 0.15);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.1);
-        }
-        .legend-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            box-shadow: 0 0 4px currentColor;
-        }
-        .legend-value {
-            font-weight: 600;
-            color: #1e3c72;
-        }
-        .legend-pct {
-            color: #6c757d;
-            font-size: 0.68rem;
-        }
-        
-        /* Responsive breakpoints */
-        @media (max-width: 1200px) {
-            :root {
-                --chart-height: clamp(300px, 40vh, 480px);
-            }
-        }
         @media (max-width: 768px) {
-            :root {
-                --chart-height: clamp(280px, 38vh, 420px);
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
             }
             .both-charts {
                 grid-template-columns: 1fr;
             }
+            #plotDebuted, #plotNonDebuted {
+                height: 500px;
+            }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
-                height: 400px;
+                height: 500px;
             }
             .stats {
                 grid-template-columns: 1fr;
                 padding: 20px;
-            }
-            .tab {
-                padding: 12px 20px;
-                font-size: 0.9rem;
             }
         }
     </style>
@@ -370,10 +160,7 @@
         </div>
         
         <div class="tab-content active" id="tab-debuted">
-            <div class="chart-wrapper" id="debutedWrapper">
-                <div class="loading-skeleton"></div>
-                <div id="plotDebuted"></div>
-            </div>
+            <div id="plotDebuted"></div>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
@@ -399,10 +186,7 @@
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="4" checked> AA</label>
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="5" checked> AAA</label>
             </div>
-            <div class="chart-wrapper" id="nonDebutedWrapper">
-                <div class="loading-skeleton"></div>
-                <div id="plotNonDebuted"></div>
-            </div>
+            <div id="plotNonDebuted"></div>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
@@ -451,29 +235,44 @@
                 </div>
             </div>
             <div style="margin-top:32px;">
-                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
-                
-                <!-- Ultra Modern Donut Chart -->
-                <div class="trajectory-chart-container">
-                    <div class="trajectory-chart-title">Highest Level Reached Distribution</div>
-                    <div class="trajectory-chart-wrapper">
-                        <div id="trajectoryDonut"></div>
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Age at Release</h3>
+                <div class="stats" style="margin-top:16px;margin-bottom:24px;">
+                    <div class="stat-item">
+                        <span class="stat-label">Average Age</span>
+                        <span class="stat-value">21.6</span>
                     </div>
-                    <div class="trajectory-legend" id="trajectoryLegend"></div>
+                    <div class="stat-item">
+                        <span class="stat-label">Youngest</span>
+                        <span class="stat-value">17</span>
+                        <span style="display:block;font-size:0.85rem;color:#6c757d;margin-top:4px;">Dermis Garcia</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Oldest</span>
+                        <span class="stat-value">30</span>
+                        <span style="display:block;font-size:0.85rem;color:#6c757d;margin-top:4px;">Hector Olivera</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Players w/ Age Data</span>
+                        <span class="stat-value">72/72</span>
+                    </div>
                 </div>
-                
-
+            </div>
+            <div style="margin-top:32px;">
+                <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
+                <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
+                    1 reached Rookie, 3 reached Low-A, 2 reached High-A, 4 reached AA, 16 reached AAA, 46 reached MLB.
+                </p>
                 <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
                     <li>
                         Average MLB career length: <strong>6.0</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MLB (last season = 2025): <strong>15</strong> of <strong>46</strong> players.
+                            Still active in MLB (last season = 2025): <strong>15</strong> players.
                         </div>
                     </li>
                     <li>
                         Average MiLB career length: <strong>5.9</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>1</strong> of <strong>26</strong> players.
+                            Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>1</strong> players.
                         </div>
                     </li>
                     <li>Debuted players in this release: <strong>46</strong>; non-debuted with MiLB data: <strong>26</strong>.</li>
@@ -512,15 +311,8 @@
             }
         });
         
-        // ========================================================================
-        // DEFERRED CHART RENDERING - Wait for Plotly Promise before revealing
-        // ========================================================================
+        // Generate plots
         
-        var nonDebutedChartRendered = false;
-        
-        // Render debuted chart immediately and wait for completion
-        (function() {
-            
         var debutedData = [{
             x: [1.29176, 0.0, 0.341976, 8.78141, -0.858014, 1.44386, -0.280692, 0.0, 0.0, -0.0214925, 3.89251, 2.50216, 28.6739, -0.377623, 0.194905, -0.672636, 7.91849, 18.5026, -0.869588, -0.338253, 6.83616, 0.0, 2.09823, 0.0304968, 0.0374535, 9.05211, 0.015114, 10.2628, 1.02301, 5.00888, 0.0, 0.157956, 13.7691, 15.534, -0.823758, 12.4187, 0.676625, 0.122733, 6.63548, 2.05029, 1.41427, 6.68479, 25.4703, 1.55137, 0.0, 0.0],
             y: [14.4, 6.0, 41.0, 19.77777777777778, 25.2, 29.571428571428573, 32.333333333333336, 5.666666666666667, 21.0, 21.0, 56.42857142857143, 21.6, 128.55555555555554, 19.5, 39.0, 35.4, 85.1, 129.125, 27.8, 15.0, 71.77777777777777, 6.0, 74.71428571428571, 47.5, 12.666666666666666, 74.11111111111111, 4.0, 20.4, 7.0, 88.4, 14.0, 38.63636363636363, 120.14285714285714, 28.22222222222222, 46.25, 26.8, 48.25, 26.5, 11.571428571428571, 42.5, 29.0, 80.11111111111111, 130.0, 61.5, 24.2, 17.666666666666668],
@@ -569,46 +361,12 @@
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
             margin: { l: 80, r: 40, t: 20, b: 60 },
-            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' },
-            autosize: true
+            font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
         
-        })();
         
-        // CRITICAL: Wait for debuted chart to fully render before revealing
-        // Plotly.newPlot returns a Promise - we use plotDebuted.on('plotly_afterplot')
-        (function() {
-            var plotEl = document.getElementById('plotDebuted');
-            var wrapper = document.getElementById('debutedWrapper');
-            if (plotEl && wrapper) {
-                // Use MutationObserver to detect when Plotly adds content
-                var observer = new MutationObserver(function(mutations, obs) {
-                    if (plotEl.querySelector('.plot-container')) {
-                        wrapper.classList.add('loaded');
-                        obs.disconnect();
-                    }
-                });
-                observer.observe(plotEl, { childList: true, subtree: true });
-                // Fallback: reveal after 500ms max
-                setTimeout(function() { 
-                    wrapper.classList.add('loaded'); 
-                    observer.disconnect();
-                }, 500);
-            }
-        })();
-        
-        // Function to render non-debuted chart (called on first tab click)
-        function renderNonDebutedChart() {
-            if (nonDebutedChartRendered) return;
-            nonDebutedChartRendered = true;
-            
-            var wrapper = document.getElementById('nonDebutedWrapper');
-            var plotEl = document.getElementById('plotNonDebuted');
-            
-            // Render the chart
-            
         // Base arrays for non-debuted players
         var nonDebutedBase = {
             x: [5, 2, 5, 5, 5, 2, 4, 5, 5, 5, 5, 5, 3, 5, 5, 1, 5, 5, 5, 2, 4, 4, 5, 5, 3, 4],
@@ -736,7 +494,7 @@
         
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: false
+            displayModeBar: true
         };
 
         function getActiveLevelsNonDebuted() {
@@ -777,229 +535,6 @@
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
         
-            
-            // Wait for render to complete before revealing
-            if (plotEl && wrapper) {
-                var observer = new MutationObserver(function(mutations, obs) {
-                    if (plotEl.querySelector('.plot-container')) {
-                        wrapper.classList.add('loaded');
-                        obs.disconnect();
-                    }
-                });
-                observer.observe(plotEl, { childList: true, subtree: true });
-                // Fallback: reveal after 500ms max
-                setTimeout(function() { 
-                    wrapper.classList.add('loaded');
-                    observer.disconnect();
-                }, 500);
-            }
-        }
-        
-        // Tab switching - render non-debuted chart on first click
-        document.querySelectorAll('.tab').forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                var tabName = this.getAttribute('data-tab');
-                
-                // Render non-debuted chart when its tab is first clicked
-                if (tabName === 'non-debuted' && !nonDebutedChartRendered) {
-                    renderNonDebutedChart();
-                }
-                
-                // Resize charts if already rendered (small delay for DOM update)
-                setTimeout(function() {
-                    var plotDebuted = document.getElementById('plotDebuted');
-                    var plotNonDebuted = document.getElementById('plotNonDebuted');
-                    if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
-                    if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
-                }, 50);
-            });
-        });
-        
-        // Handle window resize
-        window.addEventListener('resize', (function() {
-            var timeout;
-            return function() {
-                clearTimeout(timeout);
-                timeout = setTimeout(function() {
-                    var plotDebuted = document.getElementById('plotDebuted');
-                    var plotNonDebuted = document.getElementById('plotNonDebuted');
-                    var trajectoryDonut = document.getElementById('trajectoryDonut');
-                    if (plotDebuted && plotDebuted.data) Plotly.Plots.resize(plotDebuted);
-                    if (plotNonDebuted && plotNonDebuted.data) Plotly.Plots.resize(plotNonDebuted);
-                    if (trajectoryDonut && trajectoryDonut.data) Plotly.Plots.resize(trajectoryDonut);
-                }, 150);
-            };
-        })());
-        
-        // ========================================================================
-        // REFINED TRAJECTORY DONUT CHART
-        // Clean design with slice hover expansion
-        // ========================================================================
-        var trajectoryDonutRendered = false;
-        var donutSliceCount = 0;
-        
-        function renderTrajectoryDonut() {
-            if (trajectoryDonutRendered) return;
-            trajectoryDonutRendered = true;
-            
-            var donutData = [{"level": "Rookie", "count": 1, "pct": 1.4, "color": "#1c1917", "colorEnd": "#44403c"}, {"level": "Low-A", "count": 3, "pct": 4.2, "color": "#14532d", "colorEnd": "#16a34a"}, {"level": "High-A", "count": 2, "pct": 2.8, "color": "#78350f", "colorEnd": "#a16207"}, {"level": "AA", "count": 4, "pct": 5.6, "color": "#334155", "colorEnd": "#475569"}, {"level": "AAA", "count": 16, "pct": 22.2, "color": "#1e3a5f", "colorEnd": "#2563eb"}, {"level": "MLB", "count": 46, "pct": 63.9, "color": "#0c4a6e", "colorEnd": "#0e7490"}];
-            if (donutData.length === 0) return;
-            
-            donutSliceCount = donutData.length;
-            var labels = donutData.map(function(d) { return d.level; });
-            var values = donutData.map(function(d) { return d.count; });
-            var colors = donutData.map(function(d) { return d.color; });
-            
-            var hoverText = donutData.map(function(d) {
-                return '<b>' + d.level + '</b><br>' + d.count + ' players (' + d.pct + '%)';
-            });
-            
-            // Initial pull array (no expansion)
-            var basePull = new Array(donutSliceCount).fill(0);
-            
-            var data = [{
-                type: 'pie',
-                values: values,
-                labels: labels,
-                hole: 0.58,
-                marker: {
-                    colors: colors,
-                    line: {
-                        color: '#ffffff',
-                        width: 2
-                    }
-                },
-                textinfo: 'percent',
-                textposition: 'inside',
-                textfont: {
-                    family: 'Inter, sans-serif',
-                    size: 10,
-                    color: '#ffffff'
-                },
-                hoverinfo: 'none',
-                pull: basePull,
-                sort: false,
-                direction: 'clockwise'
-            }];
-            
-            var layout = {
-                showlegend: false,
-                margin: { t: 0, b: 0, l: 0, r: 0 },
-                paper_bgcolor: 'transparent',
-                plot_bgcolor: 'transparent',
-                annotations: [{
-                    text: '<b style="font-size:26px;color:#0f172a;">' + 72 + '</b><br><span style="color:#64748b;font-size:9px;letter-spacing:0.1em;">PLAYERS</span>',
-                    x: 0.5,
-                    y: 0.5,
-                    font: { family: 'Inter, sans-serif', size: 12, color: '#ffffff' },
-                    showarrow: false
-                }]
-            };
-            
-            var config = { responsive: true, displayModeBar: false };
-            
-            Plotly.newPlot('trajectoryDonut', data, layout, config).then(function() {
-                var wrapper = document.querySelector('.trajectory-chart-wrapper');
-                if (wrapper) wrapper.classList.add('loaded');
-                
-                // Apply SVG gradients to pie slices
-                var plotDiv = document.getElementById('trajectoryDonut');
-                var svg = plotDiv.querySelector('svg');
-                if (svg) {
-                    // Create defs element for gradients
-                    var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-                    donutData.forEach(function(d, i) {
-                        var grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-                        grad.setAttribute('id', 'donutGrad' + i);
-                        grad.setAttribute('x1', '0%');
-                        grad.setAttribute('y1', '0%');
-                        grad.setAttribute('x2', '100%');
-                        grad.setAttribute('y2', '100%');
-                        
-                        var stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-                        stop1.setAttribute('offset', '0%');
-                        stop1.setAttribute('stop-color', d.color);
-                        
-                        var stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-                        stop2.setAttribute('offset', '100%');
-                        stop2.setAttribute('stop-color', d.colorEnd || d.color);
-                        
-                        grad.appendChild(stop1);
-                        grad.appendChild(stop2);
-                        defs.appendChild(grad);
-                    });
-                    svg.insertBefore(defs, svg.firstChild);
-                    
-                    // Apply gradients to slices
-                    var slices = plotDiv.querySelectorAll('.slice path');
-                    slices.forEach(function(slice, i) {
-                        if (i < donutData.length) {
-                            slice.style.fill = 'url(#donutGrad' + i + ')';
-                        }
-                    });
-                }
-                
-                // Add hover expansion effect
-                
-                plotDiv.on('plotly_hover', function(eventData) {
-                    var pointIndex = eventData.points[0].pointNumber;
-                    var newPull = new Array(donutSliceCount).fill(0);
-                    newPull[pointIndex] = 0.08; // Expand hovered slice
-                    Plotly.restyle('trajectoryDonut', {'pull': [newPull]});
-                    
-                    // Show tooltip
-                    var d = donutData[pointIndex];
-                    showDonutTooltip(eventData.event, d);
-                });
-                
-                plotDiv.on('plotly_unhover', function() {
-                    Plotly.restyle('trajectoryDonut', {'pull': [new Array(donutSliceCount).fill(0)]});
-                    hideDonutTooltip();
-                });
-            });
-            
-            // Build legend
-            var legendContainer = document.getElementById('trajectoryLegend');
-            if (legendContainer) {
-                var legendHTML = '';
-                donutData.forEach(function(d) {
-                    legendHTML += '<div class="legend-item">' +
-                        '<span class="legend-dot" style="background-color:' + d.color + ';color:' + d.color + ';"></span>' +
-                        '<span>' + d.level + '</span>' +
-                        '<span class="legend-value">' + d.count + '</span>' +
-                        '<span class="legend-pct">(' + d.pct + '%)</span>' +
-                        '</div>';
-                });
-                legendContainer.innerHTML = legendHTML;
-            }
-        }
-        
-        // Custom tooltip for donut
-        var donutTooltip = null;
-        function showDonutTooltip(event, data) {
-            if (!donutTooltip) {
-                donutTooltip = document.createElement('div');
-                donutTooltip.style.cssText = 'position:fixed;padding:8px 12px;background:#ffffff;color:#1e3c72;border-radius:6px;font-size:12px;pointer-events:none;z-index:1000;border:1px solid rgba(30,60,114,0.15);box-shadow:0 4px 12px rgba(30,60,114,0.15);';
-                document.body.appendChild(donutTooltip);
-            }
-            donutTooltip.innerHTML = '<b style="color:' + data.color + '">' + data.level + '</b><br>' + data.count + ' players (' + data.pct + '%)';
-            donutTooltip.style.left = (event.clientX + 15) + 'px';
-            donutTooltip.style.top = (event.clientY - 10) + 'px';
-            donutTooltip.style.display = 'block';
-        }
-        function hideDonutTooltip() {
-            if (donutTooltip) donutTooltip.style.display = 'none';
-        }
-        
-        // Render donut when Accolades tab is first clicked
-        document.querySelectorAll('.tab').forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                var tabName = this.getAttribute('data-tab');
-                if (tabName === 'accolades' && !trajectoryDonutRendered) {
-                    setTimeout(renderTrajectoryDonut, 50);
-                }
-            });
-        });
     </script>
 </body>
 </html>
