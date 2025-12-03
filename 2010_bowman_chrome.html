@@ -294,7 +294,7 @@
     </div>
 
     <script>
-        // Tab switching functionality
+        // Tab switching functionality with Plotly resize fix
         document.querySelectorAll('.tab').forEach(tab => {
             if (!tab.disabled) {
                 tab.addEventListener('click', function() {
@@ -307,6 +307,17 @@
                         content.classList.remove('active');
                     });
                     document.getElementById('tab-' + tabName).classList.add('active');
+                    
+                    // Critical: Resize Plotly charts after tab becomes visible
+                    // Plotly can't calculate dimensions when container is display:none
+                    setTimeout(function() {
+                        if (tabName === 'debuted' && document.getElementById('plotDebuted')) {
+                            Plotly.Plots.resize('plotDebuted');
+                        }
+                        if (tabName === 'non-debuted' && document.getElementById('plotNonDebuted')) {
+                            Plotly.Plots.resize('plotNonDebuted');
+                        }
+                    }, 10);
                 });
             }
         });
@@ -360,6 +371,7 @@
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
+            showlegend: false,
             margin: { l: 80, r: 40, t: 20, b: 60 },
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
@@ -488,6 +500,7 @@
             plot_bgcolor: '#ffffff',
             paper_bgcolor: '#ffffff',
             hovermode: 'closest',
+            showlegend: false,
             margin: { l: 80, r: 40, t: 20, b: 60 },
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
