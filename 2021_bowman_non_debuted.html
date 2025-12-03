@@ -56,33 +56,6 @@
             max-height: 800px;
             margin: 30px 0;
         }
-        
-        /* Loading skeleton for chart */
-        .chart-loading {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite ease-in-out;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 0.9rem;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .chart-loading::after {
-            content: 'Loading chart...';
-        }
-        #plot.js-plotly-plot {
-            background: none;
-            animation: none;
-        }
-        #plot.js-plotly-plot::after {
-            content: none;
-        }
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -143,7 +116,7 @@
             <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="4" checked> AA</label>
             <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="5" checked> AAA</label>
         </div>
-        <div id="plot" class="chart-loading"></div>
+        <div id="plot"></div>
         <div class="stats">
             <div class="stat-item">
                 <span class="stat-label">Players Shown</span>
