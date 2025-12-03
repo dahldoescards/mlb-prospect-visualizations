@@ -173,19 +173,24 @@
         </div>
         
         <div class="tab-content active" id="tab-debuted">
+            <div id="debutedFilters" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;margin-bottom:5px;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#6c757d;margin-right:6px;">Filter by Position:</span>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-debuted" value="P" checked> Pitchers</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-debuted" value="Pos" checked> Position Players</label>
+            </div>
             <div id="plotDebuted"></div>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">33</span>
+                    <span class="stat-value" id="debutedPlayersCount">33</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Average WAR</span>
-                    <span class="stat-value">3.04</span>
+                    <span class="stat-value" id="debutedAvgWar">3.04</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">53.6</span>
+                    <span class="stat-value" id="debutedAvgGps">53.6</span>
                 </div>
             </div>
         </div>
@@ -198,6 +203,9 @@
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="3" checked> High-A</label>
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="4" checked> AA</label>
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="5" checked> AAA</label>
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#6c757d;margin-left:20px;margin-right:6px;">Position:</span>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-nondebuted" value="P" checked> Pitchers</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-nondebuted" value="Pos" checked> Position Players</label>
             </div>
             <div id="plotNonDebuted"></div>
             <div class="stats">
@@ -349,24 +357,60 @@
         
         // Generate plots
         
-        var debutedData = [{
+        // Base data for debuted players (supports position filtering)
+        var debutedBase = {
             x: [8.99711, -0.0138984, 0.972762, -0.109137, 1.26508, -0.676651, 7.73365, 3.72978, -2.54893, 1.4134, 0.712162, -0.0474467, 3.14445, 0.189227, 1.78615, -0.308939, 21.2469, 0.703438, 24.3919, 0.0, -0.567986, 4.79741, 2.11432, 10.7143, 0.978175, 0.891193, -0.368421, -0.106703, -0.0829097, -0.189342, 0.0, 0.0424082, 9.41927],
             y: [20.0, 46.57142857142857, 67.5, 3.3333333333333335, 42.8, 35.5, 21.0, 17.8, 68.33333333333333, 33.6, 49.25, 44.57142857142857, 55.833333333333336, 25.4, 15.142857142857142, 12.0, 0, 26.0, 25.714285714285715, 13.0, 20.5, 92.0, 66.0, 119.85714285714286, 43.5, 74.25, 3.5, 5.0, 16.333333333333332, 7.0, 4.0, 16.0, 88.33333333333333],
-            mode: 'markers',
-            type: 'scatter',
-            text: ["Aaron Civale", "Andrew Knizner", "Blaze Alexander", "Brewer Hicklen", "Brock Burke", "Cal Mitchell", "Dean Kremer", "Edward Cabrera", "Elehuris Montero", "Eli Morgan", "Esteury Ruiz", "Genesis Cabrera", "Joey Bart", "Jonathan Hernandez", "Jose Suarez", "Julio Pablo Martinez", "Julio Rodriguez", "Keegan Thompson", "Logan Webb", "Lyon Richardson", "Marco Luciano", "Matt Vierling", "Miguel Amaya", "Nate Lowe", "Ronny Mauricio", "Ryan McKenna", "Rylan Bannon", "Steele Walker", "Taylor Widener", "Tirso Ornelas", "Tommy Romero", "Victor Victor Mesa", "Wander Franco"],
-            marker: {
-                size: 9,
-                color: '#2a5298',
-                opacity: 0.85,
-                line: { width: 1.5, color: '#ffffff' }
-            },
-            customdata: [[140, 7], [326, 7], [135, 2], [10, 3], [214, 5], [71, 2], [126, 6], [89, 5], [205, 3], [168, 5], [197, 4], [312, 7], [335, 6], [127, 5], [106, 7], [24, 2], [590, 0], [104, 4], [180, 7], [39, 3], [41, 2], [460, 5], [198, 3], [839, 7], [87, 2], [297, 4], [7, 2], [5, 1], [49, 3], [7, 1], [4, 1], [16, 1], [265, 3]],
-            hovertemplate: '<b>%{text}</b><br>' +
-                          'Career WAR: %{x:.1f}<br>' +
-                          'Career Games Played: %{customdata[0]}<br>' +
-                          'Seasons Played: %{customdata[1]}<extra></extra>'
-        }];
+            names: ["Aaron Civale", "Andrew Knizner", "Blaze Alexander", "Brewer Hicklen", "Brock Burke", "Cal Mitchell", "Dean Kremer", "Edward Cabrera", "Elehuris Montero", "Eli Morgan", "Esteury Ruiz", "Genesis Cabrera", "Joey Bart", "Jonathan Hernandez", "Jose Suarez", "Julio Pablo Martinez", "Julio Rodriguez", "Keegan Thompson", "Logan Webb", "Lyon Richardson", "Marco Luciano", "Matt Vierling", "Miguel Amaya", "Nate Lowe", "Ronny Mauricio", "Ryan McKenna", "Rylan Bannon", "Steele Walker", "Taylor Widener", "Tirso Ornelas", "Tommy Romero", "Victor Victor Mesa", "Wander Franco"],
+            gamesPlayed: [140, 326, 135, 10, 214, 71, 126, 89, 205, 168, 197, 312, 335, 127, 106, 24, 590, 104, 180, 39, 41, 460, 198, 839, 87, 297, 7, 5, 49, 7, 4, 16, 265],
+            seasonsPlayed: [7, 7, 2, 3, 5, 2, 6, 5, 3, 5, 4, 7, 6, 5, 7, 2, 0, 4, 7, 3, 2, 5, 3, 7, 2, 4, 2, 1, 3, 1, 1, 1, 3],
+            positionTypes: ["P", "Pos", "Pos", "Pos", "P", "Pos", "P", "P", "Pos", "P", "Pos", "P", "Pos", "P", "P", "Pos", "Pos", "P", "P", "P", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "P", "Pos", "P", "Pos", "Pos"]
+        };
+        
+        function buildDebutedTrace(activePositions) {
+            var x = [], y = [], text = [], customdata = [];
+            var totalWar = 0, totalGps = 0;
+            
+            for (var i = 0; i < debutedBase.x.length; i++) {
+                var posType = debutedBase.positionTypes[i];
+                if (activePositions && activePositions.length && 
+                    activePositions.indexOf(posType) === -1) {
+                    continue;
+                }
+                x.push(debutedBase.x[i]);
+                y.push(debutedBase.y[i]);
+                text.push(debutedBase.names[i]);
+                customdata.push([debutedBase.gamesPlayed[i], debutedBase.seasonsPlayed[i]]);
+                totalWar += debutedBase.x[i];
+                totalGps += debutedBase.y[i];
+            }
+            
+            return {
+                trace: {
+                    x: x,
+                    y: y,
+                    mode: 'markers',
+                    type: 'scatter',
+                    text: text,
+                    marker: {
+                        size: 9,
+                        color: '#2a5298',
+                        opacity: 0.85,
+                        line: { width: 1.5, color: '#ffffff' }
+                    },
+                    customdata: customdata,
+                    hovertemplate: '<b>%{text}</b><br>' +
+                                  'Career WAR: %{x:.1f}<br>' +
+                                  'Career Games Played: %{customdata[0]}<br>' +
+                                  'Seasons Played: %{customdata[1]}<extra></extra>'
+                },
+                count: x.length,
+                avgWar: (x.length ? totalWar / x.length : 0),
+                avgGps: (x.length ? totalGps / x.length : 0)
+            };
+        }
+        
+        var debutedData = [buildDebutedTrace(['P', 'Pos']).trace];
         
         var debutedLayout = {
             title: { text: '', font: { size: 0 } },
@@ -411,7 +455,8 @@
             levelsLabel: ["AAA", "High-A", "AA", "AAA", "AAA", "High-A", "AAA", "AA", "AAA", "AAA", "AAA", "AAA", "High-A", "AA", "AAA", "AAA", "AA", "AA", "High-A", "AAA", "AAA"],
             careerLengths: [8, 2, 4, 4, 9, 4, 6, 4, 8, 7, 7, 6, 2, 7, 7, 10, 3, 6, 7, 6, 7],
             firstSeasons: [2017, 2018, 2017, 2017, 2014, 2016, 2019, 2017, 2015, 2015, 2017, 2018, 2018, 2016, 2014, 2015, 2017, 2016, 2014, 2016, 2015],
-            releaseDates: ["N/A", "N/A", "N/A", "2021-11-16", "2025-07-07", "N/A", "N/A", "2022-04-01", "2024-08-12", "N/A", "2024-06-20", "N/A", "2022-03-26", "N/A", "2022-06-27", "N/A", "N/A", "2025-04-22", "2021-06-20", "N/A", "N/A"]
+            releaseDates: ["N/A", "N/A", "N/A", "2021-11-16", "2025-07-07", "N/A", "N/A", "2022-04-01", "2024-08-12", "N/A", "2024-06-20", "N/A", "2022-03-26", "N/A", "2022-06-27", "N/A", "N/A", "2025-04-22", "2021-06-20", "N/A", "N/A"],
+            positionTypes: ["Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "P", "P", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "P"]
         };
 
         // Deterministic jitter for readability (stable across renders)
@@ -420,7 +465,7 @@
             return x - Math.floor(x);
         }
 
-        function buildNonDebutedTrace(activeLevels) {
+        function buildNonDebutedTrace(activeLevels, activePositions) {
             var x = [];
             var y = [];
             var text = [];
@@ -431,8 +476,17 @@
 
             for (var i = 0; i < levelNumeric.length; i++) {
                 var lvl = levelNumeric[i];
+                var posType = nonDebutedBase.positionTypes[i];
+                
+                // Filter by level
                 if (activeLevels && activeLevels.length &&
                     activeLevels.indexOf(String(lvl)) === -1) {
+                    continue;
+                }
+                
+                // Filter by position type
+                if (activePositions && activePositions.length &&
+                    activePositions.indexOf(posType) === -1) {
                     continue;
                 }
 
@@ -545,10 +599,24 @@
             }
             return active;
         }
+        
+        function getActivePositionsNonDebuted() {
+            var checks = document.querySelectorAll('.position-filter-nondebuted');
+            var active = [];
+            checks.forEach(function(cb) {
+                if (cb.checked) active.push(cb.value);
+            });
+            if (!active.length) {
+                active = ['P', 'Pos'];
+                checks.forEach(function(cb) { cb.checked = true; });
+            }
+            return active;
+        }
 
         function updateNonDebutedMainPlot() {
-            var active = getActiveLevelsNonDebuted();
-            var res = buildNonDebutedTrace(active);
+            var activeLevels = getActiveLevelsNonDebuted();
+            var activePositions = getActivePositionsNonDebuted();
+            var res = buildNonDebutedTrace(activeLevels, activePositions);
             Plotly.react('plotNonDebuted', [res.trace], nonDebutedLayout, nonDebutedConfig);
 
             var countEl = document.getElementById('nonDebutedPlayersCount');
@@ -570,11 +638,12 @@
         function renderNonDebutedChart() {
             if (nonDebutedRendered) return;
             nonDebutedRendered = true;
-            var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
+            var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5'], ['P', 'Pos']);
             var nonDebutedData = [nonDebutedFull.trace];
             Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
         }
 
+        // Event listeners for level filter
         document.querySelectorAll('.level-filter').forEach(function(cb) {
             cb.addEventListener('change', function() {
                 if (!nonDebutedRendered) renderNonDebutedChart();
@@ -582,6 +651,47 @@
             });
         });
         
+        // Event listeners for non-debuted position filter
+        document.querySelectorAll('.position-filter-nondebuted').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                if (!nonDebutedRendered) renderNonDebutedChart();
+                updateNonDebutedMainPlot();
+            });
+        });
+        
+        
+        // Debuted chart position filter functions
+        function getActivePositionsDebuted() {
+            var checks = document.querySelectorAll('.position-filter-debuted');
+            var active = [];
+            checks.forEach(function(cb) {
+                if (cb.checked) active.push(cb.value);
+            });
+            if (!active.length) {
+                active = ['P', 'Pos'];
+                checks.forEach(function(cb) { cb.checked = true; });
+            }
+            return active;
+        }
+        
+        function updateDebutedPlot() {
+            if (typeof debutedBase === 'undefined') return;
+            var activePositions = getActivePositionsDebuted();
+            var res = buildDebutedTrace(activePositions);
+            Plotly.react('plotDebuted', [res.trace], debutedLayout, { responsive: true, displayModeBar: false });
+            
+            var countEl = document.getElementById('debutedPlayersCount');
+            var avgWarEl = document.getElementById('debutedAvgWar');
+            var avgGpsEl = document.getElementById('debutedAvgGps');
+            if (countEl) countEl.textContent = res.count;
+            if (avgWarEl) avgWarEl.textContent = res.avgWar.toFixed(2);
+            if (avgGpsEl) avgGpsEl.textContent = res.avgGps.toFixed(1);
+        }
+        
+        // Event listeners for debuted position filter
+        document.querySelectorAll('.position-filter-debuted').forEach(function(cb) {
+            cb.addEventListener('change', updateDebutedPlot);
+        });
         
         // Global window resize handler for responsive charts
         window.addEventListener('resize', function() {

@@ -173,19 +173,24 @@
         </div>
         
         <div class="tab-content active" id="tab-debuted">
+            <div id="debutedFilters" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;margin-bottom:5px;">
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#6c757d;margin-right:6px;">Filter by Position:</span>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-debuted" value="P" checked> Pitchers</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-debuted" value="Pos" checked> Position Players</label>
+            </div>
             <div id="plotDebuted"></div>
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">41</span>
+                    <span class="stat-value" id="debutedPlayersCount">41</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Average WAR</span>
-                    <span class="stat-value">7.13</span>
+                    <span class="stat-value" id="debutedAvgWar">7.13</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">49.3</span>
+                    <span class="stat-value" id="debutedAvgGps">49.3</span>
                 </div>
             </div>
         </div>
@@ -198,6 +203,9 @@
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="3" checked> High-A</label>
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="4" checked> AA</label>
                 <label style="font-size:11px;color:#495057;"><input type="checkbox" class="level-filter" value="5" checked> AAA</label>
+                <span style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#6c757d;margin-left:20px;margin-right:6px;">Position:</span>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-nondebuted" value="P" checked> Pitchers</label>
+                <label style="font-size:11px;color:#495057;"><input type="checkbox" class="position-filter-nondebuted" value="Pos" checked> Position Players</label>
             </div>
             <div id="plotNonDebuted"></div>
             <div class="stats">
@@ -349,24 +357,60 @@
         
         // Generate plots
         
-        var debutedData = [{
+        // Base data for debuted players (supports position filtering)
+        var debutedBase = {
             x: [4.46722, -0.28321, 2.33928, 1.79495, 25.5927, 0.188365, 0.376354, -0.948484, -0.133151, 2.86761, 0.00412112, 0.136548, 14.3764, -0.523308, 20.9599, -0.701893, 5.32382, -0.0102344, 46.4905, 2.16718, 21.4323, 34.1066, 13.6967, -1.76519, 17.0941, -0.0226366, 19.2325, 8.11795, 3.78087, 3.54093, 5.48359, -1.24165, 9.8616, 8.38892, 0.0, 0.829216, 2.55506, 5.87531, 15.095, 1.84739, -0.00615795],
             y: [102.44444444444444, 20.333333333333332, 31.833333333333332, 26.625, 53.9375, 11.0, 20.6, 14.666666666666666, 1.0, 52.083333333333336, 18.25, 17.5, 78.18181818181819, 12.5, 116.5, 64.0, 46.75, 20.6, 106.46153846153847, 69.0, 25.692307692307693, 134.54545454545453, 35.0, 48.666666666666664, 23.214285714285715, 51.833333333333336, 109.0, 80.22222222222223, 40.22222222222222, 14.625, 64.9090909090909, 36.333333333333336, 113.28571428571429, 23.23076923076923, 13.666666666666666, 35.38461538461539, 52.714285714285715, 22.9, 100.0, 89.4, 23.333333333333332],
-            mode: 'markers',
-            type: 'scatter',
-            text: ["Adeinis Hechavarria", "Alex Liddi", "Anthony Bass", "Arodys Vizcaino", "Aroldis Chapman", "Bryan Mitchell", "Carlos Peguero", "Corban Joseph", "Daniel Fields", "Ehire Adrianza", "Eury Perez", "Francisco Peguero", "Gary Sanchez", "James Darnell", "Jason Kipnis", "Jefry Marte", "Jeurys Familia", "Jhan Marinez", "Josh Donaldson", "Kirk Nieuwenhuis", "Kyle Gibson", "Kyle Seager", "Liam Hendriks", "Marc Krauss", "Martin Perez", "Matt Davidson", "Max Kepler", "Miguel Sano", "Pedro Baez", "Robbie Erlin", "Robinson Chirinos", "Ryan Wheeler", "Scooter Gennett", "Shelby Miller", "Simon Castro", "T.J. McFarland", "Trayce Thompson", "Tyler Chatwood", "Wil Myers", "Wilin Rosario", "Wilkin Ramirez"],
-            marker: {
-                size: 9,
-                color: '#2a5298',
-                opacity: 0.85,
-                line: { width: 1.5, color: '#ffffff' }
-            },
-            customdata: [[922, 9], [61, 3], [382, 12], [213, 8], [863, 16], [66, 6], [103, 5], [44, 3], [1, 1], [625, 12], [73, 4], [35, 2], [860, 11], [25, 2], [1165, 10], [256, 4], [561, 12], [103, 5], [1384, 13], [414, 6], [334, 13], [1480, 11], [490, 14], [146, 3], [325, 14], [311, 6], [1199, 11], [722, 9], [362, 9], [117, 8], [714, 11], [109, 3], [793, 7], [302, 13], [41, 3], [460, 13], [369, 7], [229, 10], [1100, 11], [447, 5], [70, 3]],
-            hovertemplate: '<b>%{text}</b><br>' +
-                          'Career WAR: %{x:.1f}<br>' +
-                          'Career Games Played: %{customdata[0]}<br>' +
-                          'Seasons Played: %{customdata[1]}<extra></extra>'
-        }];
+            names: ["Adeinis Hechavarria", "Alex Liddi", "Anthony Bass", "Arodys Vizcaino", "Aroldis Chapman", "Bryan Mitchell", "Carlos Peguero", "Corban Joseph", "Daniel Fields", "Ehire Adrianza", "Eury Perez", "Francisco Peguero", "Gary Sanchez", "James Darnell", "Jason Kipnis", "Jefry Marte", "Jeurys Familia", "Jhan Marinez", "Josh Donaldson", "Kirk Nieuwenhuis", "Kyle Gibson", "Kyle Seager", "Liam Hendriks", "Marc Krauss", "Martin Perez", "Matt Davidson", "Max Kepler", "Miguel Sano", "Pedro Baez", "Robbie Erlin", "Robinson Chirinos", "Ryan Wheeler", "Scooter Gennett", "Shelby Miller", "Simon Castro", "T.J. McFarland", "Trayce Thompson", "Tyler Chatwood", "Wil Myers", "Wilin Rosario", "Wilkin Ramirez"],
+            gamesPlayed: [922, 61, 382, 213, 863, 66, 103, 44, 1, 625, 73, 35, 860, 25, 1165, 256, 561, 103, 1384, 414, 334, 1480, 490, 146, 325, 311, 1199, 722, 362, 117, 714, 109, 793, 302, 41, 460, 369, 229, 1100, 447, 70],
+            seasonsPlayed: [9, 3, 12, 8, 16, 6, 5, 3, 1, 12, 4, 2, 11, 2, 10, 4, 12, 5, 13, 6, 13, 11, 14, 3, 14, 6, 11, 9, 9, 8, 11, 3, 7, 13, 3, 13, 7, 10, 11, 5, 3],
+            positionTypes: ["Pos", "Pos", "P", "P", "P", "P", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "Pos", "P", "P", "Pos", "Pos", "P", "Pos", "P", "Pos", "P", "Pos", "Pos", "Pos", "P", "P", "Pos", "Pos", "Pos", "P", "P", "P", "Pos", "P", "Pos", "Pos", "Pos"]
+        };
+        
+        function buildDebutedTrace(activePositions) {
+            var x = [], y = [], text = [], customdata = [];
+            var totalWar = 0, totalGps = 0;
+            
+            for (var i = 0; i < debutedBase.x.length; i++) {
+                var posType = debutedBase.positionTypes[i];
+                if (activePositions && activePositions.length && 
+                    activePositions.indexOf(posType) === -1) {
+                    continue;
+                }
+                x.push(debutedBase.x[i]);
+                y.push(debutedBase.y[i]);
+                text.push(debutedBase.names[i]);
+                customdata.push([debutedBase.gamesPlayed[i], debutedBase.seasonsPlayed[i]]);
+                totalWar += debutedBase.x[i];
+                totalGps += debutedBase.y[i];
+            }
+            
+            return {
+                trace: {
+                    x: x,
+                    y: y,
+                    mode: 'markers',
+                    type: 'scatter',
+                    text: text,
+                    marker: {
+                        size: 9,
+                        color: '#2a5298',
+                        opacity: 0.85,
+                        line: { width: 1.5, color: '#ffffff' }
+                    },
+                    customdata: customdata,
+                    hovertemplate: '<b>%{text}</b><br>' +
+                                  'Career WAR: %{x:.1f}<br>' +
+                                  'Career Games Played: %{customdata[0]}<br>' +
+                                  'Seasons Played: %{customdata[1]}<extra></extra>'
+                },
+                count: x.length,
+                avgWar: (x.length ? totalWar / x.length : 0),
+                avgGps: (x.length ? totalGps / x.length : 0)
+            };
+        }
+        
+        var debutedData = [buildDebutedTrace(['P', 'Pos']).trace];
         
         var debutedLayout = {
             title: { text: '', font: { size: 0 } },
@@ -411,7 +455,8 @@
             levelsLabel: ["AA", "Low-A", "AA", "AAA", "Rookie", "AAA", "AAA", "AAA"],
             careerLengths: [3, 4, 6, 5, 3, 12, 7, 6],
             firstSeasons: [2008, 2009, 2009, 2010, 2010, 2006, 2009, 2007],
-            releaseDates: ["2012-04-26", "N/A", "2014-07-28", "2014-06-13", "2014-10-30", "N/A", "2016-02-17", "2019-05-08"]
+            releaseDates: ["2012-04-26", "N/A", "2014-07-28", "2014-06-13", "2014-10-30", "N/A", "2016-02-17", "2019-05-08"],
+            positionTypes: ["P", "P", "Pos", "P", "P", "Pos", "P", "P"]
         };
 
         // Deterministic jitter for readability (stable across renders)
@@ -420,7 +465,7 @@
             return x - Math.floor(x);
         }
 
-        function buildNonDebutedTrace(activeLevels) {
+        function buildNonDebutedTrace(activeLevels, activePositions) {
             var x = [];
             var y = [];
             var text = [];
@@ -431,8 +476,17 @@
 
             for (var i = 0; i < levelNumeric.length; i++) {
                 var lvl = levelNumeric[i];
+                var posType = nonDebutedBase.positionTypes[i];
+                
+                // Filter by level
                 if (activeLevels && activeLevels.length &&
                     activeLevels.indexOf(String(lvl)) === -1) {
+                    continue;
+                }
+                
+                // Filter by position type
+                if (activePositions && activePositions.length &&
+                    activePositions.indexOf(posType) === -1) {
                     continue;
                 }
 
@@ -545,10 +599,24 @@
             }
             return active;
         }
+        
+        function getActivePositionsNonDebuted() {
+            var checks = document.querySelectorAll('.position-filter-nondebuted');
+            var active = [];
+            checks.forEach(function(cb) {
+                if (cb.checked) active.push(cb.value);
+            });
+            if (!active.length) {
+                active = ['P', 'Pos'];
+                checks.forEach(function(cb) { cb.checked = true; });
+            }
+            return active;
+        }
 
         function updateNonDebutedMainPlot() {
-            var active = getActiveLevelsNonDebuted();
-            var res = buildNonDebutedTrace(active);
+            var activeLevels = getActiveLevelsNonDebuted();
+            var activePositions = getActivePositionsNonDebuted();
+            var res = buildNonDebutedTrace(activeLevels, activePositions);
             Plotly.react('plotNonDebuted', [res.trace], nonDebutedLayout, nonDebutedConfig);
 
             var countEl = document.getElementById('nonDebutedPlayersCount');
@@ -570,11 +638,12 @@
         function renderNonDebutedChart() {
             if (nonDebutedRendered) return;
             nonDebutedRendered = true;
-            var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
+            var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5'], ['P', 'Pos']);
             var nonDebutedData = [nonDebutedFull.trace];
             Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
         }
 
+        // Event listeners for level filter
         document.querySelectorAll('.level-filter').forEach(function(cb) {
             cb.addEventListener('change', function() {
                 if (!nonDebutedRendered) renderNonDebutedChart();
@@ -582,6 +651,47 @@
             });
         });
         
+        // Event listeners for non-debuted position filter
+        document.querySelectorAll('.position-filter-nondebuted').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                if (!nonDebutedRendered) renderNonDebutedChart();
+                updateNonDebutedMainPlot();
+            });
+        });
+        
+        
+        // Debuted chart position filter functions
+        function getActivePositionsDebuted() {
+            var checks = document.querySelectorAll('.position-filter-debuted');
+            var active = [];
+            checks.forEach(function(cb) {
+                if (cb.checked) active.push(cb.value);
+            });
+            if (!active.length) {
+                active = ['P', 'Pos'];
+                checks.forEach(function(cb) { cb.checked = true; });
+            }
+            return active;
+        }
+        
+        function updateDebutedPlot() {
+            if (typeof debutedBase === 'undefined') return;
+            var activePositions = getActivePositionsDebuted();
+            var res = buildDebutedTrace(activePositions);
+            Plotly.react('plotDebuted', [res.trace], debutedLayout, { responsive: true, displayModeBar: false });
+            
+            var countEl = document.getElementById('debutedPlayersCount');
+            var avgWarEl = document.getElementById('debutedAvgWar');
+            var avgGpsEl = document.getElementById('debutedAvgGps');
+            if (countEl) countEl.textContent = res.count;
+            if (avgWarEl) avgWarEl.textContent = res.avgWar.toFixed(2);
+            if (avgGpsEl) avgGpsEl.textContent = res.avgGps.toFixed(1);
+        }
+        
+        // Event listeners for debuted position filter
+        document.querySelectorAll('.position-filter-debuted').forEach(function(cb) {
+            cb.addEventListener('change', updateDebutedPlot);
+        });
         
         // Global window resize handler for responsive charts
         window.addEventListener('resize', function() {
