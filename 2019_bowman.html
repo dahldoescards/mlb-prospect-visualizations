@@ -154,7 +154,7 @@
         
         <div class="tabs">
             <button class="tab active" data-tab="debuted" >
-                Debuted (34)
+                Debuted (33)
             </button>
             <button class="tab " data-tab="non-debuted" >
                 Non-Debuted (21)
@@ -169,15 +169,15 @@
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Players Shown</span>
-                    <span class="stat-value">34</span>
+                    <span class="stat-value">33</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Average WAR</span>
-                    <span class="stat-value">2.95</span>
+                    <span class="stat-value">3.04</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value">52.5</span>
+                    <span class="stat-value">53.6</span>
                 </div>
             </div>
         </div>
@@ -212,11 +212,11 @@
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-label">Total Players</span>
-                    <span class="stat-value">55</span>
+                    <span class="stat-value">54</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">All-Stars</span>
-                    <span class="stat-value">48</span>
+                    <span class="stat-value">47</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">MVP Awards</span>
@@ -244,7 +244,7 @@
                 <div class="stats" style="margin-top:16px;margin-bottom:24px;">
                     <div class="stat-item">
                         <span class="stat-label">Average Age</span>
-                        <span class="stat-value">21.8</span>
+                        <span class="stat-value">21.9</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Youngest</span>
@@ -258,20 +258,20 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Players w/ Age Data</span>
-                        <span class="stat-value">55/55</span>
+                        <span class="stat-value">54/54</span>
                     </div>
                 </div>
             </div>
             <div style="margin-top:32px;">
                 <h3 style="color:#1e3c72;margin-bottom:12px;font-size:1.1rem;">Trajectory Snapshot</h3>
                 <p style="color:#495057;font-size:0.95rem;line-height:1.6;">
-                    4 reached High-A, 5 reached AA, 12 reached AAA, 34 reached MLB.
+                    4 reached High-A, 5 reached AA, 12 reached AAA, 33 reached MLB.
                 </p>
                 <ul style="margin-top:12px;padding-left:20px;color:#495057;font-size:0.95rem;line-height:1.6;">
                     <li>
-                        Average MLB career length: <strong>4.0</strong> seasons.
+                        Average MLB career length: <strong>4.1</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MLB (last season = 2025): <strong>21</strong> players.
+                            Still active in MLB (last season = 2025): <strong>20</strong> players.
                         </div>
                     </li>
                     <li>
@@ -280,7 +280,7 @@
                             Still active in MiLB (no release, last MiLB season = 2025, no MLB debut): <strong>3</strong> players.
                         </div>
                     </li>
-                    <li>Debuted players in this release: <strong>34</strong>; non-debuted with MiLB data: <strong>21</strong>.</li>
+                    <li>Debuted players in this release: <strong>33</strong>; non-debuted with MiLB data: <strong>21</strong>.</li>
                 </ul>
             </div>
             <div style="margin-top:32px;">
@@ -320,8 +320,13 @@
                     });
                     document.getElementById('tab-' + tabName).classList.add('active');
                     
-                    // Critical: Resize Plotly charts after tab becomes visible
-                    // Plotly can't calculate dimensions when container is display:none
+                    // DEFERRED RENDERING: Render non-debuted chart only when tab first activated
+                    // This eliminates the visible resize issue completely
+                    if (tabName === 'non-debuted' && typeof renderNonDebutedChart === 'function') {
+                        renderNonDebutedChart();
+                    }
+                    
+                    // Resize charts after tab becomes visible (for window resize cases)
                     setTimeout(function() {
                         if (tabName === 'debuted' && document.getElementById('plotDebuted')) {
                             Plotly.Plots.resize('plotDebuted');
@@ -337,18 +342,18 @@
         // Generate plots
         
         var debutedData = [{
-            x: [8.99711, -0.0138984, 0.972762, -0.109137, 1.26508, -0.676651, 7.73365, 3.72978, -2.54893, 1.4134, 0.712162, -0.0474467, 3.14445, 0.189227, 1.78615, -0.308939, 21.2469, 0.703438, 24.3919, 0.0, -0.567986, 4.79741, 2.11432, 10.7143, 0.978175, 0.891193, -0.368421, -0.106703, -0.0829097, -0.189342, 0.0, 0.0424082, 0.0424082, 9.41927],
-            y: [20.0, 46.57142857142857, 67.5, 3.3333333333333335, 42.8, 35.5, 21.0, 17.8, 68.33333333333333, 33.6, 49.25, 44.57142857142857, 55.833333333333336, 25.4, 15.142857142857142, 12.0, 0, 26.0, 25.714285714285715, 13.0, 20.5, 92.0, 66.0, 119.85714285714286, 43.5, 74.25, 3.5, 5.0, 16.333333333333332, 7.0, 4.0, 16.0, 16.0, 88.33333333333333],
+            x: [8.99711, -0.0138984, 0.972762, -0.109137, 1.26508, -0.676651, 7.73365, 3.72978, -2.54893, 1.4134, 0.712162, -0.0474467, 3.14445, 0.189227, 1.78615, -0.308939, 21.2469, 0.703438, 24.3919, 0.0, -0.567986, 4.79741, 2.11432, 10.7143, 0.978175, 0.891193, -0.368421, -0.106703, -0.0829097, -0.189342, 0.0, 0.0424082, 9.41927],
+            y: [20.0, 46.57142857142857, 67.5, 3.3333333333333335, 42.8, 35.5, 21.0, 17.8, 68.33333333333333, 33.6, 49.25, 44.57142857142857, 55.833333333333336, 25.4, 15.142857142857142, 12.0, 0, 26.0, 25.714285714285715, 13.0, 20.5, 92.0, 66.0, 119.85714285714286, 43.5, 74.25, 3.5, 5.0, 16.333333333333332, 7.0, 4.0, 16.0, 88.33333333333333],
             mode: 'markers',
             type: 'scatter',
-            text: ["Aaron Civale", "Andrew Knizner", "Blaze Alexander", "Brewer Hicklen", "Brock Burke", "Cal Mitchell", "Dean Kremer", "Edward Cabrera", "Elehuris Montero", "Eli Morgan", "Esteury Ruiz", "Genesis Cabrera", "Joey Bart", "Jonathan Hernandez", "Jose Suarez", "Julio Pablo Martinez", "Julio Rodriguez", "Keegan Thompson", "Logan Webb", "Lyon Richardson", "Marco Luciano", "Matt Vierling", "Miguel Amaya", "Nate Lowe", "Ronny Mauricio", "Ryan McKenna", "Rylan Bannon", "Steele Walker", "Taylor Widener", "Tirso Ornelas", "Tommy Romero", "Victor Mesa Jr.", "Victor Victor Mesa", "Wander Franco"],
+            text: ["Aaron Civale", "Andrew Knizner", "Blaze Alexander", "Brewer Hicklen", "Brock Burke", "Cal Mitchell", "Dean Kremer", "Edward Cabrera", "Elehuris Montero", "Eli Morgan", "Esteury Ruiz", "Genesis Cabrera", "Joey Bart", "Jonathan Hernandez", "Jose Suarez", "Julio Pablo Martinez", "Julio Rodriguez", "Keegan Thompson", "Logan Webb", "Lyon Richardson", "Marco Luciano", "Matt Vierling", "Miguel Amaya", "Nate Lowe", "Ronny Mauricio", "Ryan McKenna", "Rylan Bannon", "Steele Walker", "Taylor Widener", "Tirso Ornelas", "Tommy Romero", "Victor Victor Mesa", "Wander Franco"],
             marker: {
                 size: 9,
                 color: '#2a5298',
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [140.0, 326.0, 135.0, 10.0, 214.0, 71.0, 126.0, 89.0, 205.0, 168.0, 197.0, 312.0, 335.0, 127.0, 106.0, 24.0, 590.0, 104.0, 180.0, 39.0, 41.0, 460.0, 198.0, 839.0, 87.0, 297.0, 7.0, 5.0, 49.0, 7.0, 4.0, 16.0, 16.0, 265.0],
+            customdata: [140.0, 326.0, 135.0, 10.0, 214.0, 71.0, 126.0, 89.0, 205.0, 168.0, 197.0, 312.0, 335.0, 127.0, 106.0, 24.0, 590.0, 104.0, 180.0, 39.0, 41.0, 460.0, 198.0, 839.0, 87.0, 297.0, 7.0, 5.0, 49.0, 7.0, 4.0, 16.0, 265.0],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
@@ -550,12 +555,23 @@
             }
         }
 
-        var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
-        var nonDebutedData = [nonDebutedFull.trace];
-        Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
+        // DEFERRED RENDERING: Don't render until tab is first activated
+        // This prevents the visible resize when switching to non-debuted tab
+        var nonDebutedRendered = false;
+        
+        function renderNonDebutedChart() {
+            if (nonDebutedRendered) return;
+            nonDebutedRendered = true;
+            var nonDebutedFull = buildNonDebutedTrace(['1','2','3','4','5']);
+            var nonDebutedData = [nonDebutedFull.trace];
+            Plotly.newPlot('plotNonDebuted', nonDebutedData, nonDebutedLayout, nonDebutedConfig);
+        }
 
         document.querySelectorAll('.level-filter').forEach(function(cb) {
-            cb.addEventListener('change', updateNonDebutedMainPlot);
+            cb.addEventListener('change', function() {
+                if (!nonDebutedRendered) renderNonDebutedChart();
+                updateNonDebutedMainPlot();
+            });
         });
         
         
