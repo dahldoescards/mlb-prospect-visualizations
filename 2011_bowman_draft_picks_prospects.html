@@ -75,7 +75,9 @@
         }
         #plotDebuted, #plotNonDebuted {
             width: 100%;
-            height: 650px;
+            height: calc(100vh - 350px);
+            min-height: 400px;
+            max-height: 800px;
             margin: 30px 0;
         }
         .both-charts {
@@ -128,10 +130,13 @@
                 grid-template-columns: 1fr;
             }
             #plotDebuted, #plotNonDebuted {
-                height: 500px;
+                height: calc(100vh - 300px);
+                min-height: 350px;
+                max-height: 600px;
             }
             .both-charts #plotDebutedBoth, .both-charts #plotNonDebutedBoth {
-                height: 500px;
+                height: calc(100vh - 300px);
+                min-height: 350px;
             }
             .stats {
                 grid-template-columns: 1fr;
@@ -340,8 +345,7 @@
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
                           'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>',
-            name: 'Debuted Players'
+                          'Career Games Played: %{customdata}<extra></extra>'
         }];
         
         var debutedLayout = {
@@ -376,7 +380,7 @@
             font: { family: 'Inter, sans-serif', size: 12, color: '#495057' }
         };
         
-        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: true });
+        Plotly.newPlot('plotDebuted', debutedData, debutedLayout, { responsive: true, displayModeBar: false });
         
         
         // Base arrays for non-debuted players
@@ -448,8 +452,7 @@
                                   'MiLB Highest Level: %{customdata[0]}<br>' +
                                   'MiLB First Season: %{customdata[1]}<br>' +
                                   'MiLB Career Length: %{customdata[2]} years<br>' +
-                                  'Release Date: %{customdata[3]}<extra></extra>',
-                    name: 'Non-Debuted Players'
+                                  'Release Date: %{customdata[3]}<extra></extra>'
                 },
                 count: x.length,
                 avgGps: (x.length ? totalGps / x.length : 0),
@@ -507,7 +510,7 @@
         
         var nonDebutedConfig = {
             responsive: true,
-            displayModeBar: true
+            displayModeBar: false
         };
 
         function getActiveLevelsNonDebuted() {
@@ -548,6 +551,16 @@
             cb.addEventListener('change', updateNonDebutedMainPlot);
         });
         
+        
+        // Global window resize handler for responsive charts
+        window.addEventListener('resize', function() {
+            if (document.getElementById('plotDebuted')) {
+                Plotly.Plots.resize('plotDebuted');
+            }
+            if (document.getElementById('plotNonDebuted')) {
+                Plotly.Plots.resize('plotNonDebuted');
+            }
+        });
     </script>
 </body>
 </html>
