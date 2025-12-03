@@ -190,7 +190,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Avg Games/Season</span>
-                    <span class="stat-value" id="debutedAvgGps">41.5</span>
+                    <span class="stat-value" id="debutedAvgGps">48.8</span>
                 </div>
             </div>
         </div>
@@ -232,7 +232,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">All-Stars</span>
-                    <span class="stat-value">48</span>
+                    <span class="stat-value">47</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">MVP Awards</span>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Gold Gloves</span>
-                    <span class="stat-value">4</span>
+                    <span class="stat-value">3</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Silver Sluggers</span>
@@ -287,7 +287,7 @@
                     <li>
                         Average MLB career length: <strong>2.7</strong> seasons.
                         <div style="margin-left:18px;font-size:0.9rem;color:#6c757d;">
-                            Still active in MLB (last season = 2025): <strong>21</strong> players.
+                            Still active in MLB (last season = 2025): <strong>20</strong> players.
                         </div>
                     </li>
                     <li>
@@ -359,12 +359,12 @@
         
         // Base data for debuted players (supports position filtering)
         var debutedBase = {
-            x: [0.0, 4.1728, 0.263753, 4.44755, -0.183396, 0.515317, 0.0, -0.74488, -0.281214, 1.11272, 0.502902, 6.74145, 8.30144, 12.0818, 4.84191, 0.0, 0.0, 0.0, -0.762364, -0.877542, 1.6085, -1.44513, 1.07241, 0.0, 12.0167, 1.82415, -0.0694273, 0.40597, 2.047, 0.0499568, 4.27677, -0.282, 0.0, -0.529709, 0.0, -0.374527, 0.0636875],
-            y: [2.0, 50.0, 19.0, 137.66666666666666, 16.0, 76.0, 11.333333333333334, 13.0, 8.0, 16.333333333333332, 54.5, 76.0, 79.0, 94.33333333333333, 50.75, 1.5, 18.0, 11.0, 29.0, 37.333333333333336, 77.75, 59.333333333333336, 54.5, 23.5, 130.5, 89.5, 45.0, 12.333333333333334, 90.0, 4.0, 18.5, 14.333333333333334, 26.0, 49.666666666666664, 1.0, 31.666666666666668, 9.0],
-            names: ["Alex Speas", "Alex Vesia", "Austin Shenton", "Brenton Doyle", "Chris Gittens", "Christian Koss", "Cody Bolton", "Curtis Terry", "Drew Avans", "Drew Millas", "Erik Miller", "Francisco Alvarez", "Gabriel Moreno", "Isaac Paredes", "Ivan Herrera", "Jonathan Stiever", "Jordan Balazovic", "Karl Kauffmann", "Kevin Smith", "Lewin Diaz", "Logan O'Hoppe", "Luis Matos", "Luisangel Acu\u00f1a", "Max Lazar", "Michael Harris", "Michael Massey", "Oswald Peraza", "Packy Naughton", "Pedro Pages", "Ricky Vanasco", "Ryan Pepiot", "Taylor Jones", "Thad Ward", "Tucupita Marcano", "Tyler Ivey", "Vaughn Grissom", "Yoendrys Gomez"],
-            gamesPlayed: [4, 300, 19, 413, 16, 76, 34, 13, 8, 49, 109, 304, 316, 566, 203, 3, 18, 11, 116, 112, 311, 178, 109, 47, 522, 358, 180, 37, 180, 4, 74, 43, 26, 149, 1, 95, 27],
-            seasonsPlayed: [2, 6, 1, 3, 1, 1, 3, 1, 1, 3, 2, 4, 4, 6, 4, 2, 1, 1, 4, 3, 4, 3, 2, 2, 4, 4, 4, 3, 2, 1, 4, 3, 1, 3, 1, 3, 3],
-            positionTypes: ["P", "P", "Pos", "Pos", "Pos", "Pos", "P", "Pos", "Pos", "Pos", "P", "Pos", "Pos", "Pos", "Pos", "P", "P", "P", "Pos", "Pos", "Pos", "Pos", "Pos", "P", "Pos", "Pos", "Pos", "P", "Pos", "P", "P", "Pos", "P", "Pos", "P", "Pos", "P"]
+            x: [0.0, 4.1728, 0.263753, 4.44755, -0.183396, 0.515317, 0.0, -0.74488, -0.281214, 1.11272, 0.502902, 6.74145, 8.30144, 12.0818, 4.84191, 0.0, 0.0, 0.0, -0.762364, -0.877542, 1.6085, -1.44513, 1.07241, 0.0, 12.0167, -0.0694273, 0.40597, 2.047, 0.0499568, 4.27677, -0.282, 0.0, -0.529709, 0.0, -0.374527, 0.0636875, 1.82415],
+            y: [2.0, 50.0, 19.0, 137.66666666666666, 16.0, 76.0, 11.333333333333334, 13.0, 8.0, 16.333333333333332, 54.5, 76.0, 79.0, 94.33333333333333, 50.75, 1.5, 18.0, 11.0, 29.0, 37.333333333333336, 77.75, 59.333333333333336, 54.5, 23.5, 130.5, 45.0, 12.333333333333334, 90.0, 4.0, 18.5, 14.333333333333334, 26.0, 49.666666666666664, 1.0, 31.666666666666668, 9.0, 0],
+            names: ["Alex Speas", "Alex Vesia", "Austin Shenton", "Brenton Doyle", "Chris Gittens", "Christian Koss", "Cody Bolton", "Curtis Terry", "Drew Avans", "Drew Millas", "Erik Miller", "Francisco Alvarez", "Gabriel Moreno", "Isaac Paredes", "Ivan Herrera", "Jonathan Stiever", "Jordan Balazovic", "Karl Kauffmann", "Kevin Smith", "Lewin Diaz", "Logan O'Hoppe", "Luis Matos", "Luisangel Acu\u00f1a", "Max Lazar", "Michael Harris", "Oswald Peraza", "Packy Naughton", "Pedro Pages", "Ricky Vanasco", "Ryan Pepiot", "Taylor Jones", "Thad Ward", "Tucupita Marcano", "Tyler Ivey", "Vaughn Grissom", "Yoendrys Gomez", "Michael Massey"],
+            gamesPlayed: [4, 300, 19, 413, 16, 76, 34, 13, 8, 49, 109, 304, 316, 566, 203, 3, 18, 11, 116, 112, 311, 178, 109, 47, 522, 180, 37, 180, 4, 74, 43, 26, 149, 1, 95, 27, 358],
+            seasonsPlayed: [2, 6, 1, 3, 1, 1, 3, 1, 1, 3, 2, 4, 4, 6, 4, 2, 1, 1, 4, 3, 4, 3, 2, 2, 4, 4, 3, 2, 1, 4, 3, 1, 3, 1, 3, 3, 0],
+            positionTypes: ["P", "P", "Pos", "Pos", "Pos", "Pos", "P", "Pos", "Pos", "Pos", "P", "Pos", "Pos", "Pos", "Pos", "P", "P", "P", "Pos", "Pos", "Pos", "Pos", "Pos", "P", "Pos", "Pos", "P", "Pos", "P", "P", "Pos", "P", "Pos", "P", "Pos", "P", "Pos"]
         };
         
         function buildDebutedTrace(activePositions) {
