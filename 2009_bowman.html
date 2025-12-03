@@ -353,11 +353,11 @@
                 opacity: 0.85,
                 line: { width: 1.5, color: '#ffffff' }
             },
-            customdata: [104.0, 50.0, 1624.0, 547.0, 815.0, 44.0, 360.0, 134.0, 364.0, 971.0, 997.0],
+            customdata: [[104, 9], [50, 3], [1624, 14], [547, 10], [815, 11], [44, 2], [360, 7], [134, 7], [364, 13], [971, 10], [997, 11]],
             hovertemplate: '<b>%{text}</b><br>' +
                           'Career WAR: %{x:.1f}<br>' +
-                          'Games per Season: %{y:.1f}<br>' +
-                          'Career Games Played: %{customdata}<extra></extra>'
+                          'Career Games Played: %{customdata[0]}<br>' +
+                          'Seasons Played: %{customdata[1]}<extra></extra>'
         }];
         
         var debutedLayout = {
